@@ -16,8 +16,9 @@ LIB_DIRS= lib/mlx
 MLX=	lib/mlx/libmlx.a
 
 ifeq (${shell uname}, LINUX)
-		LDLIBS= -Llib/mlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-		LIB_DIRS= lib/mlx_linux
+		LDLIBS= -lmlx_Linux -lXext -lX11 -lm -lz
+		LIB_DIRS= lib/mlx_linux /usr/lib
+		INC_DIRS= includes lib/mlx_linux
 		MLX= lib/mlx_linux/libmlx.a
 endif
 
