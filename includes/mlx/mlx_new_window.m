@@ -558,7 +558,7 @@ int get_mouse_button(NSEventType eventtype)
   glEnableVertexAttribArray(0);
 
   glEnable(GL_BLEND);
-  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // src alpha 0xFF : keep dst
+  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // srcs alpha 0xFF : keep dst
   glBlendEquation(GL_FUNC_ADD);
 
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -595,7 +595,7 @@ int get_mouse_button(NSEventType eventtype)
   glEnableVertexAttribArray(0);
 
   glEnable(GL_BLEND);
-  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // src alpha 0xFF : keep dst
+  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // srcs alpha 0xFF : keep dst
   glBlendEquation(GL_FUNC_ADD);
 
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -620,7 +620,7 @@ int get_mouse_button(NSEventType eventtype)
   glEnableVertexAttribArray(0);
 
   glEnable(GL_BLEND);
-  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // src alpha 0xFF : keep dst
+  glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // srcs alpha 0xFF : keep dst
   glBlendEquation(GL_FUNC_ADD);
 
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
