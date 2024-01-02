@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: shinfray <shinfray@student.s19.be>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/24 14:58:52 by Leex-Labs         #+#    #+#              #
-#    Updated: 2024/01/02 13:37:27 by shinfray         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ################################################################################
 #                                 CONFIG                                       #
 ################################################################################
@@ -23,12 +11,12 @@ SRCS_DIR:= src
 BUILD_DIR:= build
 INC_DIRS= includes lib/mlx
 
-#LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
-#LIB_DIRS= lib/mlx
-#MLX=	lib/mlx/libmlx.a
+LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
+LIB_DIRS= lib/mlx
+MLX=	lib/mlx/libmlx.a
 
-ifneq (${shell uname}, Darwin)
-		LDLIBS= -lXext -lX11 -lm -lz
+ifeq (${shell uname}, LINUX)
+		LDLIBS= -Llib/mlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 		LIB_DIRS= lib/mlx_linux
 		MLX= lib/mlx_linux/libmlx.a
 endif
