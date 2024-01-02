@@ -15,7 +15,7 @@ LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
 LIB_DIRS= lib/mlx
 MLX=	lib/mlx/libmlx.a
 
-ifeq (${shell uname}, LINUX)
+ifeq (${shell uname}, Linux)
 		LDLIBS= -lmlx_Linux -lXext -lX11 -lm -lz
 		LIB_DIRS= lib/mlx_linux /usr/lib
 		INC_DIRS= includes lib/mlx_linux
