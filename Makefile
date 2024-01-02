@@ -1,14 +1,26 @@
+################################################################################
+#                                 CONFIG                                       #
+################################################################################
+
 .DELETE_ON_ERROR:
 .SILENT:
 
-COLOR_GREEN := \033[32m
-COLOR_RESET := \033[0m
-
 NAME:=	cub3d
 
-SRCS_DIR:= sources
+SRCS_DIR:= src
 BUILD_DIR:= build
-INC_DIRS= includes
+INC_DIRS= includes lib/mlx
+
+LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
+LIB_DIRS= lib/mlx
+MLX=	lib/mlx/libmlx.a
+
+ifeq (${shell uname}, Linux)
+		LDLIBS= -lmlx_Linux -lXext -lX11 -lm -lz
+		LIB_DIRS= lib/mlx_linux /usr/lib
+		INC_DIRS= includes lib/mlx_linux
+		MLX= lib/mlx_linux/libmlx.a
+endif
 
 CC:=	clang
 
@@ -23,17 +35,32 @@ CFLAGS+=	-Wconversion 			\
 			-Wshadow 				\
 			-Wundef 				\
 			-Wunused-macros 		\
+			-Wwrite-strings 		\
 			-Wmissing-prototypes 	\
 			-Wmissing-declarations	\
-			-O3
+			-g3
 
-ifeq (${shell uname}, Darwin)
-	MLX_OBJS:= -I${INC_DIRS}/mlx
-	MLX_COMP:= -L${INC_DIRS}/mlx -lmlx -framework OpenGL -framework AppKit
-endif
+#			-Wpedantic \
+# 			-pedantic-errors
+#			-Wcast-qual
+#			-Wstrict-prototypes \
+#			-Wpadded \
+#
+#			gcc flags only
+#			-Wformat-overflow \
+#			-Wformat-truncation \
+#			-Wlogical-op \
+#			-Wformat-signedness \
+#			-Wduplicated-cond \
+#			-Wduplicated-branches \
+#			-Walloc-zero
 
-MLX_OBJS:= -I/usr/include -I${INC_DIRS}/mlx_linux
-MLX_COMP:= -L${INC_DIRS}/mlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+ADDITIONAL_CPPFLAGS=
+ADDITIONAL_LDFLAGS=
+
+################################################################################
+#                                 PROGRAM'S SRCS                               #
+################################################################################
 
 EXT:=	.c
 
@@ -69,6 +96,10 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_strnstr		\
 				utils/ft_substr
 
+################################################################################
+#                                 VAR FORMATING                                #
+################################################################################
+
 MAKEFILE_NAME:= ${lastword ${MAKEFILE_LIST}}
 
 SRCS:=	${addprefix ${SRCS_DIR}/,${addsuffix ${EXT},${MAIN} ${SRCS_FILES}}}
@@ -80,27 +111,40 @@ DEPS_DIR:= ${BUILD_DIR}/deps
 DEPS:=	${OBJS:${OBJS_DIR}/%.o=${DEPS_DIR}/%.d}
 
 CPPFLAGS= ${addprefix -I,${INC_DIRS}} -MMD -MP -MF ${@:${OBJS_DIR}/%.o=${DEPS_DIR}/%.d}
+CPPFLAGS+= ${ADDITIONAL_CPPFLAGS}
 
 LDFLAGS= ${addprefix -L,${LIB_DIRS}}
+LDFLAGS+= ${ADDITIONAL_LDFLAGS}
 
 RM:=	rm -rf
 
+COLOR_GREEN := \033[32m
+COLOR_RESET := \033[0m
+
+################################################################################
+#                                 MAKEFILE RULES                               #
+################################################################################
+
 all: ${NAME}
 
-${NAME}: ${OBJS}
-	${CC} ${LDFLAGS} ${OBJS} ${MLX_COMP} -o $@
+${NAME}: ${OBJS} ${MLX}
+	${CC} ${LDFLAGS} ${OBJS} ${LDLIBS} -o $@
 	echo "${COLOR_GREEN}Compilation completed.${COLOR_RESET}"
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%${EXT} ${MAKEFILE_NAME}
 	mkdir -p ${dir $@}
 	mkdir -p ${dir ${@:${OBJS_DIR}/%.o=${DEPS_DIR}/%.d}}
-	${CC} ${CPPFLAGS} ${CFLAGS} ${MLX_OBJS} -c $< -o $@
+	${CC} ${CPPFLAGS} ${CFLAGS} -c $< -o $@
+    
+${MLX}:
+	${MAKE} -C ${dir ${MLX}}
 
 clean:
 	${RM} ${BUILD_DIR}
 	echo "${COLOR_GREEN}Objects cleaned.${COLOR_RESET}"
 
 fclean: clean
+	${MAKE} clean -C ${dir ${MLX}}
 	${RM} ${NAME}
 	echo "${COLOR_GREEN}Executables cleaned.${COLOR_RESET}"
 

@@ -1,9 +1,7 @@
 #ifndef MAP_H
 # define MAP_H
 
-# ifdef __linux__
-#  include <stdint.h>
-# endif
+# include <stdint.h>
 
 typedef enum	e_orientation
 {

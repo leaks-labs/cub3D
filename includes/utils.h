@@ -2,9 +2,7 @@
 # define UTILS_H
 
 # include <stdbool.h>
-#ifdef __linux__
 # include <stddef.h>
-#endif
 
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_freef(const char *formats, ...);
