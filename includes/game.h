@@ -1,9 +1,7 @@
 #ifndef GAME_H
 # define GAME_H
 
-# ifdef __linux__
 #  include <stdint.h>
-# endif
 
 typedef struct s_map 	t_map;
 typedef struct s_graphx	t_graphx;

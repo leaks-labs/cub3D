@@ -1,11 +1,9 @@
 #ifndef LIBX_H
 # define LIBX_H
 
-# include <mlx.h>
-# ifdef __linux__
-#  include <stdint.h>
-#  include <stddef.h>
-# endif
+# include "mlx.h"
+# include <stdint.h>
+# include <stddef.h>
 
 # define MLX_INIT_ERROR		"Failed to initialise mlx"
 # define MLX_WINDOW_ERROR	"Failed to initialise the window"
