@@ -23,9 +23,9 @@ SRCS_DIR:= src
 BUILD_DIR:= build
 INC_DIRS= includes lib/mlx
 
-LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
-LIB_DIRS= lib/mlx
-MLX=	lib/mlx/libmlx.a
+#LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
+#LIB_DIRS= lib/mlx
+#MLX=	lib/mlx/libmlx.a
 
 ifneq (${shell uname}, Darwin)
 		LDLIBS= -lXext -lX11 -lm -lz
@@ -68,11 +68,6 @@ CFLAGS+=	-Wconversion 			\
 
 ADDITIONAL_CPPFLAGS=
 ADDITIONAL_LDFLAGS=
-
-ifeq (${shell uname}, Darwin)
-        LIB_DIRS+= $$HOMEBREW_PREFIX/opt/readline/lib
-        INC_DIRS+= $$HOMEBREW_PREFIX/opt/readline/include
-endif
 
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
