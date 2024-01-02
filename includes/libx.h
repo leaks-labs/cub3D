@@ -47,7 +47,7 @@ typedef struct	s_image
 {
 	void	*mlx_img;
 	char	*data;
-	int32_t bits_per_pixel; /* can't be unsigned for mlx compatibility */
+	int32_t bits_per_pixel;
 	int32_t	size_line;
 	int32_t	endian;
 }				t_image;

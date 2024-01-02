@@ -14,6 +14,12 @@ typedef enum	e_orientation
 	N_ORIENTATION
 }				t_orientation;
 
+typedef enum e_element
+{
+	WALL,
+	EMPTY
+}			t_element;
+
 typedef struct	s_texture
 {
 	char	*texture_path; //dllist
@@ -22,20 +28,21 @@ typedef struct	s_texture
 
 typedef struct	s_grid
 {
-	t_texture texture[N_ORIENTATION];
-	//element
+	t_texture		texture;
+	t_element		type;
+	t_orientation	orientation;
+	//pos
 }				t_grid;
 
 typedef struct	s_map
 {
-	int16_t 		width;
-	int16_t 		height;
-	t_grid			*notUse;
-	int32_t 	 		*grid;
+	t_grid			*grid_not_use;
+	size_t			n_grid;
+	int32_t			*grid;
 	t_orientation	orientation;
 }				t_map;
 
-uint8_t	ft_set_map(int argc, char *argv[], t_map *map);
+uint8_t	ft_set_map(int argc, char **argv, t_map *map);
 
 void	ft_destroy_map(t_map *map);
 
