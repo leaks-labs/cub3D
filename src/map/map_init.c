@@ -1,10 +1,10 @@
 #include "map.h"
 #include "utils.h"
-
-uint8_t ft_set_map(int argc, char *argv[], t_map *map)
+#include <stdio.h>
+uint8_t ft_init_map(char *file, t_map *map)
 {
-	(void)argc;
-	(void)argv;
+	if (ft_throw_map_exception(ft_parse_map(file)))
+		return (1);
 	map->grid = ft_calloc(25, sizeof(int32_t));
 	if (map->grid == NULL)
 		return (1);
