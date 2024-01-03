@@ -69,6 +69,8 @@ MAIN:=	main
 SRCS_FILES:=	game/game_destroy		\
 				game/game_event			\
 				game/game_init			\
+				game/game_movement		\
+				game/game_rotation		\
 				game/render				\
 				game/run				\
 				libx/libx_event			\

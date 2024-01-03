@@ -4,17 +4,15 @@
 int ft_key_handler(int32_t key_code, t_game_data *game_data)
 {
 	void (*const f[N_KEY])(t_game_data *game_data) = {
-			&ft_go_forward,
-			&ft_go_backward,
-			&ft_go_left,
-			&ft_go_right,
+			&ft_go_forward, &ft_go_backward,
+			&ft_go_left, &ft_go_right,
+			&ft_rotate_to_left, &ft_rotate_to_right,
 			&ft_escape
 	};
 	const t_keyboard keyboard_key[N_KEY] = {
-			KEY_W,
-			KEY_S,
-			KEY_A,
-			KEY_D,
+			KEY_W, KEY_S,
+			KEY_A, KEY_D,
+			KEY_ARROW_LEFT, KEY_ARROW_RIGHT,
 			KEY_ESC
 	};
 	size_t i;

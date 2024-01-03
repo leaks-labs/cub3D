@@ -1,6 +1,7 @@
 #ifndef MAP_H
 # define MAP_H
 
+# include <stddef.h>
 # include <stdint.h>
 
 typedef enum	e_orientation
@@ -16,8 +17,8 @@ typedef enum	e_orientation
 
 typedef enum e_element
 {
-	WALL,
-	EMPTY
+	EMPTY,
+	WALL
 }			t_element;
 
 typedef struct	s_texture
