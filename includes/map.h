@@ -13,6 +13,13 @@
 # define MAP_ELEMENT_ERROR		"Missing or wrong map element"
 # define MAP_LEN_ERROR			44
 
+# define REQUIREMENT_NORTH_TEXTURE	"NO"
+# define REQUIREMENT_SOUTH_TEXTURE	"SO"
+# define REQUIREMENT_WEST_TEXTURE	"WE"
+# define REQUIREMENT_EAST_TEXTURE	"EA"
+# define REQUIREMENT_FLOOR_RGB		"F"
+# define REQUIREMENT_CEILING_RGB	"C"
+
 typedef enum	e_map_exception /* add open and read exception */
 {
 	EXTENSION_ERROR,
