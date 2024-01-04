@@ -8,7 +8,7 @@ void ft_rotate_to_left(t_game_data *game_data)
 
 	printf("Key : <-\n");
 	game_data->player.pos.radian += ROTATION_SPEED;
-	if (game_data->player.pos.radian > RAD_MAX)
+	if (game_data->player.pos.radian >= RAD_MAX)
 		game_data->player.pos.radian -= RAD_MAX;
 	ft_render(game_data);
 }

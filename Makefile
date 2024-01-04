@@ -98,7 +98,8 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_strncmp		\
 				utils/ft_strndup		\
 				utils/ft_strnstr		\
-				utils/ft_substr
+				utils/ft_substr			\
+				utils/get_next_line
 
 ################################################################################
 #                                 VAR FORMATING                                #

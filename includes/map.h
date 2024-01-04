@@ -5,6 +5,8 @@
 # include <stdint.h>
 
 # define MAP_EXTENSION_ERROR	"Missing or wrong extension file"
+# define MAP_OPEN_ERROR			"Failed to open the file"
+# define MAP_READ_ERROR			"Failed to read the file"
 # define MAP_REQUIREMENT_ERROR	"Missing or wrong requirement"
 # define MAP_PATH_ERROR			"Texture path doesn't exist or is misleading"
 # define MAP_RGB_ERROR			"Missing or wrong RGB value"
@@ -14,6 +16,8 @@
 typedef enum	e_map_exception /* add open and read exception */
 {
 	EXTENSION_ERROR,
+	OPEN_ERROR,
+	READ_ERROR,
 	REQUIREMENT_ERROR,
 	PATH_ERROR,
 	RGB_ERROR,
@@ -61,11 +65,13 @@ typedef struct	s_map
 	t_orientation	orientation;
 }				t_map;
 
+/* init and destroy */
 uint8_t			ft_init_map(char *file, t_map *map);
 void			ft_destroy_map(t_map *map);
 
-/* exception maybe */
+/* map parsing + error handling */
 uint8_t 		ft_throw_map_exception(t_map_exception e_exception);
 t_map_exception	ft_parse_map(char *file);/* in progress */
-uint8_t			ft_check_extension(char *file);
+uint8_t			ft_check_extension(const char *str);
+uint8_t			ft_open_file(char *str, int32_t *fd);
 #endif
