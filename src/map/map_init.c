@@ -1,6 +1,6 @@
 #include "map.h"
 #include "utils.h"
-#include <stdio.h>
+
 uint8_t ft_init_map(char *file, t_map *map)
 {
 	if (ft_throw_map_exception(ft_parse_map(file)))

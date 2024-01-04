@@ -83,6 +83,7 @@ SRCS_FILES:=	game/game_destroy		\
 				map/map_parse			\
 				utils/ft_calloc			\
 				utils/ft_freef			\
+				utils/ft_get_next_line	\
 				utils/ft_isalnum		\
 				utils/ft_isalpha		\
 				utils/ft_isdigit		\
@@ -98,8 +99,7 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_strncmp		\
 				utils/ft_strndup		\
 				utils/ft_strnstr		\
-				utils/ft_substr			\
-				utils/get_next_line
+				utils/ft_substr
 
 ################################################################################
 #                                 VAR FORMATING                                #

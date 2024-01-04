@@ -1,6 +1,10 @@
 #include "map.h"
 #include "utils.h"
 #include <fcntl.h>
+#include <unistd.h>
+
+#include <stdlib.h>
+#include <stdio.h>
 
 t_map_exception ft_parse_map(char *file)
 {
@@ -10,6 +14,14 @@ t_map_exception ft_parse_map(char *file)
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);
+	char *line = ft_get_next_line(fd);
+	while (line != NULL)
+	{
+		printf("%s", line);
+		free(line);
+		line = ft_get_next_line(fd);
+	}
+	close(fd);
 	return (NO_MAP_EXCEPTION);
 }
 
