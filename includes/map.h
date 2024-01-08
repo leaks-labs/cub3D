@@ -1,6 +1,7 @@
 #ifndef MAP_H
 # define MAP_H
 
+# include "libx.h"
 # include <stddef.h>
 # include <stdint.h>
 
@@ -11,13 +12,14 @@
 # define MAP_PATH_ERROR			"Texture path doesn't exist or is misleading"
 # define MAP_RGB_ERROR			"Missing or wrong RGB value"
 # define MAP_ELEMENT_ERROR		"Missing or wrong map element"
-# define MAP_LEN_ERROR			44
 
+# define MAP_LEN_ERROR			44
 # define REQUIREMENT_NORTH_TEXTURE	"NO"
 # define REQUIREMENT_SOUTH_TEXTURE	"SO"
 # define REQUIREMENT_WEST_TEXTURE	"WE"
 # define REQUIREMENT_EAST_TEXTURE	"EA"
 # define REQUIREMENT_FLOOR_RGB		"F"
+
 # define REQUIREMENT_CEILING_RGB	"C"
 
 typedef enum	e_map_exception /* add open and read exception */
@@ -33,25 +35,35 @@ typedef enum	e_map_exception /* add open and read exception */
 	NO_MAP_EXCEPTION
 }				t_map_exception;
 
-typedef enum	e_orientation
+typedef enum    e_orientation
 {
 	NORTH,
 	SOUTH,
 	WEST,
 	EST,
 	N_ORIENTATION
-}				t_orientation;
+}                t_orientation;
 
 typedef enum	e_element
 {
 	EMPTY,
 	WALL,
+	FLOOR,
+	CEILING,
+	N_ELEMENT
 }				t_element;
+
+typedef struct		s_texture
+{
+	char	orientation[N_ORIENTATION][50]; /* PATH MAX */
+	t_image	image[N_ORIENTATION];
+	int32_t	RGB[N_ORIENTATION];
+}					t_texture;
 
 typedef struct	s_map
 {
 	t_element	*grid;
-	char		texture[N_ORIENTATION][50];
+	t_texture	texture[N_ELEMENT];
 	int32_t		width;
 	int32_t		height;
 }				t_map;
