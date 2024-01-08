@@ -1,5 +1,6 @@
 #include "libx.h"
 #include "utils.h"
+#include "unistd.h"
 
 uint8_t ft_throw_mlx_exception(t_mlx_exception e_mlx_exception)
 {
@@ -13,10 +14,10 @@ uint8_t ft_throw_mlx_exception(t_mlx_exception e_mlx_exception)
 	e_exception = INIT_ERROR;
 	while (e_exception < N_EXCEPTION)
 	{
-		if (e_exception == e_mlx_exception)
+		if (e_mlx_exception == e_exception)
 		{
-			ft_putendl_fd("Error", 2);
-			ft_putendl_fd(mlx_exception[e_exception], 2);
+			ft_putendl_fd("Error", STDERR_FILENO);
+			ft_putendl_fd(mlx_exception[e_exception], STDERR_FILENO);
 			return (1);
 		}
 		++e_exception;

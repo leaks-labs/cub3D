@@ -13,5 +13,5 @@ int main(int argc, char **argv)
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	return (1 == ft_set_map(argc, argv, &map) || 1 == ft_run(&map));
+	return (1 == ft_init_map(argv[1], &map) || 1 == ft_run(&map));
 }

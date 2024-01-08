@@ -69,16 +69,21 @@ MAIN:=	main
 SRCS_FILES:=	game/game_destroy		\
 				game/game_event			\
 				game/game_init			\
+				game/game_movement		\
+				game/game_rotation		\
 				game/render				\
 				game/run				\
 				libx/libx_event			\
 				libx/libx_destroy		\
 				libx/libx_exception		\
 				libx/libx_init			\
-				map/map_init			\
 				map/map_destroy			\
+				map/map_exception		\
+				map/map_init			\
+				map/map_parse			\
 				utils/ft_calloc			\
 				utils/ft_freef			\
+				utils/ft_get_next_line	\
 				utils/ft_isalnum		\
 				utils/ft_isalpha		\
 				utils/ft_isdigit		\

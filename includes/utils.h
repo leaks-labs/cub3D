@@ -6,6 +6,7 @@
 
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_freef(const char *formats, ...);
+char	*ft_get_next_line(int fd);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

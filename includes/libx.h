@@ -5,6 +5,10 @@
 # include <stdint.h>
 # include <stddef.h>
 
+# define WINDOW_NAME	"cub3d"
+# define WINDOW_WIDTH	500
+# define WINDOW_HEIGHT	500
+
 # define MLX_INIT_ERROR		"Failed to initialise mlx"
 # define MLX_WINDOW_ERROR	"Failed to initialise the window"
 # define MLX_IMAGE_ERROR	"Failed to initialise image"
@@ -18,7 +22,9 @@
 		KEY_S = 115,
 		KEY_D = 100,
 		KEY_A = 97,
-		N_KEY = 5
+		KEY_ARROW_LEFT = 65361,
+		KEY_ARROW_RIGHT = 65363,
+		N_KEY = 7
 	}			t_keyboard;
 # elif __APPLE__
 	typedef enum e_keyboard
@@ -28,6 +34,8 @@
 		KEY_S = 1,
 		KEY_D = 2,
 		KEY_A = 0,
+		KEY_ARROW_LEFT = 123,
+		KEY_ARROW_RIGHT = 124,
 		N_KEY = 5
 	}			t_keyboard;
 # endif
