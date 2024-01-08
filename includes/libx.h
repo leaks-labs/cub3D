@@ -36,7 +36,7 @@
 		KEY_A = 0,
 		KEY_ARROW_LEFT = 123,
 		KEY_ARROW_RIGHT = 124,
-		N_KEY = 5
+		N_KEY = 7
 	}			t_keyboard;
 # endif
 
