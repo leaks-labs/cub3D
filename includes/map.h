@@ -39,37 +39,21 @@ typedef enum	e_orientation
 	SOUTH,
 	WEST,
 	EST,
-	UP,
-	DOWN,
 	N_ORIENTATION
 }				t_orientation;
 
-typedef enum e_element
+typedef enum	e_element
 {
 	EMPTY,
-	WALL
-}			t_element;
-
-typedef struct	s_texture
-{
-	char	*texture_path; //dllist
-	uint8_t	rgb[3];
-}				t_texture;
-
-typedef struct	s_grid
-{
-	t_texture		texture;
-	t_element		type;
-	t_orientation	orientation;
-	//pos
-}				t_grid;
+	WALL,
+}				t_element;
 
 typedef struct	s_map
 {
-	t_grid			*grid_not_use;
-	size_t			n_grid;
-	int32_t			*grid;
-	t_orientation	orientation;
+	t_element	*grid;
+	char		texture[N_ORIENTATION][50];
+	int32_t		width;
+	int32_t		height;
 }				t_map;
 
 /* init and destroy */

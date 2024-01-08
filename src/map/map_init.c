@@ -16,7 +16,7 @@ uint8_t ft_init_map(char *file, t_map *map)
 	int32_t i = 0;
 	while (i < 25)
 	{
-		map->grid[i] = grid[i];
+		map->grid[i] = (t_element) grid[i];
 		++i;
 	}
 	return (0);

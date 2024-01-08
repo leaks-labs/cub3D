@@ -4,12 +4,13 @@
 # include <math.h>
 # include <stdint.h>
 
-# define RAD_MAX (M_PI * 2)
-# define ROTATION_SPEED	(5 * M_PI / 180)
-# define MOVEMENT_SPEED	5
-# define N_VECTOR		22 /* 2 rad div 5 degrees */
+# define RAD_MAX			(M_PI * 2)
+# define FOV				(60 * M_PI / 180) /* could be var */
+# define ROTATION_VELOCITY	(10 * M_PI / 180)
+# define MOVEMENT_VELOCITY	10
+ /* 2 rad div 5 degrees */
 
-typedef struct s_map 	t_map;
+typedef struct s_map		t_map;
 typedef struct s_graphx	t_graphx;
 
 typedef enum e_render_exception
@@ -18,23 +19,32 @@ typedef enum e_render_exception
 	NO_RENDER_EXCEPTION
 }				t_render_exception;
 
+typedef struct	s_axis
+{
+	double	x;
+	double	y;
+	double	z; /* only z axis for now */
+}				t_axis;
+
 typedef struct	s_pos
 {
 	double	x;
 	double	y;
-	double	radian;
+	double	z;
 }				t_pos;
 
 typedef struct	s_vector
-{
-	t_pos		pos;
+{ /* angle from origin */
+	t_pos		*pos; /* obviously the player pos, could be the same ptr */
+	double		orientation; /* radian */
 	uint32_t	len;
 }				t_vector;
 
 typedef struct	s_player
 {
 	t_pos		pos;
-	t_vector	vector[N_VECTOR];
+	t_axis		axis;
+	t_vector	vector[1920]; /* screen width, maybe unset */
 }				t_player;
 
 typedef struct	s_game_data
