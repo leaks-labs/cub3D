@@ -10,7 +10,7 @@
 # define MOVEMENT_VELOCITY	10
  /* 2 rad div 5 degrees */
 
-typedef struct s_map		t_map;
+typedef struct s_map	t_map;
 typedef struct s_graphx	t_graphx;
 
 typedef enum e_render_exception
@@ -21,8 +21,8 @@ typedef enum e_render_exception
 
 typedef struct	s_axis
 {
-	double	x;
-	double	y;
+	__attribute__((unused)) double	x;
+	__attribute__((unused)) double	y;
 	double	z; /* only z axis for now */
 }				t_axis;
 
@@ -33,25 +33,16 @@ typedef struct	s_pos
 	double	z;
 }				t_pos;
 
-typedef struct	s_vector
-{ /* angle from origin */
-	t_pos		*pos; /* obviously the player pos, could be the same ptr */
-	double		orientation; /* radian */
-	uint32_t	len;
-}				t_vector;
-
 typedef struct	s_player
 {
 	t_pos		pos;
 	t_axis		axis;
-	t_vector	vector[1920]; /* screen width, maybe unset */
 }				t_player;
 
 typedef struct	s_game_data
 {
 	t_map		*map;
 	t_graphx	*graphx;
-	t_player	player; /* Could be an array if multiplayer */
 }				t_game_data;
 
 uint8_t				ft_run(t_map *map);

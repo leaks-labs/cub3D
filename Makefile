@@ -92,6 +92,7 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_memcpy			\
 				utils/ft_putendl_fd		\
 				utils/ft_putstr_fd		\
+				utils/ft_split			\
 				utils/ft_strchr			\
 				utils/ft_strcmp			\
 				utils/ft_strdup			\
