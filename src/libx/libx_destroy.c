@@ -1,6 +1,9 @@
-#include "libx.h"
 #include <stdlib.h>
-void ft_destroy_graphx(t_graphx *graphx)
+#include "libx.h"
+
+void	ft_destroy_graphx(t_graphx *graphx);
+
+void	ft_destroy_graphx(t_graphx *graphx)
 {
 	//mlx_loop_end(graphx->mlx_ptr);
 	/* could be a loop if minimap */

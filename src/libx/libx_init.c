@@ -1,11 +1,12 @@
 #include "libx.h"
 
-static void *ft_mlx_init(void **mlx_ptr);
-static void *ft_mlx_new_window(void *mlx_ptr, void **mlx_win);
-static void *ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
-static void ft_mlx_get_data_addr(t_image *image);
+t_mlx_exception	ft_init_graphx(t_game_data *game_data, t_graphx *graphx);
+static void		*ft_mlx_init(void **mlx_ptr);
+static void		*ft_mlx_new_window(void *mlx_ptr, void **mlx_win);
+static void		*ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
+static void		ft_mlx_get_data_addr(t_image *image);
 
-t_mlx_exception ft_init_graphx(t_game_data *game_data, t_graphx *graphx)
+t_mlx_exception	ft_init_graphx(t_game_data *game_data, t_graphx *graphx)
 {
 	if (NULL == ft_mlx_init(&graphx->mlx_ptr))
 		return (INIT_ERROR);
@@ -25,31 +26,31 @@ t_mlx_exception ft_init_graphx(t_game_data *game_data, t_graphx *graphx)
 	return (NO_EXCEPTION);
 }
 
-static void *ft_mlx_init(void **mlx_ptr)
+static void	*ft_mlx_init(void **mlx_ptr)
 {
 	*mlx_ptr = mlx_init();
 	return (*mlx_ptr);
 }
 
-static void *ft_mlx_new_window(void *mlx_ptr, void **mlx_win)
+static void	*ft_mlx_new_window(void *mlx_ptr, void **mlx_win)
 {
-	*mlx_win = mlx_new_window(mlx_ptr,
-							WINDOW_WIDTH,
-							WINDOW_HEIGHT,
+	*mlx_win = mlx_new_window(mlx_ptr, \
+							WINDOW_WIDTH, \
+							WINDOW_HEIGHT, \
 							(char *)WINDOW_NAME);
 	return (*mlx_win);
 }
 
-static void *ft_mlx_new_image(void *mlx_ptr, void **mlx_img)
+static void	*ft_mlx_new_image(void *mlx_ptr, void **mlx_img)
 {
 	*mlx_img = mlx_new_image(mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return (*mlx_img);
 }
 
-static void ft_mlx_get_data_addr(t_image *image)
+static void	ft_mlx_get_data_addr(t_image *image)
 {
-	image->data = mlx_get_data_addr(image->mlx_img,
-									&image->bits_per_pixel,
-									&image->size_line,
+	image->data = mlx_get_data_addr(image->mlx_img, \
+									&image->bits_per_pixel, \
+									&image->size_line, \
 									&image->endian);
 }

@@ -66,17 +66,24 @@ EXT:=	.c
 
 MAIN:=	main
 
-SRCS_FILES:=	game/game_destroy		\
+SRCS_FILES:=	game/rendering/drawing	\
+				game/rendering/get_map_info	\
+				game/rendering/get_print_info	\
+				game/rendering/get_slice	\
+				game/rendering/len_to_axis	\
+				game/rendering/render	\
+				game/rendering/raycast	\
+				game/game_destroy		\
 				game/game_event			\
 				game/game_init			\
 				game/game_movement		\
 				game/game_rotation		\
-				game/render				\
 				game/run				\
 				libx/libx_event			\
 				libx/libx_destroy		\
 				libx/libx_exception		\
 				libx/libx_init			\
+				libx/libx_print_screen	\
 				map/map_destroy			\
 				map/map_exception		\
 				map/map_init			\
@@ -90,6 +97,7 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_isspace		\
 				utils/ft_join			\
 				utils/ft_memcpy			\
+				utils/ft_memset			\
 				utils/ft_putendl_fd		\
 				utils/ft_putstr_fd		\
 				utils/ft_strchr			\
