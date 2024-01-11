@@ -82,6 +82,7 @@ SRCS_FILES:=	game/game_destroy		\
 				map/map_init			\
 				map/map_parse			\
 				utils/ft_calloc			\
+				utils/ft_dptrlen		\
 				utils/ft_freef			\
 				utils/ft_get_next_line	\
 				utils/ft_isalnum		\
@@ -96,10 +97,12 @@ SRCS_FILES:=	game/game_destroy		\
 				utils/ft_strchr			\
 				utils/ft_strcmp			\
 				utils/ft_strdup			\
+				utils/ft_strlcpy		\
 				utils/ft_strlen			\
 				utils/ft_strncmp		\
 				utils/ft_strndup		\
 				utils/ft_strnstr		\
+				utils/ft_strtoi			\
 				utils/ft_substr
 
 ################################################################################

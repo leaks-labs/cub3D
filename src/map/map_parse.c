@@ -11,6 +11,11 @@ static uint8_t			ft_open_file(char *file, int32_t *fd);
 static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i);
 static t_map_exception	ft_check_map( t_map *map, int32_t fd);
 
+uint8_t ft_set_path(t_map *map, t_dictionary lexic, char *args);
+uint8_t ft_set_rgb(t_map *map, t_dictionary lexic, char *args);
+
+uint8_t ft_set_args(t_map *map, t_dictionary dictionary, char *args);
+
 char *ft_read_line(char **str, int32_t fd);
 
 t_map_exception ft_parse_map(char *file, t_map *map)
@@ -52,22 +57,25 @@ uint8_t ft_open_file(char *file, int32_t *fd)
 
 static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
 {
-	static const char dictionary[N_REQUIREMENT][REQUIREMENT_LEN] = {
-			REQUIREMENT_NORTH_TEXTURE,REQUIREMENT_SOUTH_TEXTURE,
-			REQUIREMENT_WEST_TEXTURE,REQUIREMENT_EAST_TEXTURE,
-			REQUIREMENT_FLOOR_RGB,REQUIREMENT_CEILING_RGB
+	static const t_dictionary lexic[N_RULE]= {
+			{NORTH_TEXTURE, WALL, NORTH, PATH_ERROR},
+			{SOUTH_TEXTURE,WALL, SOUTH, PATH_ERROR},
+			{WEST_TEXTURE,WALL, WEST, PATH_ERROR},
+			{EAST_TEXTURE, WALL, EAST, PATH_ERROR},
+			{FLOOR_RGB, FLOOR, 0, RGB_ERROR},
+			{CEILING_RGB, CEILING, 0, RGB_ERROR}
 	};
-	char **requirement;
+	char **args;
 	char *line;
 
 	ft_read_line(&line, fd);
-	requirement = ft_split(line, ' ');
-	if (requirement == NULL || requirement[1] == NULL || ft_strcmp(dictionary[i], requirement[0]) != 0)
-		return (ft_freef("%p, %P", line, requirement), REQUIREMENT_ERROR);
-	if (ft_check_path(requirement[i], map) == 0)
-		;
-	ft_freef("%p, %P", line, requirement);
-	if (i < N_REQUIREMENT && ft_check_requirement(map, fd, ++i) == 3)
+	args = ft_split(line, ' ');
+	if (ft_dptrlen((const char **)args) != 2 || ft_strcmp(lexic[i].rule, args[0]) != 0)
+		return (ft_freef("%p, %P", line, args), REQUIREMENT_ERROR);
+	if (1 == ft_set_args(map, lexic[i], args[1]))
+		return (ft_freef("%p, %P", line, args), lexic[i].exception);
+	ft_freef("%p, %P", line, args);
+	if (i < N_RULE - 1 && ft_check_requirement(map, fd, ++i) == 3)
 		return (REQUIREMENT_ERROR);
 	return (NO_MAP_EXCEPTION);
 }
@@ -90,3 +98,44 @@ char *ft_read_line(char **str, int32_t fd)
 	}
 	return	(*str);
 }
+
+uint8_t ft_set_args(t_map *map, t_dictionary lexic, char *args)
+{
+	if (PATH_ERROR == lexic.exception)
+		return (ft_set_path(map, lexic, args));
+	return (ft_set_rgb(map, lexic, args));
+}
+
+uint8_t ft_set_path(t_map *map, t_dictionary lexic, char *args)
+{
+	const size_t len = ft_strlen(args);
+	int32_t fd;
+	if (len >= PATH_MAX || 1 == ft_open_file(args, &fd))
+		return (1);
+	close(fd);
+	ft_strlcpy(map->texture[lexic.element].orientation[lexic.orientation], args, len);
+	return (0);
+}
+
+uint8_t ft_set_rgb(t_map *map, t_dictionary lexic, char *args)
+{
+	char	**rgb;
+	size_t	len;
+	int32_t	rgb_val = 0x0000FF00;
+	bool	is_overflow;
+
+	rgb = ft_split(args, ',');
+	len = ft_dptrlen((const char **)rgb);
+	if (len != 3)
+		return (ft_freef("%P", rgb), 1);
+	while (len > 0)
+	{
+		rgb_val = ft_strtoi(rgb[len], &is_overflow);
+		if (is_overflow || rgb_val < 0 || rgb_val > 255)
+			return (ft_freef("%P", rgb), 1);
+
+		--len;
+	}
+	return (ft_freef("%P", rgb), 0);
+}
+

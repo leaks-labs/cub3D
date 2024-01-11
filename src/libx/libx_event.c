@@ -1,8 +1,10 @@
 #include "libx.h"
 #include "game.h"
+#include <stdio.h>
 
 int ft_key_handler(int32_t key_code, t_game_data *game_data)
 {
+	printf("%d\n", key_code);
 	static void (*const f[N_KEY])(t_game_data *game_data) = {
 			&ft_go_forward, &ft_go_backward,
 			&ft_go_left, &ft_go_right,
