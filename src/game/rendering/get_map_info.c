@@ -39,6 +39,7 @@ bool	ft_isawall_coord(t_map *map, t_pos *pos, t_element *element)
 
 static bool	ft_isawall_grid(t_map *map, int x, int y, t_element *element)
 {
-	*element = (map->grid)[x + (y * map->width)];
+	if (element != NULL)
+		*element = (map->grid)[x + (y * map->width)];
 	return ((map->grid)[x + (y * map->width)] > 0);
 }
