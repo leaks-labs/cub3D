@@ -6,8 +6,8 @@
 # include "mlx.h"
 
 # define WINDOW_NAME		"cub3d"
-# define WINDOW_WIDTH		500
-# define WINDOW_HEIGHT		500
+# define WINDOW_WIDTH		1280
+# define WINDOW_HEIGHT		720
 
 # define MLX_INIT_ERROR		"Failed to initialise mlx"
 # define MLX_WINDOW_ERROR	"Failed to initialise the window"
