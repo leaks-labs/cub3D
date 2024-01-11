@@ -13,7 +13,7 @@ void	ft_draw_slice(t_game_data *gd, t_slice *slice, int x_screen_offset)
 	t_screen	s_screen;
 	t_pixel		s_pixel_dest;
 
-	ft_init_screen_info(&s_screen, slice, x_screen_offset);
+	ft_init_screen_info(&s_screen, slice, x_screen_offset, gd->map->player.view.ver_view);
 	s_pixel_dest.x = s_screen.x;
 	s_pixel_dest.y = 0;
 	ft_draw_ceiling(gd, &s_screen, &s_pixel_dest);

@@ -1,11 +1,11 @@
 #include "render.h"
 
-void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x);
+void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x, int hor_view);
 t_orientation	ft_get_orientation(int bitwise);
 
-void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x)
+void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x, int ver_view)
 {
-	static const int	screen_center = WINDOW_HEIGHT / 2;
+	const int	screen_center = ver_view;
 
 	screen->real_wall_height = slice->slice_height;
 	screen->x = x;

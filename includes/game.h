@@ -15,6 +15,7 @@
 
 # define ROTATION_VELOCITY	0.174532925199433 /* (10 * M_PI / 180) */
 # define MOVEMENT_VELOCITY	10
+# define VER_VIEW_VELOCITY	60
 
 # define EST_RAD			0
 # define NORTH_RAD			1.570796
@@ -53,6 +54,8 @@ void	ft_go_right(t_game_data *game_data);
 /* game rotation */
 void	ft_rotate_to_left(t_game_data *game_data);
 void	ft_rotate_to_right(t_game_data *game_data);
+void	ft_look_up(t_game_data *game_data);
+void	ft_look_down(t_game_data *game_data);
 void	ft_rescale_angle(double *angle);
 
 /* game event */

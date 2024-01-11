@@ -69,8 +69,8 @@ bool				ft_isawall_coord(t_map *map, t_pos *pos, \
 										t_element *element);
 
 /* get print info */
-void				ft_init_screen_info(t_screen *screen, t_slice *slice, \
-										int x);
+void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x, \
+									int ver_view);
 t_orientation		ft_get_orientation(int bitwise);
 
 /* get slice */

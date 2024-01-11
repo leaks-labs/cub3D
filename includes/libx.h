@@ -31,7 +31,9 @@ typedef enum e_keyboard
 	KEY_A = 97,
 	KEY_ARROW_LEFT = 65361,
 	KEY_ARROW_RIGHT = 65363,
-	N_KEY = 7
+	KEY_ARROW_DOWN = 65364,
+	KEY_ARROW_UP = 65362,
+	N_KEY = 9
 }			t_keyboard;
 
 # elif __APPLE__
@@ -45,7 +47,9 @@ typedef enum e_keyboard
 	KEY_A = 0,
 	KEY_ARROW_LEFT = 123,
 	KEY_ARROW_RIGHT = 124,
-	N_KEY = 7
+	KEY_ARROW_DOWN = 125,
+	KEY_ARROW_UP = 126,
+	N_KEY = 9
 }			t_keyboard;
 
 # endif

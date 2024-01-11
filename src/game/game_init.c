@@ -1,7 +1,5 @@
 #include "game.h"
 
-#include "stdio.h" // to remove
-
 void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map);
 
 void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map)
@@ -13,6 +11,7 @@ void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map)
 	// map->player.axis.x = 0;
 	// map->player.axis.y = 0;
 	map->player.view.hor_view = NORTH_RAD;
+	map->player.view.ver_view = WINDOW_HEIGHT / 2;
 	map->width = 5;
 	map->height = 5;
 	/* to remove */
