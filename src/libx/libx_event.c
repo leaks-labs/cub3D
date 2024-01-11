@@ -1,7 +1,9 @@
+#include <stdlib.h>
 #include "libx.h"
 #include "game.h"
 
 int	ft_key_handler(int32_t key_code, t_game_data *game_data);
+int	ft_on_destroy(t_game_data *game_data);
 
 int	ft_key_handler(int32_t key_code, t_game_data *game_data)
 {
@@ -27,4 +29,10 @@ int	ft_key_handler(int32_t key_code, t_game_data *game_data)
 		++i;
 	}
 	return (0);
+}
+
+int	ft_on_destroy(t_game_data *game_data)
+{
+	ft_destroy_game(game_data);
+	exit(0);
 }

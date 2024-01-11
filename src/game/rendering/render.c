@@ -12,7 +12,6 @@ t_render_exception	ft_render(t_game_data *game_data)
 	int		x_screen_offset;
 	double	current_angle;
 
-	printf("\nbacklog : %.15f\n", (90 * M_PI / 180));
 	// printf("\nbacklog :\n");
 	// printf("x axis : %f\n", game_data->player.pos.x);
 	// printf("y axis : %f\n", game_data->player.pos.y);

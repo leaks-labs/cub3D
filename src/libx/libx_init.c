@@ -22,7 +22,8 @@ t_mlx_exception	ft_init_graphx(t_game_data *game_data, t_graphx *graphx)
 		return (CREATE_IMAGE_ERROR);
 	}
 	ft_mlx_get_data_addr(&graphx->window.image);
-	mlx_hook(graphx->window.mlx_win, 2, (1L << 0), &ft_key_handler, game_data);
+	mlx_hook(graphx->window.mlx_win, ON_KEYDOWN, (1L << 0), &ft_key_handler, game_data);
+	mlx_hook(graphx->window.mlx_win, ON_DESTROY, 0, &ft_on_destroy, game_data);
 	return (NO_EXCEPTION);
 }
 

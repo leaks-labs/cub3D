@@ -14,6 +14,9 @@
 # define MLX_IMAGE_ERROR	"Failed to initialise image"
 # define MLX_LEN_ERROR		32
 
+# define ON_KEYDOWN			2
+# define ON_DESTROY			17
+
 typedef struct s_pixel		t_pixel;
 typedef struct s_game_data	t_game_data;
 
@@ -83,6 +86,7 @@ void			ft_destroy_graphx(t_graphx *graphx);
 
 /* handlers */
 int32_t			ft_key_handler(int32_t key_code, t_game_data *game_data);
+int				ft_on_destroy(t_game_data *game_data);
 /* Maybe add mousse handler */
 
 /* error handling */
