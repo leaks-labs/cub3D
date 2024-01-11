@@ -23,14 +23,14 @@ void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x)
 
 t_orientation	ft_get_orientation(int bitwise)
 {
-	static const t_dic_orient	dic[8] = {{DR_NW | TOUCH_X, NORTH}, \
-											{DL_NE | TOUCH_X, NORTH}, \
-											{UR_SW | TOUCH_X, SOUTH}, \
-											{UL_SE | TOUCH_X, SOUTH}, \
-											{UR_SW | TOUCH_Y, WEST}, \
-											{DR_NW | TOUCH_Y, WEST}, \
-											{UL_SE | TOUCH_Y, EAST}, \
-											{DL_NE | TOUCH_Y, EAST}};
+	static const t_dic_orient	dic[8] = {{DR_NW | TOUCH_H, NORTH}, \
+											{DL_NE | TOUCH_H, NORTH}, \
+											{UR_SW | TOUCH_H, SOUTH}, \
+											{UL_SE | TOUCH_H, SOUTH}, \
+											{UR_SW | TOUCH_V, WEST}, \
+											{DR_NW | TOUCH_V, WEST}, \
+											{UL_SE | TOUCH_V, EAST}, \
+											{DL_NE | TOUCH_V, EAST}};
 	t_orientation				e_result;
 	int							i;
 

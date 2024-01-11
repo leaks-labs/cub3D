@@ -37,7 +37,7 @@ static void	ft_draw_wall(t_game_data *gd, t_slice *slice, t_screen *screen, \
 	t_element		e_bloc_type;
 	t_orientation	e_orientation;
 
-	if ((slice->orientation_bitwise & TOUCH_X) > 0)
+	if ((slice->orientation_bitwise & TOUCH_H) > 0)
 	{
 		s_pixel_src.x = (int)slice->x_offset;
 		e_bloc_type = slice->e_hor;
@@ -51,8 +51,8 @@ static void	ft_draw_wall(t_game_data *gd, t_slice *slice, t_screen *screen, \
 	while (screen->current_slice_offset < screen->max_slice_height)
 	{
 		pixel_dest->y = screen->y++;
-		s_pixel_src.y = screen->current_slice_offset \
-						* UNITS / screen->real_slice_height;
+		s_pixel_src.y = (int)(screen->current_slice_offset \
+						* UNITS / screen->real_slice_height + 0.5);
 		ft_pixel_cpy(&gd->map->texture[e_bloc_type].image[e_orientation], \
 						&gd->graphx->window.image, &s_pixel_src, pixel_dest);
 		screen->current_slice_offset++;

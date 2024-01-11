@@ -15,11 +15,11 @@ double	ft_get_ray_len(t_game_data *gd, t_slice *slice, double angle)
 			|| actual_len < 0)
 	{
 		actual_len = len_to_v_stripe;
-		slice->orientation_bitwise |= TOUCH_Y;
+		slice->orientation_bitwise |= TOUCH_V;
 	}
 	else
 	{
-		slice->orientation_bitwise |= TOUCH_X;
+		slice->orientation_bitwise |= TOUCH_H;
 	}
 	return (ft_fisheye(actual_len, gd->map->player.axis.z, angle));
 }

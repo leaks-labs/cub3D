@@ -8,8 +8,8 @@
 # define UL_SE		2
 # define DR_NW		4
 # define DL_NE		8
-# define TOUCH_Y	16
-# define TOUCH_X	32
+# define TOUCH_V	16
+# define TOUCH_H	32
 
 typedef enum e_render_exception
 {
