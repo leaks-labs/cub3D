@@ -12,8 +12,8 @@ void	ft_get_slice(t_game_data *gd, t_slice *slice, double angle)
 	if (ft_get_left_right(angle) == LEFT)
 		slice->orientation_bitwise <<= 1;
 	slice->slice_height = ft_get_slice_height(gd, slice, angle);
-	slice->x_offset = (int)slice->x_offset % UNITS;
-	slice->y_offset = (int)slice->y_offset % UNITS;
+	slice->x_offset = (int)round(slice->x_offset) % UNITS;
+	slice->y_offset = (int)round(slice->y_offset) % UNITS;
 }
 
 static int	ft_get_slice_height(t_game_data *gd, t_slice *slice, double angle)
