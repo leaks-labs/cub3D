@@ -21,7 +21,7 @@ double	ft_get_ray_len(t_game_data *gd, t_slice *slice, double angle)
 	{
 		slice->orientation_bitwise |= TOUCH_H;
 	}
-	return (ft_fisheye(actual_len, gd->map->player.axis.z, angle));
+	return (ft_fisheye(actual_len, gd->map->player.view.hor_view, angle));
 }
 
 static double	ft_fisheye(double len, double ref_angle, double angle)

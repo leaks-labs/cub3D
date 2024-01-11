@@ -18,8 +18,8 @@ void	ft_go_forward(t_game_data *game_data)
 
 	printf("Key : W\n");
 	start_pos = game_data->map->player.pos;
-	x_dist = cos(-game_data->map->player.axis.z) * MOVEMENT_VELOCITY;
-	y_dist = sin(-game_data->map->player.axis.z) * MOVEMENT_VELOCITY;
+	x_dist = cos(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
+	y_dist = sin(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
 	new_pos = ft_get_update_pos(game_data->map, &start_pos, x_dist, y_dist);
 	game_data->map->player.pos = new_pos;
 	ft_render(game_data);
@@ -34,8 +34,8 @@ void	ft_go_backward(t_game_data *game_data)
 
 	printf("Key : S\n");
 	start_pos = game_data->map->player.pos;
-	x_dist = -cos(-game_data->map->player.axis.z) * MOVEMENT_VELOCITY;
-	y_dist = -sin(-game_data->map->player.axis.z) * MOVEMENT_VELOCITY;
+	x_dist = -cos(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
+	y_dist = -sin(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
 	new_pos = ft_get_update_pos(game_data->map, &start_pos, x_dist, y_dist);
 	game_data->map->player.pos = new_pos;
 	ft_render(game_data);
@@ -50,9 +50,9 @@ void	ft_go_left(t_game_data *game_data)
 
 	printf("Key : A\n");
 	start_pos = game_data->map->player.pos;
-	x_dist = cos(-(game_data->map->player.axis.z + RECT_ANGLE)) \
+	x_dist = cos(-(game_data->map->player.view.hor_view + RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
-	y_dist = sin(-(game_data->map->player.axis.z + RECT_ANGLE)) \
+	y_dist = sin(-(game_data->map->player.view.hor_view + RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
 	new_pos = ft_get_update_pos(game_data->map, &start_pos, x_dist, y_dist);
 	game_data->map->player.pos = new_pos;
@@ -68,9 +68,9 @@ void	ft_go_right(t_game_data *game_data)
 
 	printf("Key : D\n");
 	start_pos = game_data->map->player.pos;
-	x_dist = cos(-(game_data->map->player.axis.z - RECT_ANGLE)) \
+	x_dist = cos(-(game_data->map->player.view.hor_view - RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
-	y_dist = sin(-(game_data->map->player.axis.z - RECT_ANGLE)) \
+	y_dist = sin(-(game_data->map->player.view.hor_view - RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
 	new_pos = ft_get_update_pos(game_data->map, &start_pos, x_dist, y_dist);
 	game_data->map->player.pos = new_pos;

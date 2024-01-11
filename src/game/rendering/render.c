@@ -15,7 +15,7 @@ t_render_exception	ft_render(t_game_data *game_data)
 	// printf("rotation radiant : %f\n\n", game_data->map->player.axis.z);
 
 	x_screen_offset = 0;
-	current_angle = game_data->map->player.axis.z + (FOV / 2);
+	current_angle = game_data->map->player.view.hor_view + (FOV / 2);
 	ft_rescale_angle(&current_angle);
 	while (x_screen_offset < WINDOW_WIDTH)
 	{

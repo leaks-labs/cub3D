@@ -21,12 +21,12 @@
 # define WEST_RAD			3.141593
 # define SOUTH_RAD			4.712389
 
-// typedef struct	s_vector
+// typedef struct	s_view
 // { /* angle from origin */
 // 	t_pos		*pos; /* obviously the player pos, could be the same ptr */
 // 	double		orientation; /* radian */
 // 	uint32_t	len;
-// }				t_vector;
+// }				t_view;
 
 typedef struct s_game_data
 {

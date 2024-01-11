@@ -58,25 +58,22 @@ typedef struct s_texture
 	int32_t	rgb[N_ORIENTATION];
 }				t_texture;
 
-typedef struct s_axis
+typedef struct s_view
 {
-	// double	x;
-	// double	y;
-	double	z; /* only z axis for now */
-}				t_axis;
+	int		ver_view;
+	double	hor_view;
+}				t_view;
 
 typedef struct s_pos
 {
 	double	x;
 	double	y;
-	// double	z;
 }				t_pos;
 
 typedef struct s_player
 {
-	t_pos		pos;
-	t_axis		axis;
-	// t_vector	vector[1920]; /* screen width, maybe unset */
+	t_pos	pos;
+	t_view	view;
 }				t_player;
 
 typedef struct s_map
