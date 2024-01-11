@@ -12,7 +12,7 @@ uint8_t	ft_init_map(char *file, t_map *map)
 		return (1);
 	int32_t	grid[25] = {1, 1, 1, 1, 1,
 						1, 0, 0, 0, 1,
-						1, 0, 0, 0, 1,
+						1, 0, 1, 0, 1,
 						1, 0, 0, 0, 1,
 						1, 1, 1, 1, 1};
 	int32_t	i = 0;

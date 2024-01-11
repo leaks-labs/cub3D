@@ -38,12 +38,12 @@ t_orientation	ft_get_orientation(int bitwise)
 	i = 0;
 	while (i < 8)
 	{
-		if (bitwise == dic[i].bitwise || bitwise == dic[++i].bitwise)
+		if (bitwise == dic[i].bitwise || bitwise == dic[i + 1].bitwise)
 		{
 			e_result = dic[i].e_orientation;
 			break ;
 		}
-		++i;
+		i += 2;
 	}
 	return (e_result);
 }

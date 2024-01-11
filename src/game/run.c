@@ -22,7 +22,6 @@ uint8_t	ft_run(t_map *map)
 	const char	*f3 = "./maps/textures/west_texture_xpm.xpm";
 	const char	*f4 = "./maps/textures/east_texture_xpm.xpm";
 
-
 	s_game_data.map->texture[WALL].image[NORTH].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f1, &units1, &units2);
 	s_game_data.map->texture[WALL].image[SOUTH].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f2, &units1, &units2);
 	s_game_data.map->texture[WALL].image[WEST].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f3, &units1, &units2);
@@ -34,7 +33,7 @@ uint8_t	ft_run(t_map *map)
 	i1->data = mlx_get_data_addr(i1->mlx_img, &i1->bits_per_pixel, &i1->size_line, &i1->endian);
 	i2->data = mlx_get_data_addr(i2->mlx_img, &i2->bits_per_pixel, &i2->size_line, &i2->endian);
 	i3->data = mlx_get_data_addr(i3->mlx_img, &i3->bits_per_pixel, &i3->size_line, &i3->endian);
-	i4->data = mlx_get_data_addr(i3->mlx_img, &i4->bits_per_pixel, &i4->size_line, &i4->endian);
+	i4->data = mlx_get_data_addr(i4->mlx_img, &i4->bits_per_pixel, &i4->size_line, &i4->endian);
 	s_game_data.map->texture[FLOOR].rgb[0] = 0xffecbf;
 	s_game_data.map->texture[CEILING].rgb[0] = 0x43629d;
 	/* to remove */

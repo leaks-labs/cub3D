@@ -10,9 +10,9 @@ t_render_exception	ft_render(t_game_data *game_data)
 	double	current_angle;
 
 	// printf("\nbacklog :\n");
-	// printf("x axis : %f\n", game_data->player.pos.x);
-	// printf("y axis : %f\n", game_data->player.pos.y);
-	// printf("rotation radiant : %f\n\n", game_data->player.axis.z);
+	// printf("x axis : %f\n", game_data->map->player.pos.x);
+	// printf("y axis : %f\n", game_data->map->player.pos.y);
+	// printf("rotation radiant : %f\n\n", game_data->map->player.axis.z);
 
 	x_screen_offset = 0;
 	current_angle = game_data->map->player.axis.z + (FOV / 2);
