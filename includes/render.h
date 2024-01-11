@@ -45,10 +45,10 @@ typedef struct s_pixel
 typedef struct s_screen
 {
 	int	x;
-	int	y;
-	int	max_slice_height;
-	int	real_slice_height;
-	int	current_slice_offset;
+	int	min_wall_y;
+	int	max_wall_y;
+	int	real_wall_height;
+	int	current_wall_offset;
 }				t_screen;
 
 typedef struct s_dic_orient

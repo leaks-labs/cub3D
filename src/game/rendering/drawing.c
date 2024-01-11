@@ -23,10 +23,10 @@ void	ft_draw_slice(t_game_data *gd, t_slice *slice, int x_screen_offset)
 
 static void	ft_draw_ceiling(t_game_data *gd, t_screen *screen, t_pixel *pixel)
 {
-	if (screen->y > 0)
+	if (screen->min_wall_y > 0)
 	{
 		pixel->colour = gd->map->texture[CEILING].rgb[0];
-		ft_draw_env_slice(&gd->graphx->window.image, pixel, screen->y);
+		ft_draw_env_slice(&gd->graphx->window.image, pixel, screen->min_wall_y);
 	}
 }
 
@@ -48,20 +48,22 @@ static void	ft_draw_wall(t_game_data *gd, t_slice *slice, t_screen *screen, \
 		e_bloc_type = slice->e_ver;
 	}
 	e_orientation = ft_get_orientation(slice->orientation_bitwise);
-	while (screen->current_slice_offset < screen->max_slice_height)
+	pixel_dest->y = screen->min_wall_y;
+	while (pixel_dest->y < screen->max_wall_y)
 	{
-		pixel_dest->y = screen->y++;
-		s_pixel_src.y = (int)(screen->current_slice_offset \
-						* UNITS / screen->real_slice_height + 0.5);
+		s_pixel_src.y = (int)(screen->current_wall_offset \
+						* UNITS / screen->real_wall_height + 0.5);
 		ft_pixel_cpy(&gd->map->texture[e_bloc_type].image[e_orientation], \
 						&gd->graphx->window.image, &s_pixel_src, pixel_dest);
-		screen->current_slice_offset++;
+		screen->current_wall_offset++;
+		pixel_dest->y++;
 	}
 }
 
 static void	ft_draw_floor(t_game_data *gd, t_screen *screen, t_pixel *pixel)
 {
-	if (screen->y < WINDOW_HEIGHT)
+	(void)screen;
+	if (pixel->y < WINDOW_HEIGHT)
 	{
 		pixel->colour = gd->map->texture[FLOOR].rgb[0];
 		ft_draw_env_slice(&gd->graphx->window.image, pixel, WINDOW_HEIGHT);

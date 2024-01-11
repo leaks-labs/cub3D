@@ -22,6 +22,7 @@ uint8_t	ft_run(t_map *map)
 	const char	*f3 = "./maps/textures/west_texture_xpm.xpm";
 	const char	*f4 = "./maps/textures/east_texture_xpm.xpm";
 
+
 	s_game_data.map->texture[WALL].image[NORTH].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f1, &units1, &units2);
 	s_game_data.map->texture[WALL].image[SOUTH].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f2, &units1, &units2);
 	s_game_data.map->texture[WALL].image[WEST].mlx_img = mlx_xpm_file_to_image(s_game_data.graphx->mlx_ptr, (char *)f3, &units1, &units2);

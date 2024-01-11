@@ -7,18 +7,18 @@ void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x)
 {
 	static const int	screen_center = WINDOW_HEIGHT / 2;
 
-	screen->real_slice_height = slice->slice_height;
+	screen->real_wall_height = slice->slice_height;
 	screen->x = x;
-	screen->y = screen_center - screen->real_slice_height / 2;
-	screen->current_slice_offset = 0;
-	if (screen->y < 0)
+	screen->min_wall_y = screen_center - screen->real_wall_height / 2;
+	screen->max_wall_y = screen->min_wall_y + screen->real_wall_height;
+	screen->current_wall_offset = 0;
+	if (screen->min_wall_y < 0)
 	{
-		screen->current_slice_offset += -screen->y;
-		screen->y = 0;
+		screen->current_wall_offset += -screen->min_wall_y;
+		screen->min_wall_y = 0;
 	}
-	screen->max_slice_height = screen->real_slice_height;
-	if (screen->max_slice_height > WINDOW_HEIGHT)
-		screen->max_slice_height = WINDOW_HEIGHT;
+	if (screen->max_wall_y > WINDOW_HEIGHT)
+		screen->max_wall_y = WINDOW_HEIGHT;
 }
 
 t_orientation	ft_get_orientation(int bitwise)
@@ -45,8 +45,5 @@ t_orientation	ft_get_orientation(int bitwise)
 		}
 		++i;
 	}
-	// to remove
-	e_result = NORTH;
-	// to remove
 	return (e_result);
 }
