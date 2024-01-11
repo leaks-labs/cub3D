@@ -23,5 +23,5 @@ static int	ft_get_slice_height(t_game_data *gd, t_slice *slice, double angle)
 	len = ft_get_ray_len(gd, slice, angle);
 	if (len < 1)
 		len = 1;
-	return ((int)round(UNITS / len * PLAYER_DISTANCE));
+	return ((int)round(UNITS * PLAYER_DISTANCE / len));
 }
