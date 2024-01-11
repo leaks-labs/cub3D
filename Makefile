@@ -11,14 +11,14 @@ SRCS_DIR:= src
 BUILD_DIR:= build
 INC_DIRS= includes lib/mlx
 
-LDLIBS= -lm -lmlx -framework OpenGL -framework Appkit
+LDLIBS= -lmlx -framework OpenGL -framework Appkit
 LIB_DIRS= lib/mlx
 MLX=	lib/mlx/libmlx.a
 
 ifeq (${shell uname}, Linux)
 		LDLIBS= -lmlx_Linux -lXext -lX11 -lm -lz
 		LIB_DIRS= lib/mlx_linux /usr/lib
-		INC_DIRS= includes lib/mlx_linux
+		INC_DIRS= includes lib/mlx_linux /usr/include
 		MLX= lib/mlx_linux/libmlx.a
 endif
 
