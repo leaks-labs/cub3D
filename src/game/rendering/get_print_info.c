@@ -1,9 +1,11 @@
 #include "render.h"
 
-void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x, int hor_view);
+void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x, \
+									int hor_view);
 t_orientation	ft_get_orientation(int bitwise);
 
-void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x, int ver_view)
+void	ft_init_screen_info(t_screen *screen, t_slice *slice, int x, \
+							int ver_view)
 {
 	const int	screen_center = ver_view;
 
