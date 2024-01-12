@@ -27,8 +27,8 @@ double	ft_get_len_to_h_stripe(t_game_data *gd, t_slice *slice, double angle)
 	x_steps = -y_steps / tan(angle);
 	while (ft_isawall_coord(gd->map, &tmp, &slice->e_hor) == false)
 	{
-		tmp.x = tmp.x + x_steps;
-		tmp.y = tmp.y + y_steps;
+		tmp.x += x_steps;
+		tmp.y += y_steps;
 		slice->x_offset = tmp.x;
 		if (ft_isinmap(&tmp, gd->map) == false)
 			return (-1);
@@ -54,8 +54,8 @@ double	ft_get_len_to_v_stripe(t_game_data *gd, t_slice *slice, double angle)
 	y_steps = -x_steps * tan(angle);
 	while (ft_isawall_coord(gd->map, &tmp, &slice->e_ver) == false)
 	{
-		tmp.x = tmp.x + x_steps;
-		tmp.y = tmp.y + y_steps;
+		tmp.x += x_steps;
+		tmp.y += y_steps;
 		slice->y_offset = tmp.y;
 		if (ft_isinmap(&tmp, gd->map) == false)
 			return (-1);
