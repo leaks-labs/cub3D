@@ -1,10 +1,10 @@
-NO ./textures/Wall1.xpm
-SO ./textures/Wall2.xpm
-WE ./textures/Wall3.xpm
-EA ./textures/Wall4.xpm
+NO /home/martin/Bureau/cub3d/test
+SO /home/martin/Bureau/cub3d/test
+WE /home/martin/Bureau/cub3d/test
+EA /home/martin/Bureau/cub3d/test
 
-F 220,100,0
-C 225,30,0
+F 255,100,0
+C 257,30,0
 
 11111111111
 10000000001
