@@ -42,8 +42,8 @@ void	ft_pixel_cpy(t_image *img_src, t_image *img_dst, \
 	char	*pixel_dst;
 
 	pixel_src = img_src->data + (src->y * img_src->size_line + src->x \
-								* (img_src->bits_per_pixel / 8));
+								* (img_src->bits_per_pixel >> 3));
 	pixel_dst = img_dst->data + (dst->y * img_dst->size_line + dst->x \
-								* (img_dst->bits_per_pixel / 8));
-	ft_memcpy(pixel_dst, pixel_src, (size_t)(img_dst->bits_per_pixel / 8));
+								* (img_dst->bits_per_pixel >> 3));
+	ft_memcpy(pixel_dst, pixel_src, (size_t)(img_dst->bits_per_pixel >> 3));
 }
