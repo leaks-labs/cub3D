@@ -19,12 +19,13 @@
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
-# define KEY_M				46
 
 typedef struct s_pixel		t_pixel;
 typedef struct s_game_data	t_game_data;
 
 # ifdef __linux__
+
+#  define KEY_M	109
 
 typedef enum e_keyboard
 {
@@ -41,6 +42,8 @@ typedef enum e_keyboard
 }			t_keyboard;
 
 # elif __APPLE__
+
+#  define KEY_M	46
 
 typedef enum e_keyboard
 {
