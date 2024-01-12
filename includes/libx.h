@@ -19,6 +19,8 @@
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
+# define KEY_M				46
+
 typedef struct s_pixel		t_pixel;
 typedef struct s_game_data	t_game_data;
 
@@ -35,8 +37,7 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 65363,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_UP = 65362,
-	KEY_M = 46,
-	N_KEY = 10
+	N_KEY = 9
 }			t_keyboard;
 
 # elif __APPLE__
@@ -52,8 +53,7 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 124,
 	KEY_ARROW_DOWN = 125,
 	KEY_ARROW_UP = 126,
-	KEY_M = 46,
-	N_KEY = 10
+	N_KEY = 9
 }			t_keyboard;
 
 # endif
@@ -97,7 +97,7 @@ void			ft_destroy_graphx(t_graphx *graphx);
 int32_t			ft_key_handler(int32_t key_code, t_game_data *game_data);
 int				ft_on_destroy(t_game_data *game_data);
 int				ft_on_mouse_move(int x, int y, t_game_data *game_data);
-int				ft_key_down_handler(int32_t key_code, t_game_data *game_data);
+int				ft_key_up_handler(int32_t key_code, t_game_data *game_data);
 
 /* error handling */
 uint8_t			ft_throw_mlx_exception(t_mlx_exception e_exception);

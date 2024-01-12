@@ -5,7 +5,7 @@
 int	ft_key_handler(int32_t key_code, t_game_data *game_data);
 int	ft_on_destroy(t_game_data *game_data);
 int	ft_on_mouse_move(int x, int y, t_game_data *game_data);
-int	ft_key_down_handler(int32_t key_code, t_game_data *game_data);
+int	ft_key_up_handler(int32_t key_code, t_game_data *game_data);
 
 int	ft_key_handler(int32_t key_code, t_game_data *game_data)
 {
@@ -60,7 +60,7 @@ int	ft_on_mouse_move(int x, int y, t_game_data *game_data)
 	return (0);
 }
 
-int	ft_key_down_handler(int32_t key_code, t_game_data *game_data)
+int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
 {
 	if (key_code == KEY_M)
 	{
