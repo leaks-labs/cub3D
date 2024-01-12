@@ -56,7 +56,6 @@ void	ft_rotate_to_left(t_game_data *game_data);
 void	ft_rotate_to_right(t_game_data *game_data);
 void	ft_look_up(t_game_data *game_data);
 void	ft_look_down(t_game_data *game_data);
-void	ft_rescale_angle(double *angle);
 
 /* game event */
 void	ft_escape(t_game_data *game_data);

@@ -1,6 +1,7 @@
 #ifndef LIBX_H
 # define LIBX_H
 
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
 # include "mlx.h"
@@ -15,6 +16,7 @@
 # define MLX_LEN_ERROR		32
 
 # define ON_KEYDOWN			2
+# define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
 typedef struct s_pixel		t_pixel;
@@ -33,7 +35,8 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 65363,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_UP = 65362,
-	N_KEY = 9
+	KEY_M = 46,
+	N_KEY = 10
 }			t_keyboard;
 
 # elif __APPLE__
@@ -49,7 +52,8 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 124,
 	KEY_ARROW_DOWN = 125,
 	KEY_ARROW_UP = 126,
-	N_KEY = 9
+	KEY_M = 46,
+	N_KEY = 10
 }			t_keyboard;
 
 # endif
@@ -82,6 +86,7 @@ typedef struct s_graphx
 {
 	void		*mlx_ptr;
 	t_window	window; /* could be a ptr, but struct is fine for the project */
+	bool		mouse_tracked;
 }				t_graphx;
 
 /* init and destroy */
@@ -91,7 +96,8 @@ void			ft_destroy_graphx(t_graphx *graphx);
 /* handlers */
 int32_t			ft_key_handler(int32_t key_code, t_game_data *game_data);
 int				ft_on_destroy(t_game_data *game_data);
-/* Maybe add mousse handler */
+int				ft_on_mouse_move(int x, int y, t_game_data *game_data);
+int				ft_key_down_handler(int32_t key_code, t_game_data *game_data);
 
 /* error handling */
 uint8_t			ft_throw_mlx_exception(t_mlx_exception e_exception);

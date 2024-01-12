@@ -89,4 +89,8 @@ double				ft_get_ray_len(t_game_data *gd, t_slice *slice, \
 /* render */
 t_render_exception	ft_render(t_game_data *game_data);
 
+/* rescale view */
+void	ft_rescale_hor_view(double *angle);
+void	ft_rescale_ver_view(int *ver_view);
+
 #endif
