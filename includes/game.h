@@ -4,16 +4,16 @@
 # include <math.h>
 # include "render.h"
 
-# define RAD_MAX			6.283185307179586 /* (M_PI * 2) */
-# define RECT_ANGLE			1.570796326794897 /* (90 * M_PI / 180) */
+# define RAD_MAX			6.283185307179586 // (M_PI * 2)
+# define RECT_ANGLE			1.570796326794897 // (90 * M_PI / 180)
 
 # define UNITS				64
-# define PLAYER_VIEW		32 /* (UNITS / 2.0) */
-# define FOV				1.047198 /* (60 * M_PI / 180) could be var */
-# define ANGLE_RAYS			0.000818123086872 /* ((60.0 / WINDOW_WIDTH) * M_PI / 180) */
-# define PLAYER_DISTANCE	1108	/* (WINDOW_WIDTH / 2) / tan(30 * M_PI / 180) */
+# define PLAYER_VIEW		32 // (UNITS / 2.0)
+# define FOV				1.047198 // (60 * M_PI / 180)
+# define ANGLE_RAYS			0.000818123086872 // ((60.0 / WINDOW_WIDTH) * M_PI / 180)
+# define PLAYER_DISTANCE	1108	// (WINDOW_WIDTH / 2) / tan(30 * M_PI / 180)
 
-# define ROTATION_VELOCITY	0.174532925199433 /* (10 * M_PI / 180) */
+# define ROTATION_VELOCITY	0.174532925199433 // (10 * M_PI / 180)
 # define MOVEMENT_VELOCITY	10
 # define VER_VIEW_VELOCITY	60
 
@@ -22,18 +22,10 @@
 # define WEST_RAD			3.141593
 # define SOUTH_RAD			4.712389
 
-// typedef struct	s_view
-// { /* angle from origin */
-// 	t_pos		*pos; /* obviously the player pos, could be the same ptr */
-// 	double		orientation; /* radian */
-// 	uint32_t	len;
-// }				t_view;
-
 typedef struct s_game_data
 {
 	t_map		*map;
 	t_graphx	*graphx;
-	// t_player	player; /* Could be an array if multiplayer */
 }				t_game_data;
 
 /* runtime */

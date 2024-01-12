@@ -1,7 +1,5 @@
 #include "game.h"
 
-#include <stdio.h> /* to remove */
-
 void			ft_go_forward(t_game_data *game_data);
 void			ft_go_backward(t_game_data *game_data);
 void			ft_go_left(t_game_data *game_data);
@@ -16,7 +14,6 @@ void	ft_go_forward(t_game_data *game_data)
 	double	x_dist;
 	double	y_dist;
 
-	printf("Key : W\n");
 	start_pos = game_data->map->player.pos;
 	x_dist = cos(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
 	y_dist = sin(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
@@ -32,7 +29,6 @@ void	ft_go_backward(t_game_data *game_data)
 	double	x_dist;
 	double	y_dist;
 
-	printf("Key : S\n");
 	start_pos = game_data->map->player.pos;
 	x_dist = -cos(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
 	y_dist = -sin(-game_data->map->player.view.hor_view) * MOVEMENT_VELOCITY;
@@ -48,7 +44,6 @@ void	ft_go_left(t_game_data *game_data)
 	double	x_dist;
 	double	y_dist;
 
-	printf("Key : A\n");
 	start_pos = game_data->map->player.pos;
 	x_dist = cos(-(game_data->map->player.view.hor_view + RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
@@ -66,7 +61,6 @@ void	ft_go_right(t_game_data *game_data)
 	double	x_dist;
 	double	y_dist;
 
-	printf("Key : D\n");
 	start_pos = game_data->map->player.pos;
 	x_dist = cos(-(game_data->map->player.view.hor_view - RECT_ANGLE)) \
 				* MOVEMENT_VELOCITY;
