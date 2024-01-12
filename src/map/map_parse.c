@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include <stdlib.h>
+#include "string.h"
 #include <stdio.h>
 
 static uint8_t			ft_check_extension(char *str, char *ext);
@@ -75,8 +76,8 @@ static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
 	if (1 == ft_set_args(map, lexic[i], args[1]))
 		return (ft_freef("%p, %P", line, args), lexic[i].exception);
 	ft_freef("%p, %P", line, args);
-	if (i < N_RULE - 1 && ft_check_requirement(map, fd, ++i) == 3)
-		return (REQUIREMENT_ERROR);
+	if (i < N_RULE - 1 && ft_check_requirement(map, fd, ++i) == 4 )
+		return (REQUIREMENT_ERROR); // to correct recursive return
 	return (NO_MAP_EXCEPTION);
 }
 
@@ -110,6 +111,8 @@ uint8_t ft_set_path(t_map *map, t_dictionary lexic, char *args)
 {
 	const size_t len = ft_strlen(args);
 	int32_t fd;
+
+	args[len - 1] = '\0';
 	if (len >= PATH_MAX || 1 == ft_open_file(args, &fd))
 		return (1);
 	close(fd);
@@ -119,23 +122,30 @@ uint8_t ft_set_path(t_map *map, t_dictionary lexic, char *args)
 
 uint8_t ft_set_rgb(t_map *map, t_dictionary lexic, char *args)
 {
+	(void)map;
+	(void)lexic;
 	char	**rgb;
 	size_t	len;
-	int32_t	rgb_val = 0x0000FF00;
-	bool	is_overflow;
+	int32_t	rgb_val[3];
+	bool	is_overflow;;
+
 
 	rgb = ft_split(args, ',');
 	len = ft_dptrlen((const char **)rgb);
 	if (len != 3)
 		return (ft_freef("%P", rgb), 1);
-	while (len > 0)
+	rgb[len - 1][ft_strlen(rgb[len - 1]) - 1] = '\0';
+	while (len-- > 0)
 	{
-		rgb_val = ft_strtoi(rgb[len], &is_overflow);
-		if (is_overflow || rgb_val < 0 || rgb_val > 255)
+		is_overflow = false;
+		printf("string :%s:\n", rgb[len]);
+		rgb_val[len] = ft_strtoi(rgb[len], &is_overflow);
+		printf("RGB :%d:\n", rgb_val[len]);
+		if (is_overflow == true || rgb_val[len] < 0 || rgb_val[len] > 255)
 			return (ft_freef("%P", rgb), 1);
-
-		--len;
 	}
+	int32_t hex = ((rgb_val[0] & 0x0ff) << 16) | ((rgb_val[1] & 0x0ff) << 8) | (rgb_val[2] & 0x0ff);
+	printf("->%d\n", hex);
 	return (ft_freef("%P", rgb), 0);
 }
 

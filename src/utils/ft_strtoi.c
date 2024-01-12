@@ -5,8 +5,6 @@ int32_t	ft_strtoi(char *nptr, bool *is_overflow)
 	int32_t	res;
 	int32_t	cpy;
 
-	if (*nptr == '0')
-		return (*is_overflow = true);
 	res = 0;
 	while (*nptr >= '0' && *nptr <= '9')
 	{
