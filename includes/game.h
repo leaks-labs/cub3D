@@ -10,7 +10,7 @@
 # define UNITS				64
 # define PLAYER_VIEW		32 // (UNITS / 2.0)
 # define FOV				1.047198 // (60 * M_PI / 180)
-# define ANGLE_RAYS			0.000818123086872 // ((60.0 / WINDOW_WIDTH) * M_PI / 180)
+# define ANGLE_RAYS			0.000818123086872 // ((60 / WINDOW_W) * M_PI / 180)
 # define PLAYER_DISTANCE	1108	// (WINDOW_WIDTH / 2) / tan(30 * M_PI / 180)
 
 # define ROTATION_VELOCITY	0.174532925199433 // (10 * M_PI / 180)

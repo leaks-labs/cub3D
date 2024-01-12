@@ -7,9 +7,6 @@ void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map)
 	/* to remove */
 	map->player.pos.x = 3;
 	map->player.pos.y = 3;
-	// map->player.pos.z = 0;
-	// map->player.axis.x = 0;
-	// map->player.axis.y = 0;
 	map->player.view.hor_view = NORTH_RAD;
 	map->player.view.ver_view = WINDOW_HEIGHT / 2;
 	map->width = 5;

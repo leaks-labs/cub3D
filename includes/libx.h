@@ -19,7 +19,6 @@
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
-
 typedef struct s_pixel		t_pixel;
 typedef struct s_game_data	t_game_data;
 

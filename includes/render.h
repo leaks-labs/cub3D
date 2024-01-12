@@ -69,8 +69,8 @@ bool				ft_isawall_coord(t_map *map, t_pos *pos, \
 										t_element *element);
 
 /* get print info */
-void			ft_init_screen_info(t_screen *screen, t_slice *slice, int x, \
-									int ver_view);
+void				ft_init_screen_info(t_screen *screen, t_slice *slice, \
+										int x, int ver_view);
 t_orientation		ft_get_orientation(int bitwise);
 
 /* get slice */
@@ -90,7 +90,7 @@ double				ft_get_ray_len(t_game_data *gd, t_slice *slice, \
 t_render_exception	ft_render(t_game_data *game_data);
 
 /* rescale view */
-void	ft_rescale_hor_view(double *angle);
-void	ft_rescale_ver_view(int *ver_view);
+void				ft_rescale_hor_view(double *angle);
+void				ft_rescale_ver_view(int *ver_view);
 
 #endif
