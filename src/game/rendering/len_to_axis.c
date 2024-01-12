@@ -22,7 +22,7 @@ double	ft_get_len_to_h_stripe(t_game_data *gd, t_slice *slice, double angle)
 	if (ft_isawall_coord(gd->map, &tmp, &slice->e_hor) == true)
 		return (ft_get_len_from_coord(&gd->map->player.pos, &tmp));
 	y_steps = UNITS;
-	if (ft_get_up_down(angle) == UP)
+	if ((slice->orientation_bitwise & (UL_SE | UR_SW)) > 0)
 		y_steps = -UNITS;
 	x_steps = -y_steps / tan(angle);
 	while (ft_isawall_coord(gd->map, &tmp, &slice->e_hor) == false)
@@ -49,7 +49,7 @@ double	ft_get_len_to_v_stripe(t_game_data *gd, t_slice *slice, double angle)
 	if (ft_isawall_coord(gd->map, &tmp, &slice->e_ver) == true)
 		return (ft_get_len_from_coord(&gd->map->player.pos, &tmp));
 	x_steps = UNITS;
-	if (ft_get_left_right(angle) == LEFT)
+	if ((slice->orientation_bitwise & (UL_SE | DL_NE)) > 0)
 		x_steps = -UNITS;
 	y_steps = -x_steps * tan(angle);
 	while (ft_isawall_coord(gd->map, &tmp, &slice->e_ver) == false)
