@@ -41,6 +41,8 @@ int	ft_on_destroy(t_game_data *game_data)
 	exit(0);
 }
 
+#ifdef __APPLE__
+
 int	ft_on_mouse_move(int x, int y, t_game_data *game_data)
 {
 	int	dist_x;
@@ -60,6 +62,32 @@ int	ft_on_mouse_move(int x, int y, t_game_data *game_data)
 	return (0);
 }
 
+#elif __linux__
+
+int	ft_on_mouse_move(int x, int y, t_game_data *game_data)
+{
+	int	dist_x;
+	int	dist_y;
+
+	if (game_data->graphx->mouse_tracked == false)
+		return (0);
+	dist_x = -((WINDOW_WIDTH / 2 - x) * 2);
+	dist_y = ((WINDOW_HEIGHT / 2 - y) * 2);
+	game_data->map->player.view.ver_view += dist_y;
+	ft_rescale_ver_view(&game_data->map->player.view.ver_view);
+	game_data->map->player.view.hor_view += ANGLE_RAYS * -dist_x;
+	ft_rescale_hor_view(&game_data->map->player.view.hor_view);
+	mlx_mouse_move(game_data->graphx->mlx_ptr, \
+					game_data->graphx->window.mlx_win, \
+					WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	ft_render(game_data);
+	return (0);
+}
+
+#endif
+
+#ifdef __APPLE__
+
 int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
 {
 	if (key_code == KEY_M)
@@ -76,3 +104,27 @@ int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
 	}
 	return (0);
 }
+
+#elif __linux__
+
+int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
+{
+	if (key_code == KEY_M)
+	{
+		if (game_data->graphx->mouse_tracked == false)
+		{
+			mlx_mouse_hide(game_data->graphx->mlx_ptr, \
+							game_data->graphx->window.mlx_win);
+			mlx_mouse_move(game_data->graphx->mlx_ptr, \
+							game_data->graphx->window.mlx_win, \
+							WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+		}
+		else
+			mlx_mouse_show(game_data->graphx->mlx_ptr, \
+							game_data->graphx->window.mlx_win);
+		game_data->graphx->mouse_tracked ^= 1;
+	}
+	return (0);
+}
+
+#endif
