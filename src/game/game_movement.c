@@ -1,36 +1,60 @@
 #include "game.h"
-#include "libx.h"
 
-#include <stdio.h> /* to remove */
+void			ft_move_back_forth(t_game_data *gd, int key_code);
+void			ft_move_left_right(t_game_data *gd, int key_code);
+static bool		ft_isawall_grid(t_map *map, int x, int y);
 
-void ft_go_forward(t_game_data *game_data)
+void	ft_move_back_forth(t_game_data *gd, int key_code)
 {
-	printf("Key : W\n");
-	/* check if collision with wall before incrementing */
-	game_data->player.pos.x += MOVEMENT_VELOCITY;
-	ft_render(game_data);
+	double	new_x_real;
+	double	new_y_real;
+	int		new_x_grid;
+	int		new_y_grid;
+	int		dir;
+
+	dir = 1;
+	if (key_code == KEY_W)
+		dir = 1;
+	else if (key_code == KEY_S)
+		dir = -1;
+	new_x_real = gd->map->s_player.s_pos.x \
+					+ gd->map->s_player.s_dir.x * MOVEMENT_VELOCITY * dir;
+	new_y_real = gd->map->s_player.s_pos.y \
+					+ gd->map->s_player.s_dir.y * MOVEMENT_VELOCITY * dir;
+	new_x_grid = (int)new_x_real;
+	new_y_grid = (int)new_y_real;
+	if (!ft_isawall_grid(gd->map, new_x_grid, (int)gd->map->s_player.s_pos.y))
+		gd->map->s_player.s_pos.x = new_x_real;
+	if (!ft_isawall_grid(gd->map, (int)gd->map->s_player.s_pos.x, new_y_grid))
+		gd->map->s_player.s_pos.y = new_y_real;
 }
 
-void ft_go_backward(t_game_data *game_data)
+void	ft_move_left_right(t_game_data *gd, int key_code)
 {
-	printf("Key : S\n");
-	/* check if collision with wall before incrementing */
-	game_data->player.pos.x -= MOVEMENT_VELOCITY;
-	ft_render(game_data);
+	double	new_x_real;
+	double	new_y_real;
+	int		new_x_grid;
+	int		new_y_grid;
+	int		dir;
+
+	dir = 1;
+	if (key_code == KEY_A)
+		dir = -1;
+	else if (key_code == KEY_D)
+		dir = 1;
+	new_x_real = gd->map->s_player.s_pos.x \
+					+ gd->map->s_player.s_plane.x * MOVEMENT_VELOCITY * dir;
+	new_y_real = gd->map->s_player.s_pos.y \
+					+ gd->map->s_player.s_plane.y * MOVEMENT_VELOCITY * dir;
+	new_x_grid = (int)new_x_real;
+	new_y_grid = (int)new_y_real;
+	if (!ft_isawall_grid(gd->map, new_x_grid, (int)gd->map->s_player.s_pos.y))
+		gd->map->s_player.s_pos.x = new_x_real;
+	if (!ft_isawall_grid(gd->map, (int)gd->map->s_player.s_pos.x, new_y_grid))
+		gd->map->s_player.s_pos.y = new_y_real;
 }
 
-void ft_go_left(t_game_data *game_data)
+bool	ft_isawall_grid(t_map *map, int x, int y)
 {
-	printf("Key : A\n");
-	/* check if collision with wall before incrementing */
-	game_data->player.pos.y -= MOVEMENT_VELOCITY;
-	ft_render(game_data);
-}
-
-void ft_go_right(t_game_data *game_data)
-{
-	printf("Key : D\n");
-	/* check if collision with wall before incrementing */
-	game_data->player.pos.y += MOVEMENT_VELOCITY;
-	ft_render(game_data);
+	return ((map->grid)[x + (y * map->width)] > 0);
 }

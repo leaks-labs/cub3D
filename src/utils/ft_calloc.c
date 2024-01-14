@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leex-labs@gmail.com>            +#+  +:+       +#+        */
+/*   By: shinfray <shinfray@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:57:04 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2023/11/24 14:57:05 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/01/09 16:40:59 by shinfray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>
 
 void		*ft_calloc(size_t count, size_t size);
-static void	*ft_memset(void *b, int c, size_t len);
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -25,15 +24,4 @@ void	*ft_calloc(size_t count, size_t size)
 	if (ptr != NULL)
 		ft_memset(ptr, 0, f_size);
 	return (ptr);
-}
-
-static void	*ft_memset(void *b, int c, size_t len)
-{
-	const unsigned char	uc_c = (const unsigned char)c;
-	unsigned char		*uc_b;
-
-	uc_b = (unsigned char *)b;
-	while (len-- != 0)
-		*uc_b++ = uc_c;
-	return (b);
 }
