@@ -30,7 +30,7 @@ t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx)
 	mlx_hook(graphx->s_window.mlx_win, ON_KEYDOWN, (1L << 0), \
 				&ft_key_handler, game);
 	graphx->mouse_tracked = false;
-	mlx_hook(graphx->s_window.mlx_win, ON_MOUSEMOVE, 0, \
+	mlx_hook(graphx->s_window.mlx_win, ON_MOUSEMOVE, (1L << 6), \
 				&ft_on_mouse_move, game);
 	mlx_key_hook(graphx->s_window.mlx_win, &ft_key_up_handler, game);
 	return (NO_EXCEPTION);
