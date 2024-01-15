@@ -50,13 +50,15 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 	if (game->graphx->mouse_tracked == false)
 		return (0);
-	dist_x = (WINDOW_WIDTH / 2 - x) / 2.0;
-	dist_y = (WINDOW_HEIGHT / 2 - y) * 2;
+	dist_x = (game->graphx->s_window.s_image.width / 2 - x) / 2.0;
+	dist_y = (game->graphx->s_window.s_image.height / 2 - y) * 2;
 	game->screen_center += dist_y;
-	ft_rescale_ver_view(&game->screen_center);
+	ft_rescale_ver_view(&game->screen_center, \
+						game->graphx->s_window.s_image.height);
 	ft_rotate(game, -dist_x / 16);
 	mlx_mouse_move(game->graphx->s_window.mlx_win, \
-					WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+					game->graphx->s_window.s_image.width / 2, \
+					game->graphx->s_window.s_image.height / 2);
 	return (0);
 }
 
@@ -69,13 +71,15 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 	if (game->graphx->mouse_tracked == false)
 		return (0);
-	dist_x = (WINDOW_WIDTH / 2 - x) / 2.0;
-	dist_y = (WINDOW_HEIGHT / 2 - y) * 2;
+	dist_x = (game->graphx->s_window.s_image.width / 2 - x) / 2.0;
+	dist_y = (game->graphx->s_window.s_image.height / 2 - y) * 2;
 	game->screen_center += dist_y;
-	ft_rescale_ver_view(&game->screen_center);
+	ft_rescale_ver_view(&game->screen_center, \
+						game->graphx->s_window.s_image.height);
 	ft_rotate(game, -dist_x / 16);
 	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->window.mlx_win, \
-					WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+					game->graphx->s_window.s_image.width / 2, \
+					game->graphx->s_window.s_image.height / 2);
 	return (0);
 }
 
@@ -91,7 +95,8 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 		{
 			mlx_mouse_hide();
 			mlx_mouse_move(game->graphx->s_window.mlx_win, \
-							WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+							game->graphx->s_window.s_image.width / 2, \
+							game->graphx->s_window.s_image.height / 2);
 		}
 		else
 			mlx_mouse_show();
@@ -112,7 +117,8 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 							game->graphx->window.mlx_win);
 			mlx_mouse_move(game->graphx->mlx_ptr, \
 							game->graphx->window.mlx_win, \
-							WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+							game->graphx->s_window.s_image.width / 2, \
+							game->graphx->s_window.s_image.height / 2);
 		}
 		else
 			mlx_mouse_show(game->graphx->mlx_ptr, \

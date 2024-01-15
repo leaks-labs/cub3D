@@ -19,8 +19,8 @@ void	ft_pixel_put(t_image *img, t_pixel *coord)
 	char	*pixel;
 	int		i;
 
-	if (coord->x < 0 || coord->x >= WINDOW_WIDTH \
-			|| coord->y < 0 || coord->y >= WINDOW_HEIGHT)
+	if (coord->x < 0 || coord->x >= img->width \
+			|| coord->y < 0 || coord->y >= img->height)
 		return ;
 	i = img->bits_per_pixel - 8;
 	pixel = img->data + \

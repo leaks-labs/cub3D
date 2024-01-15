@@ -47,24 +47,24 @@ static t_orientation	ft_get_orientation(t_raycast *raycast)
 static void	ft_texture_iter(t_draw *draw, t_game *game, t_image *src_img, \
 							double wall_x)
 {
-	const double	step = 1.0 * TEX_HEIGHT / draw->line_height;
+	const double	step = 1.0 * src_img->height / draw->line_height;
 	t_pixel			s_tex;
 	double			tex_pos;
 
-	s_tex.x = (int)(wall_x * (double)(TEX_WIDTH));
+	s_tex.x = (int)(wall_x * (double)(src_img->width));
 	if (game->s_raycast.side_touched == TOUCH_X_AXIS \
 			&& game->s_raycast.s_ray_dir.x > 0)
-		s_tex.x = TEX_WIDTH - s_tex.x - 1;
+		s_tex.x = src_img->width - s_tex.x - 1;
 	if (game->s_raycast.side_touched == TOUCH_Y_AXIS \
 			&& game->s_raycast.s_ray_dir.y < 0)
-		s_tex.x = TEX_WIDTH - s_tex.x - 1;
+		s_tex.x = src_img->width - s_tex.x - 1;
 	tex_pos = (draw->draw_start - game->screen_center + draw->line_height / 2) \
 				* step;
 	while (draw->s_dst_pix.y <= draw->draw_end)
 	{
 		// Cast the texture coordinate to integer,
 		// and mask with (texHeight - 1) in case of overflow
-		s_tex.y = (int)tex_pos & (TEX_HEIGHT - 1);
+		s_tex.y = (int)tex_pos & (src_img->height - 1);
 		tex_pos += step;
 		ft_pixel_cpy(src_img, draw->dst_img, &s_tex, &draw->s_dst_pix);
 		draw->s_dst_pix.y++;

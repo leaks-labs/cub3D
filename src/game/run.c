@@ -16,17 +16,23 @@ uint8_t	ft_run(t_map *map)
 	}
 
 	/* to remove (just for testing)*/
-	int			units1;
-	int			units2;
+	int			*width_f1 = &s_game.map->texture[WALL].image[NORTH].width;
+	int			*height_f1 = &s_game.map->texture[WALL].image[NORTH].height;
+	int			*width_f2 = &s_game.map->texture[WALL].image[SOUTH].width;
+	int			*height_f2 = &s_game.map->texture[WALL].image[SOUTH].height;
+	int			*width_f3 = &s_game.map->texture[WALL].image[WEST].width;
+	int			*height_f3 = &s_game.map->texture[WALL].image[WEST].height;
+	int			*width_f4 = &s_game.map->texture[WALL].image[EAST].width;
+	int			*height_f4 = &s_game.map->texture[WALL].image[EAST].height;
 	const char	*f1 = "./maps/textures/north_texture_xpm.xpm";
 	const char	*f2 = "./maps/textures/south_texture_xpm.xpm";
 	const char	*f3 = "./maps/textures/west_texture_xpm.xpm";
 	const char	*f4 = "./maps/textures/east_texture_xpm.xpm";
 
-	s_game.map->texture[WALL].image[NORTH].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f1, &units1, &units2);
-	s_game.map->texture[WALL].image[SOUTH].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f2, &units1, &units2);
-	s_game.map->texture[WALL].image[WEST].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f3, &units1, &units2);
-	s_game.map->texture[WALL].image[EAST].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f4, &units1, &units2);
+	s_game.map->texture[WALL].image[NORTH].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f1, width_f1, height_f1);
+	s_game.map->texture[WALL].image[SOUTH].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f2, width_f2, height_f2);
+	s_game.map->texture[WALL].image[WEST].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f3, width_f3, height_f3);
+	s_game.map->texture[WALL].image[EAST].mlx_img = mlx_xpm_file_to_image(s_game.graphx->mlx_ptr, (char *)f4, width_f4, height_f4);
 	t_image		*i1 = &s_game.map->texture[WALL].image[NORTH];
 	t_image		*i2 = &s_game.map->texture[WALL].image[SOUTH];
 	t_image		*i3 = &s_game.map->texture[WALL].image[WEST];

@@ -76,6 +76,8 @@ typedef struct s_image
 	int32_t	bits_per_pixel;
 	int32_t	size_line;
 	int32_t	endian;
+	int		width;
+	int		height;
 }				t_image;
 
 typedef struct s_window

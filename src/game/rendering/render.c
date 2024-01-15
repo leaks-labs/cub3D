@@ -2,7 +2,7 @@
 #include "game.h"
 
 int				ft_render(t_game *game);
-static void		ft_raycast_init(t_player *pl, t_raycast *rc, int x);
+static void		ft_raycast_init(t_game *game, int x);
 static void		ft_raycast_side_dist_init(t_player *pl, t_raycast *rc);
 static double	ft_get_ray_len(t_raycast *rc, t_map *map);
 
@@ -11,9 +11,9 @@ int	ft_render(t_game *game)
 	int	current_x;
 
 	current_x = 0;
-	while (current_x < WINDOW_WIDTH)
+	while (current_x < game->graphx->s_window.s_image.width)
 	{
-		ft_raycast_init(&game->map->s_player, &game->s_raycast, current_x);
+		ft_raycast_init(game, current_x);
 		game->s_raycast.wall_dist = ft_get_ray_len(&game->s_raycast, game->map);
 		ft_draw(game, current_x);
 		++current_x;
@@ -22,25 +22,27 @@ int	ft_render(t_game *game)
 	return (0);
 }
 
-static void	ft_raycast_init(t_player *pl, t_raycast *rc, int x)
+static void	ft_raycast_init(t_game *game, int x)
 {
-	static const double	screen_width = (double)(WINDOW_WIDTH);
+	const double	screen_w = (double)(game->graphx->s_window.s_image.width);
 
 	//calculate ray position and direction
-	rc->camera_x = 2 * x / screen_width - 1;
-	rc->s_ray_dir.x = pl->s_dir.x + pl->s_plane.x * rc->camera_x;
-	rc->s_ray_dir.y = pl->s_dir.y + pl->s_plane.y * rc->camera_x;
+	game->s_raycast.camera_x = 2 * x / screen_w - 1;
+	game->s_raycast.s_ray_dir.x = game->map->s_player.s_dir.x \
+					+ game->map->s_player.s_plane.x * game->s_raycast.camera_x;
+	game->s_raycast.s_ray_dir.y = game->map->s_player.s_dir.y \
+					+ game->map->s_player.s_plane.y * game->s_raycast.camera_x;
 
 	// which box of the map we're in
-	rc->s_map_tmp.x = (int)pl->s_pos.x;
-	rc->s_map_tmp.y = (int)pl->s_pos.y;
+	game->s_raycast.s_map_tmp.x = (int)game->map->s_player.s_pos.x;
+	game->s_raycast.s_map_tmp.y = (int)game->map->s_player.s_pos.y;
 
 	// length of ray from one x or y-side to next x or y-side
 	// double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX);
 	// double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY);
-	rc->s_delta_dist.x = fabs(1.0 / rc->s_ray_dir.x);
-	rc->s_delta_dist.y = fabs(1.0 / rc->s_ray_dir.y);
-	ft_raycast_side_dist_init(pl, rc);
+	game->s_raycast.s_delta_dist.x = fabs(1.0 / game->s_raycast.s_ray_dir.x);
+	game->s_raycast.s_delta_dist.y = fabs(1.0 / game->s_raycast.s_ray_dir.y);
+	ft_raycast_side_dist_init(&game->map->s_player, &game->s_raycast);
 }
 
 static void	ft_raycast_side_dist_init(t_player *pl, t_raycast *rc)
