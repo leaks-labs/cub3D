@@ -14,7 +14,8 @@ void	ft_draw_wall(t_game *game, t_draw *draw)
 	double			wall_x;
 
 	e_block_type = game->map->grid[game->s_raycast.s_map_tmp.x \
-								+ game->s_raycast.s_map_tmp.y * game->map->width];
+									+ game->s_raycast.s_map_tmp.y \
+									* game->map->width];
 	e_orientation = ft_get_orientation(&game->s_raycast);
 	src_img = &game->map->texture[e_block_type].image[e_orientation];
 	if (game->s_raycast.side_touched == TOUCH_X_AXIS)
@@ -51,9 +52,11 @@ static void	ft_texture_iter(t_draw *draw, t_game *game, t_image *src_img, \
 	double			tex_pos;
 
 	s_tex.x = (int)(wall_x * (double)(TEX_WIDTH));
-	if (game->s_raycast.side_touched == TOUCH_X_AXIS && game->s_raycast.s_ray_dir.x > 0)
+	if (game->s_raycast.side_touched == TOUCH_X_AXIS \
+			&& game->s_raycast.s_ray_dir.x > 0)
 		s_tex.x = TEX_WIDTH - s_tex.x - 1;
-	if (game->s_raycast.side_touched == TOUCH_Y_AXIS && game->s_raycast.s_ray_dir.y < 0)
+	if (game->s_raycast.side_touched == TOUCH_Y_AXIS \
+			&& game->s_raycast.s_ray_dir.y < 0)
 		s_tex.x = TEX_WIDTH - s_tex.x - 1;
 	tex_pos = (draw->draw_start - game->screen_center + draw->line_height / 2) \
 				* step;

@@ -1,10 +1,10 @@
 #include "render.h"
 #include "game.h"
 
-void					ft_draw(t_game *game, int x);
-static void				ft_draw_init(t_game *game, t_draw *draw, int x);
-static void				ft_draw_ceiling(t_draw *draw, t_map *map);
-static void				ft_draw_floor(t_draw *draw, t_map *map);
+void			ft_draw(t_game *game, int x);
+static void		ft_draw_init(t_game *game, t_draw *draw, int x);
+static void		ft_draw_ceiling(t_draw *draw, t_map *map);
+static void		ft_draw_floor(t_draw *draw, t_map *map);
 
 void	ft_draw(t_game *game, int x)
 {
