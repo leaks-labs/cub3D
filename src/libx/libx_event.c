@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "libx.h"
 #include "game.h"
+#include <stdio.h>
 
 int	ft_key_handler(int32_t key_code, t_game *game);
 int	ft_on_destroy(t_game *game);
@@ -14,17 +15,16 @@ int	ft_key_handler(int32_t key_code, t_game *game)
 			&ft_move_left_right, &ft_move_left_right, \
 			&ft_rotate_left_right, &ft_rotate_left_right, \
 			&ft_look_up_down, &ft_look_up_down, \
-			&ft_escape
+			&ft_size_factor, &ft_size_factor
 	};
 	static const t_keyboard	keyboard_key[N_KEY] = {\
 			KEY_W, KEY_S, \
 			KEY_A, KEY_D, \
 			KEY_ARROW_LEFT, KEY_ARROW_RIGHT, \
 			KEY_ARROW_DOWN, KEY_ARROW_UP, \
-			KEY_ESC
+			KEY_H, KEY_L
 	};
 	size_t					i;
-
 	i = 0;
 	while (i < N_KEY)
 	{
@@ -66,7 +66,6 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 int	ft_on_mouse_move(int x, int y, t_game *game)
 {
-	//printf()
 	double	dist_x;
 	int		dist_y;
 
@@ -90,7 +89,9 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
-	if (key_code == KEY_M)
+	if (key_code == KEY_ESC)
+		ft_escape(game);
+	else if (key_code == KEY_M)
 	{
 		if (game->graphx->mouse_tracked == false)
 		{
@@ -110,7 +111,9 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 
 int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
-	if (key_code == KEY_M)
+	if (key_code == KEY_ESC)
+		ft_escape(game);
+	else if (key_code == KEY_M)
 	{
 		if (game->graphx->mouse_tracked == false)
 		{
