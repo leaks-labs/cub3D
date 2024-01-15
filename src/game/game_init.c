@@ -14,6 +14,7 @@ void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map)
 	map->s_player.s_dir.y = 0;
 	map->s_player.s_plane.x = 0;
 	map->s_player.s_plane.y = 0;
+	game->size_factor = 1;
 	if (map->s_player.e_orientation == EAST)
 	{
 		map->s_player.s_dir.x = 1;

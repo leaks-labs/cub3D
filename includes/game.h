@@ -15,6 +15,7 @@ typedef struct s_game
 	t_graphx	*graphx;
 	t_raycast	s_raycast;
 	int			screen_center;
+	double		size_factor;
 }				t_game;
 
 /* runtime */
@@ -36,6 +37,7 @@ void	ft_look_up_down(t_game *game, int key_code);
 void	ft_rescale_ver_view(int *screen_center, int window_height);
 
 /* game event */
-void	ft_escape(t_game *game, int key_code);
+void	ft_escape(t_game *game);
+void	ft_size_factor(t_game *game, int key_code);
 
 #endif

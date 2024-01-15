@@ -25,10 +25,10 @@ typedef struct s_game	t_game;
 # ifdef __linux__
 
 #  define KEY_M	109
+#  define KEY_ESC 65307
 
 typedef enum e_keyboard
 {
-	KEY_ESC = 65307,
 	KEY_W = 119,
 	KEY_S = 115,
 	KEY_D = 100,
@@ -37,16 +37,18 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 65363,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_UP = 65362,
-	N_KEY = 9
+	KEY_H = 104,
+	KEY_L = 108,
+	N_KEY = 10
 }			t_keyboard;
 
 # elif __APPLE__
 
 #  define KEY_M	46
+#  define KEY_ESC 53
 
 typedef enum e_keyboard
 {
-	KEY_ESC = 53,
 	KEY_W = 13,
 	KEY_S = 1,
 	KEY_D = 2,
@@ -55,7 +57,9 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 124,
 	KEY_ARROW_DOWN = 125,
 	KEY_ARROW_UP = 126,
-	N_KEY = 9
+	KEY_H = 4,
+	KEY_L = 37,
+	N_KEY = 10
 }			t_keyboard;
 
 # endif

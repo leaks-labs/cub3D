@@ -19,6 +19,7 @@ void	ft_draw(t_game *game, int x)
 static void	ft_draw_init(t_game *game, t_draw *draw, int x)
 {
 	draw->line_height = (int)(game->graphx->s_window.s_image.height \
+								* game->size_factor \
 								/ game->s_raycast.wall_dist);
 	draw->draw_start = game->screen_center - draw->line_height / 2;
 	if (draw->draw_start < 0)
