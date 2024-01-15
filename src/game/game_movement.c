@@ -23,9 +23,11 @@ void	ft_move_back_forth(t_game *game, int key_code)
 					+ game->map->s_player.s_dir.y * MOVEMENT_VELOCITY * dir;
 	new_x_grid = (int)new_x_real;
 	new_y_grid = (int)new_y_real;
-	if (!ft_isawall_grid(game->map, new_x_grid, (int)game->map->s_player.s_pos.y))
+	if (!ft_isawall_grid(game->map, new_x_grid, \
+						(int)game->map->s_player.s_pos.y))
 		game->map->s_player.s_pos.x = new_x_real;
-	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, new_y_grid))
+	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, \
+							new_y_grid))
 		game->map->s_player.s_pos.y = new_y_real;
 }
 
@@ -48,9 +50,11 @@ void	ft_move_left_right(t_game *game, int key_code)
 					+ game->map->s_player.s_plane.y * MOVEMENT_VELOCITY * dir;
 	new_x_grid = (int)new_x_real;
 	new_y_grid = (int)new_y_real;
-	if (!ft_isawall_grid(game->map, new_x_grid, (int)game->map->s_player.s_pos.y))
+	if (!ft_isawall_grid(game->map, new_x_grid, \
+						(int)game->map->s_player.s_pos.y))
 		game->map->s_player.s_pos.x = new_x_real;
-	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, new_y_grid))
+	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, \
+							new_y_grid))
 		game->map->s_player.s_pos.y = new_y_real;
 }
 

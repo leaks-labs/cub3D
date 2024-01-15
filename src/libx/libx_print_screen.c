@@ -9,7 +9,8 @@ void	ft_pixel_cpy(t_image *img_src, t_image *img_dst, \
 
 void	ft_refresh(t_game *game)
 {
-	mlx_put_image_to_window(game->graphx->mlx_ptr, game->graphx->s_window.mlx_win, \
+	mlx_put_image_to_window(game->graphx->mlx_ptr, \
+							game->graphx->s_window.mlx_win, \
 							game->graphx->s_window.s_image.mlx_img, 0, 0);
 }
 

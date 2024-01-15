@@ -1,5 +1,5 @@
 #include "game.h"
-#include "render.h"
+// #include "render.h"
 
 uint8_t	ft_run(t_map *map);
 
