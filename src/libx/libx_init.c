@@ -42,23 +42,26 @@ t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx)
 {
 	if (NULL == ft_mlx_init(&graphx->mlx_ptr))
 		return (INIT_ERROR);
-	if (NULL == ft_mlx_new_window(graphx->mlx_ptr, &graphx->window.mlx_win))
+	if (NULL == ft_mlx_new_window(graphx->mlx_ptr, &graphx->s_window.mlx_win))
 	{
 		mlx_destroy_display(graphx->mlx_ptr);
 		return (CREATE_WINDOW_ERROR);
 	}
-	if (NULL == ft_mlx_new_image(graphx->mlx_ptr, &graphx->window.image.mlx_img)) /* need loop if add minimap */
+	if (NULL == ft_mlx_new_image(graphx->mlx_ptr, &graphx->s_window.s_image.mlx_img)) /* need loop if add minimap */
 	{
-		mlx_destroy_window(graphx->mlx_ptr, graphx->window.mlx_win);
+		mlx_destroy_window(graphx->mlx_ptr, graphx->s_window.mlx_win);
 		mlx_destroy_display(graphx->mlx_ptr);
 		return (CREATE_IMAGE_ERROR);
 	}
-	ft_mlx_get_data_addr(&graphx->window.image);
-	mlx_hook(graphx->window.mlx_win, ON_DESTROY, 0, &ft_on_destroy, game);
-	mlx_hook(graphx->window.mlx_win, ON_KEYDOWN, (1L << 0), &ft_key_handler, game);
+	graphx->s_window.s_image.width = WINDOW_WIDTH;
+	graphx->s_window.s_image.height = WINDOW_HEIGHT;
+	game->screen_center = graphx->s_window.s_image.height / 2;
+	ft_mlx_get_data_addr(&graphx->s_window.s_image);
+	mlx_hook(graphx->s_window.mlx_win, ON_DESTROY, 0, &ft_on_destroy, game);
+	mlx_hook(graphx->s_window.mlx_win, ON_KEYDOWN, (1L << 0), &ft_key_handler, game);
 	graphx->mouse_tracked = false;
-	mlx_hook(graphx->window.mlx_win, ON_MOUSEMOVE, 0, &ft_on_mouse_move, game);
-	mlx_key_hook(graphx->window.mlx_win, &ft_key_up_handler, game);
+	mlx_hook(graphx->s_window.mlx_win, ON_MOUSEMOVE, (1L << 6), &ft_on_mouse_move, game);
+	mlx_key_hook(graphx->s_window.mlx_win, &ft_key_up_handler, game);
 	return (NO_EXCEPTION);
 }
 

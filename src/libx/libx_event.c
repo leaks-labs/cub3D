@@ -66,6 +66,7 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 int	ft_on_mouse_move(int x, int y, t_game *game)
 {
+	//printf()
 	double	dist_x;
 	int		dist_y;
 
@@ -77,7 +78,7 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 	ft_rescale_ver_view(&game->screen_center, \
 						game->graphx->s_window.s_image.height);
 	ft_rotate(game, -dist_x / 16);
-	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->window.mlx_win, \
+	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
 					game->graphx->s_window.s_image.height / 2);
 	return (0);
@@ -114,15 +115,15 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 		if (game->graphx->mouse_tracked == false)
 		{
 			mlx_mouse_hide(game->graphx->mlx_ptr, \
-							game->graphx->window.mlx_win);
+							game->graphx->s_window.mlx_win);
 			mlx_mouse_move(game->graphx->mlx_ptr, \
-							game->graphx->window.mlx_win, \
+							game->graphx->s_window.mlx_win, \
 							game->graphx->s_window.s_image.width / 2, \
 							game->graphx->s_window.s_image.height / 2);
 		}
 		else
 			mlx_mouse_show(game->graphx->mlx_ptr, \
-							game->graphx->window.mlx_win);
+							game->graphx->s_window.mlx_win);
 		game->graphx->mouse_tracked ^= 1;
 	}
 	return (0);
