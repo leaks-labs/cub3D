@@ -2,76 +2,40 @@
 # define GAME_H
 
 # include <math.h>
-# include <stdint.h>
+# include "render.h"
 
-# define RAD_MAX			(M_PI * 2)
-# define FOV				(60 * M_PI / 180) /* could be var */
-# define ROTATION_VELOCITY	(10 * M_PI / 180)
-# define MOVEMENT_VELOCITY	10
- /* 2 rad div 5 degrees */
+# define ROTATION_VELOCITY	0.174532925199433 // (10 degrees * M_PI / 180)
+# define MOVEMENT_VELOCITY	0.1
+# define VER_VIEW_VELOCITY	60
+# define FOV_FACTOR			0.65 // tan(66.0 degrees / 2.0 * M_PI / 180.0)
 
-typedef struct s_map		t_map;
-typedef struct s_graphx	t_graphx;
-
-typedef enum e_render_exception
-{
-	/* No exception for now */
-	NO_RENDER_EXCEPTION
-}				t_render_exception;
-
-typedef struct	s_axis
-{
-	double	x;
-	double	y;
-	double	z; /* only z axis for now */
-}				t_axis;
-
-typedef struct	s_pos
-{
-	double	x;
-	double	y;
-	double	z;
-}				t_pos;
-
-typedef struct	s_vector
-{ /* angle from origin */
-	t_pos		*pos; /* obviously the player pos, could be the same ptr */
-	double		orientation; /* radian */
-	uint32_t	len;
-}				t_vector;
-
-typedef struct	s_player
-{
-	t_pos		pos;
-	t_axis		axis;
-	t_vector	vector[1920]; /* screen width, maybe unset */
-}				t_player;
-
-typedef struct	s_game_data
+typedef struct s_game
 {
 	t_map		*map;
 	t_graphx	*graphx;
-	t_player	player; /* Could be an array if multiplayer */
-}				t_game_data;
+	t_raycast	s_raycast;
+	int			screen_center;
+}				t_game;
 
-uint8_t				ft_run(t_map *map);
-t_render_exception	ft_render(t_game_data *game_data);
-/* Init and destroy */
-void				ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map);
-void				ft_destroy_game(t_game_data *game_data);
-/* Throw error */
+/* runtime */
+uint8_t	ft_run(t_map *map);
 
-/* Game movement */
-void				ft_go_forward(t_game_data *game_data);
-void				ft_go_backward(t_game_data *game_data);
-void				ft_go_left(t_game_data *game_data);
-void				ft_go_right(t_game_data *game_data);
+/* init and destroy */
+void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map);
+void	ft_destroy_game(t_game *game);
+/* throw error */
 
-/* Game rotation */
-void				ft_rotate_to_left(t_game_data *game_data);
-void				ft_rotate_to_right(t_game_data *game_data);
+/* game movement */
+void	ft_move_back_forth(t_game *game, int key_code);
+void	ft_move_left_right(t_game *game, int key_code);
 
-/* Game event */
-void	ft_escape(t_game_data *game_data);
+/* game rotation */
+void	ft_rotate(t_game *game, double factor);
+void	ft_rotate_left_right(t_game *game, int key_code);
+void	ft_look_up_down(t_game *game, int key_code);
+void	ft_rescale_ver_view(int *screen_center);
+
+/* game event */
+void	ft_escape(t_game *game, int key_code);
 
 #endif

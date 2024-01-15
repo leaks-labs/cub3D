@@ -1,10 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "map.h"
-#include "utils.h"
 #include "game.h"
+#include "utils.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_map	map;
 

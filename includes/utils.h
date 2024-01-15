@@ -13,6 +13,7 @@ int		ft_isdigit(int c);
 int		ft_isspace(int c);
 char	*ft_join(int argc, ...);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_memset(void *b, int c, size_t len);
 void	ft_putendl_fd(const char *s, int fd);
 void	ft_putstr_fd(const char *s, int fd);
 char	*ft_strchr(const char *s, int c);
