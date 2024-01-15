@@ -2,14 +2,14 @@
 #include "libx.h"
 #include "game.h"
 
-int	ft_key_handler(int32_t key_code, t_game_data *game_data);
-int	ft_on_destroy(t_game_data *game_data);
-int	ft_on_mouse_move(int x, int y, t_game_data *gd);
-int	ft_key_up_handler(int32_t key_code, t_game_data *game_data);
+int	ft_key_handler(int32_t key_code, t_game *game);
+int	ft_on_destroy(t_game *game);
+int	ft_on_mouse_move(int x, int y, t_game *game);
+int	ft_key_up_handler(int32_t key_code, t_game *game);
 
-int	ft_key_handler(int32_t key_code, t_game_data *game_data)
+int	ft_key_handler(int32_t key_code, t_game *game)
 {
-	static void (*const		f[N_KEY])(t_game_data *game_data, int key_code) = {\
+	static void (*const		f[N_KEY])(t_game *game, int key_code) = {\
 			&ft_move_back_forth, &ft_move_back_forth, \
 			&ft_move_left_right, &ft_move_left_right, \
 			&ft_rotate_left_right, &ft_rotate_left_right, \
@@ -29,52 +29,52 @@ int	ft_key_handler(int32_t key_code, t_game_data *game_data)
 	while (i < N_KEY)
 	{
 		if ((t_keyboard)key_code == keyboard_key[i])
-			f[i](game_data, key_code);
+			f[i](game, key_code);
 		++i;
 	}
 	return (0);
 }
 
-int	ft_on_destroy(t_game_data *game_data)
+int	ft_on_destroy(t_game *game)
 {
-	ft_destroy_game(game_data);
+	ft_destroy_game(game);
 	exit(0);
 }
 
 #ifdef __APPLE__
 
-int	ft_on_mouse_move(int x, int y, t_game_data *gd)
+int	ft_on_mouse_move(int x, int y, t_game *game)
 {
 	double	dist_x;
 	int		dist_y;
 
-	if (gd->graphx->mouse_tracked == false)
+	if (game->graphx->mouse_tracked == false)
 		return (0);
 	dist_x = (WINDOW_WIDTH / 2 - x) / 2.0;
 	dist_y = (WINDOW_HEIGHT / 2 - y) * 2;
-	gd->screen_center += dist_y;
-	ft_rescale_ver_view(&gd->screen_center);
-	ft_rotate(gd, -dist_x / 16);
-	mlx_mouse_move(gd->graphx->window.mlx_win, \
+	game->screen_center += dist_y;
+	ft_rescale_ver_view(&game->screen_center);
+	ft_rotate(game, -dist_x / 16);
+	mlx_mouse_move(game->graphx->s_window.mlx_win, \
 					WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	return (0);
 }
 
 #elif __linux__
 
-int	ft_on_mouse_move(int x, int y, t_game_data *gd)
+int	ft_on_mouse_move(int x, int y, t_game *game)
 {
 	double	dist_x;
 	int		dist_y;
 
-	if (gd->graphx->mouse_tracked == false)
+	if (game->graphx->mouse_tracked == false)
 		return (0);
 	dist_x = (WINDOW_WIDTH / 2 - x) / 2.0;
 	dist_y = (WINDOW_HEIGHT / 2 - y) * 2;
-	gd->screen_center += dist_y;
-	ft_rescale_ver_view(&gd->screen_center);
-	ft_rotate(gd, -dist_x / 16);
-	mlx_mouse_move(gd->graphx->mlx_ptr, gd->graphx->window.mlx_win, \
+	game->screen_center += dist_y;
+	ft_rescale_ver_view(&game->screen_center);
+	ft_rotate(game, -dist_x / 16);
+	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->window.mlx_win, \
 					WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	return (0);
 }
@@ -83,41 +83,41 @@ int	ft_on_mouse_move(int x, int y, t_game_data *gd)
 
 #ifdef __APPLE__
 
-int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
+int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
 	if (key_code == KEY_M)
 	{
-		if (game_data->graphx->mouse_tracked == false)
+		if (game->graphx->mouse_tracked == false)
 		{
 			mlx_mouse_hide();
-			mlx_mouse_move(game_data->graphx->window.mlx_win, \
+			mlx_mouse_move(game->graphx->s_window.mlx_win, \
 							WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 		}
 		else
 			mlx_mouse_show();
-		game_data->graphx->mouse_tracked ^= 1;
+		game->graphx->mouse_tracked ^= 1;
 	}
 	return (0);
 }
 
 #elif __linux__
 
-int	ft_key_up_handler(int32_t key_code, t_game_data *game_data)
+int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
 	if (key_code == KEY_M)
 	{
-		if (game_data->graphx->mouse_tracked == false)
+		if (game->graphx->mouse_tracked == false)
 		{
-			mlx_mouse_hide(game_data->graphx->mlx_ptr, \
-							game_data->graphx->window.mlx_win);
-			mlx_mouse_move(game_data->graphx->mlx_ptr, \
-							game_data->graphx->window.mlx_win, \
+			mlx_mouse_hide(game->graphx->mlx_ptr, \
+							game->graphx->window.mlx_win);
+			mlx_mouse_move(game->graphx->mlx_ptr, \
+							game->graphx->window.mlx_win, \
 							WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 		}
 		else
-			mlx_mouse_show(game_data->graphx->mlx_ptr, \
-							game_data->graphx->window.mlx_win);
-		game_data->graphx->mouse_tracked ^= 1;
+			mlx_mouse_show(game->graphx->mlx_ptr, \
+							game->graphx->window.mlx_win);
+		game->graphx->mouse_tracked ^= 1;
 	}
 	return (0);
 }

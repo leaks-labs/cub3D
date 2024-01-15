@@ -6,8 +6,8 @@
 # define TOUCH_X_AXIS	0
 # define TOUCH_Y_AXIS	1
 
-# define TEX_WIDTH	64
-# define TEX_HEIGHT	64
+# define TEX_WIDTH		64
+# define TEX_HEIGHT		64
 
 typedef struct s_pixel
 {
@@ -56,12 +56,12 @@ typedef struct s_raycast
 }				t_raycast;
 
 /* draw wall */
-void	ft_draw_wall(t_game_data *gd, t_draw *draw);
+void	ft_draw_wall(t_game *game, t_draw *draw);
 
 /* drawing */
-void	ft_draw(t_game_data *gd, int x);
+void	ft_draw(t_game *game, int x);
 
 /* render */
-int		ft_render(t_game_data *gd);
+int		ft_render(t_game *game);
 
 #endif

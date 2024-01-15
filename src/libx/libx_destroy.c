@@ -8,8 +8,8 @@ void	ft_destroy_graphx(t_graphx *graphx);
 void	ft_destroy_graphx(t_graphx *graphx)
 {
 	/* could be a loop if minimap */
-	mlx_destroy_image(graphx->mlx_ptr, graphx->window.image.mlx_img);
-	mlx_destroy_window(graphx->mlx_ptr, graphx->window.mlx_win);
+	mlx_destroy_image(graphx->mlx_ptr, graphx->s_window.s_image.mlx_img);
+	mlx_destroy_window(graphx->mlx_ptr, graphx->s_window.mlx_win);
 	free(graphx->mlx_ptr);
 }
 

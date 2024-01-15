@@ -19,8 +19,8 @@
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
-typedef struct s_pixel		t_pixel;
-typedef struct s_game_data	t_game_data;
+typedef struct s_pixel	t_pixel;
+typedef struct s_game	t_game;
 
 # ifdef __linux__
 
@@ -81,33 +81,33 @@ typedef struct s_image
 typedef struct s_window
 {
 	void		*mlx_win;
-	t_image		image; /* could be an array of 2 if minimap or a ptr */
+	t_image		s_image; /* could be an array of 2 if minimap or a ptr */
 }				t_window;
 
 typedef struct s_graphx
 {
 	void		*mlx_ptr;
-	t_window	window; /* could be a ptr, but struct is fine for the project */
+	t_window	s_window; /* could be a ptr, but struct is fine for the project */
 	bool		mouse_tracked;
 }				t_graphx;
 
 /* init and destroy */
-t_mlx_exception	ft_init_graphx(t_game_data *game_data, t_graphx *graphx);
+t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx);
 void			ft_destroy_graphx(t_graphx *graphx);
 
 /* handlers */
-int32_t			ft_key_handler(int32_t key_code, t_game_data *game_data);
-int				ft_on_destroy(t_game_data *game_data);
-int				ft_on_mouse_move(int x, int y, t_game_data *gd);
-int				ft_key_up_handler(int32_t key_code, t_game_data *game_data);
+int32_t			ft_key_handler(int32_t key_code, t_game *game);
+int				ft_on_destroy(t_game *game);
+int				ft_on_mouse_move(int x, int y, t_game *game);
+int				ft_key_up_handler(int32_t key_code, t_game *game);
 
 /* error handling */
 uint8_t			ft_throw_mlx_exception(t_mlx_exception e_exception);
 
 /* print to screen */
-void			ft_refresh(t_game_data *gd);
+void			ft_refresh(t_game *game);
 void			ft_pixel_put(t_image *img, t_pixel *coord);
 void			ft_pixel_cpy(t_image *img_src, t_image *img_dst, \
-						t_pixel *src, t_pixel *dst);
+								t_pixel *src, t_pixel *dst);
 
 #endif

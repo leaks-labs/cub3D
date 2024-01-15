@@ -1,10 +1,10 @@
 #include "game.h"
 
-void			ft_move_back_forth(t_game_data *gd, int key_code);
-void			ft_move_left_right(t_game_data *gd, int key_code);
+void			ft_move_back_forth(t_game *game, int key_code);
+void			ft_move_left_right(t_game *game, int key_code);
 static bool		ft_isawall_grid(t_map *map, int x, int y);
 
-void	ft_move_back_forth(t_game_data *gd, int key_code)
+void	ft_move_back_forth(t_game *game, int key_code)
 {
 	double	new_x_real;
 	double	new_y_real;
@@ -17,19 +17,19 @@ void	ft_move_back_forth(t_game_data *gd, int key_code)
 		dir = 1;
 	else if (key_code == KEY_S)
 		dir = -1;
-	new_x_real = gd->map->s_player.s_pos.x \
-					+ gd->map->s_player.s_dir.x * MOVEMENT_VELOCITY * dir;
-	new_y_real = gd->map->s_player.s_pos.y \
-					+ gd->map->s_player.s_dir.y * MOVEMENT_VELOCITY * dir;
+	new_x_real = game->map->s_player.s_pos.x \
+					+ game->map->s_player.s_dir.x * MOVEMENT_VELOCITY * dir;
+	new_y_real = game->map->s_player.s_pos.y \
+					+ game->map->s_player.s_dir.y * MOVEMENT_VELOCITY * dir;
 	new_x_grid = (int)new_x_real;
 	new_y_grid = (int)new_y_real;
-	if (!ft_isawall_grid(gd->map, new_x_grid, (int)gd->map->s_player.s_pos.y))
-		gd->map->s_player.s_pos.x = new_x_real;
-	if (!ft_isawall_grid(gd->map, (int)gd->map->s_player.s_pos.x, new_y_grid))
-		gd->map->s_player.s_pos.y = new_y_real;
+	if (!ft_isawall_grid(game->map, new_x_grid, (int)game->map->s_player.s_pos.y))
+		game->map->s_player.s_pos.x = new_x_real;
+	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, new_y_grid))
+		game->map->s_player.s_pos.y = new_y_real;
 }
 
-void	ft_move_left_right(t_game_data *gd, int key_code)
+void	ft_move_left_right(t_game *game, int key_code)
 {
 	double	new_x_real;
 	double	new_y_real;
@@ -42,16 +42,16 @@ void	ft_move_left_right(t_game_data *gd, int key_code)
 		dir = -1;
 	else if (key_code == KEY_D)
 		dir = 1;
-	new_x_real = gd->map->s_player.s_pos.x \
-					+ gd->map->s_player.s_plane.x * MOVEMENT_VELOCITY * dir;
-	new_y_real = gd->map->s_player.s_pos.y \
-					+ gd->map->s_player.s_plane.y * MOVEMENT_VELOCITY * dir;
+	new_x_real = game->map->s_player.s_pos.x \
+					+ game->map->s_player.s_plane.x * MOVEMENT_VELOCITY * dir;
+	new_y_real = game->map->s_player.s_pos.y \
+					+ game->map->s_player.s_plane.y * MOVEMENT_VELOCITY * dir;
 	new_x_grid = (int)new_x_real;
 	new_y_grid = (int)new_y_real;
-	if (!ft_isawall_grid(gd->map, new_x_grid, (int)gd->map->s_player.s_pos.y))
-		gd->map->s_player.s_pos.x = new_x_real;
-	if (!ft_isawall_grid(gd->map, (int)gd->map->s_player.s_pos.x, new_y_grid))
-		gd->map->s_player.s_pos.y = new_y_real;
+	if (!ft_isawall_grid(game->map, new_x_grid, (int)game->map->s_player.s_pos.y))
+		game->map->s_player.s_pos.x = new_x_real;
+	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, new_y_grid))
+		game->map->s_player.s_pos.y = new_y_real;
 }
 
 bool	ft_isawall_grid(t_map *map, int x, int y)

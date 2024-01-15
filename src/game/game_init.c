@@ -1,8 +1,8 @@
 #include "game.h"
 
-void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map);
+void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map);
 
-void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map)
+void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map)
 {
 	/* to remove */
 	map->s_player.s_pos.x = 1.5;
@@ -34,7 +34,7 @@ void	ft_init_game_data(t_game_data *game_data, t_graphx *graphx, t_map *map)
 		map->s_player.s_dir.y = 1;
 		map->s_player.s_plane.x = -FOV_FACTOR;
 	}
-	game_data->screen_center = WINDOW_HEIGHT / 2;
-	game_data->map = map;
-	game_data->graphx = graphx;
+	game->screen_center = WINDOW_HEIGHT / 2;
+	game->map = map;
+	game->graphx = graphx;
 }

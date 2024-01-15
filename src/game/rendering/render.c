@@ -1,24 +1,27 @@
 #include "render.h"
 #include "game.h"
 
-int				ft_render(t_game_data *gd);
+#include <stdio.h>
+int				ft_render(t_game *game);
 static void		ft_raycast_init(t_player *pl, t_raycast *rc, int x);
 static void		ft_raycast_side_dist_init(t_player *pl, t_raycast *rc);
 static double	ft_get_ray_len(t_raycast *rc, t_map *map);
 
-int	ft_render(t_game_data *gd)
+int	ft_render(t_game *game)
 {
 	int	current_x;
 
+	printf("result a = %.15f\n",  2 * atan(0.649407593197511) / M_PI * 180);
+	printf("result b = %f\n",  tan(66.0 / 2.0 * M_PI / 180.0));
 	current_x = 0;
 	while (current_x < WINDOW_WIDTH)
 	{
-		ft_raycast_init(&gd->map->s_player, &gd->raycast, current_x);
-		gd->raycast.wall_dist = ft_get_ray_len(&gd->raycast, gd->map);
-		ft_draw(gd, current_x);
+		ft_raycast_init(&game->map->s_player, &game->s_raycast, current_x);
+		game->s_raycast.wall_dist = ft_get_ray_len(&game->s_raycast, game->map);
+		ft_draw(game, current_x);
 		++current_x;
 	}
-	ft_refresh(gd);
+	ft_refresh(game);
 	return (0);
 }
 
