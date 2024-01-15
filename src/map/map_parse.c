@@ -76,8 +76,8 @@ static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
 	if (1 == ft_set_args(map, lexic[i], args[1]))
 		return (ft_freef("%p, %P", line, args), lexic[i].exception);
 	ft_freef("%p, %P", line, args);
-	if (i < N_RULE - 1 && ft_check_requirement(map, fd, ++i) == 4 )
-		return (REQUIREMENT_ERROR); // to correct recursive return
+	if (i < N_RULE - 1)
+		return (ft_check_requirement(map, fd, ++i)); // to correct recursive return
 	return (NO_MAP_EXCEPTION);
 }
 
