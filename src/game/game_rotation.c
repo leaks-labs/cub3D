@@ -3,7 +3,7 @@
 void	ft_rotate(t_game *game, double factor);
 void	ft_rotate_left_right(t_game *game, int key_code);
 void	ft_look_up_down(t_game *game, int key_code);
-void	ft_rescale_ver_view(int *screen_center);
+void	ft_rescale_ver_view(int *screen_center, int window_height);
 
 void	ft_rotate(t_game *game, double factor)
 {
@@ -36,13 +36,14 @@ void	ft_look_up_down(t_game *game, int key_code)
 		game->screen_center += VER_VIEW_VELOCITY;
 	if (key_code == KEY_ARROW_DOWN)
 		game->screen_center -= VER_VIEW_VELOCITY;
-	ft_rescale_ver_view(&game->screen_center);
+	ft_rescale_ver_view(&game->screen_center, \
+						game->graphx->s_window.s_image.height);
 }
 
-void	ft_rescale_ver_view(int *screen_center)
+void	ft_rescale_ver_view(int *screen_center, int window_height)
 {
 	if (*screen_center < 10)
 		*screen_center = 10;
-	if (*screen_center >= WINDOW_HEIGHT - 10)
-		*screen_center = WINDOW_HEIGHT - 10;
+	if (*screen_center >= window_height - 10)
+		*screen_center = window_height - 10;
 }

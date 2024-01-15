@@ -6,9 +6,6 @@
 # define TOUCH_X_AXIS	0
 # define TOUCH_Y_AXIS	1
 
-# define TEX_WIDTH		64
-# define TEX_HEIGHT		64
-
 typedef struct s_pixel
 {
 	int	x;

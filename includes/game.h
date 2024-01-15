@@ -33,7 +33,7 @@ void	ft_move_left_right(t_game *game, int key_code);
 void	ft_rotate(t_game *game, double factor);
 void	ft_rotate_left_right(t_game *game, int key_code);
 void	ft_look_up_down(t_game *game, int key_code);
-void	ft_rescale_ver_view(int *screen_center);
+void	ft_rescale_ver_view(int *screen_center, int window_height);
 
 /* game event */
 void	ft_escape(t_game *game, int key_code);

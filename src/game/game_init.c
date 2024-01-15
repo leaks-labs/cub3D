@@ -34,7 +34,6 @@ void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map)
 		map->s_player.s_dir.y = 1;
 		map->s_player.s_plane.x = -FOV_FACTOR;
 	}
-	game->screen_center = WINDOW_HEIGHT / 2;
 	game->map = map;
 	game->graphx = graphx;
 }

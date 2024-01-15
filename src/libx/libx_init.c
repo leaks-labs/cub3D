@@ -1,4 +1,5 @@
 #include "libx.h"
+#include "game.h"
 
 t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx);
 static void		*ft_mlx_init(void **mlx_ptr);
@@ -21,6 +22,9 @@ t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx)
 		mlx_destroy_window(graphx->mlx_ptr, graphx->s_window.mlx_win);
 		return (CREATE_IMAGE_ERROR);
 	}
+	graphx->s_window.s_image.width = WINDOW_WIDTH;
+	graphx->s_window.s_image.height = WINDOW_HEIGHT;
+	game->screen_center = graphx->s_window.s_image.height / 2;
 	ft_mlx_get_data_addr(&graphx->s_window.s_image);
 	mlx_hook(graphx->s_window.mlx_win, ON_DESTROY, 0, &ft_on_destroy, game);
 	mlx_hook(graphx->s_window.mlx_win, ON_KEYDOWN, (1L << 0), \
