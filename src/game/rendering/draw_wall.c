@@ -60,6 +60,7 @@ static void	ft_texture_iter(t_draw *draw, t_game *game, t_image *src_img, \
 		s_tex.x = src_img->width - s_tex.x - 1;
 	tex_pos = (draw->draw_start - game->screen_center + draw->line_height / 2) \
 				* step;
+	draw->s_dst_pix.y = draw->draw_start;
 	while (draw->s_dst_pix.y <= draw->draw_end)
 	{
 		// Cast the texture coordinate to integer,
