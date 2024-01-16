@@ -13,6 +13,26 @@ typedef struct s_pixel
 	int	colour;
 }				t_pixel;
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}				t_coord;
+
+typedef struct s_env
+{
+	t_image	*dst_img;
+	t_image	*tex_ceiling;
+	t_image	*tex_floor;
+	t_vec	s_ray_dir_l;
+	t_vec	s_ray_dir_r;
+	t_pixel	s_src_pix;
+	t_pixel	s_dst_pix;
+	t_vec	s_step;
+	t_vec	s_coord;
+	t_coord	s_grid_coord;
+}				t_env;
+
 typedef struct s_draw
 {
 	t_image	*dst_img;
@@ -21,12 +41,6 @@ typedef struct s_draw
 	int		draw_end;
 	int		line_height;
 }				t_draw;
-
-typedef struct s_coord
-{
-	int	x;
-	int	y;
-}				t_coord;
 
 typedef struct s_dist
 {
@@ -51,6 +65,9 @@ typedef struct s_raycast
 	double	wall_dist;
 	bool	side_touched;
 }				t_raycast;
+
+/* draw environment */
+void 	ft_draw_text_env(t_game *game, t_player *pl);
 
 /* draw wall */
 void	ft_draw_wall(t_game *game, t_draw *draw);

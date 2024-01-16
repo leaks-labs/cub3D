@@ -11,9 +11,12 @@ void	ft_draw(t_game *game, int x)
 	t_draw	s_draw;
 
 	ft_draw_init(game, &s_draw, x);
-	ft_draw_ceiling(&s_draw, game->map);
+	if (game->map->texture[CEILING].image->mlx_img == NULL)
+		ft_draw_ceiling(&s_draw, game->map);
 	ft_draw_wall(game, &s_draw);
-	ft_draw_floor(&s_draw, game->map, game->graphx->s_window.s_image.height);
+	if (game->map->texture[FLOOR].image->mlx_img == NULL)
+		ft_draw_floor(&s_draw, game->map, \
+						game->graphx->s_window.s_image.height);
 }
 
 static void	ft_draw_init(t_game *game, t_draw *draw, int x)
@@ -36,6 +39,7 @@ static void	ft_draw_ceiling(t_draw *draw, t_map *map)
 {
 	if (draw->draw_start < 0)
 		return ;
+	draw->s_dst_pix.y = 0;
 	draw->s_dst_pix.colour = map->texture[CEILING].rgb[0];
 	while (draw->s_dst_pix.y < draw->draw_start)
 	{
@@ -48,6 +52,7 @@ static void	ft_draw_floor(t_draw *draw, t_map *map, int window_height)
 {
 	if (draw->draw_end >= window_height - 1)
 		return ;
+	draw->s_dst_pix.y = draw->draw_end + 1;
 	draw->s_dst_pix.colour = map->texture[FLOOR].rgb[0];
 	while (draw->s_dst_pix.y < window_height)
 	{
