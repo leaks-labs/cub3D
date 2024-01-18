@@ -1,20 +1,11 @@
-#include <stdlib.h>
 #include "libx.h"
 #include "game.h"
 
-int			ft_on_destroy(t_game *game);
-int			ft_key_handler(int32_t key_code, t_game *game);
-int			ft_on_mouse_move(int x, int y, t_game *game);
+int			ft_key_down_handler(int32_t key_code, t_game *game);
 int			ft_key_up_handler(int32_t key_code, t_game *game);
 static void	ft_switch_mouse_mode(t_game *game);
 
-int	ft_on_destroy(t_game *game)
-{
-	ft_destroy_game(game);
-	exit(0);
-}
-
-int	ft_key_handler(int32_t key_code, t_game *game)
+int	ft_key_down_handler(int32_t key_code, t_game *game)
 {
 	static const t_dic_keys	s_dic_keys[N_BIT_KEY] = {\
 		{KEY_W, BIT_KEY_W}, {KEY_S, BIT_KEY_S}, \
@@ -24,7 +15,7 @@ int	ft_key_handler(int32_t key_code, t_game *game)
 		{KEY_ARROW_DOWN, BIT_KEY_ARROW_DOWN}, \
 		{KEY_ARROW_UP, BIT_KEY_ARROW_UP}, \
 		{KEY_I, BIT_KEY_I}, {KEY_O, BIT_KEY_O}};
-	size_t	i;
+	size_t					i;
 
 	i = 0;
 	while (i < N_BIT_KEY)
@@ -36,40 +27,6 @@ int	ft_key_handler(int32_t key_code, t_game *game)
 	return (0);
 }
 
-#ifdef __APPLE__
-
-int	ft_on_mouse_move(int x, int y, t_game *game)
-{
-	if (game->s_mouse.mouse_tracked == false)
-		return (0);
-	game->s_mouse.rot_mouse_left_right += \
-						(game->graphx->s_window.s_image.width / 2 - x) / 2.0;
-	game->s_mouse.rot_mouse_up_down += \
-						(game->graphx->s_window.s_image.height / 2 - y) * 3;
-	mlx_mouse_move(game->graphx->s_window.mlx_win, \
-					game->graphx->s_window.s_image.width / 2, \
-					game->graphx->s_window.s_image.height / 2);
-	return (0);
-}
-
-#elif __linux__
-
-int	ft_on_mouse_move(int x, int y, t_game *game)
-{
-	if (game->s_mouse.mouse_tracked  == false)
-		return (0);
-	game->s_mouse.rot_mouse_left_right += \
-						(game->graphx->s_window.s_image.width / 2 - x) / 2.0;
-	game->s_mouse.rot_mouse_up_down += \
-						(game->graphx->s_window.s_image.height / 2 - y) * 2;
-	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->s_window.mlx_win, \
-					game->graphx->s_window.s_image.width / 2, \
-					game->graphx->s_window.s_image.height / 2);
-	return (0);
-}
-
-#endif
-
 int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
 	static const t_dic_keys	s_dic_keys[N_BIT_KEY] = {\
@@ -80,7 +37,7 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 		{KEY_ARROW_DOWN, BIT_KEY_ARROW_DOWN}, \
 		{KEY_ARROW_UP, BIT_KEY_ARROW_UP}, \
 		{KEY_I, BIT_KEY_I}, {KEY_O, BIT_KEY_O}};
-	size_t	i;
+	size_t					i;
 
 	i = 0;
 	while (i < N_BIT_KEY)

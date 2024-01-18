@@ -26,17 +26,17 @@ CC:=	clang
 
 CFLAGS=	-Wall -Wextra -Werror
 
-CFLAGS+=	-Wconversion 			\
+CFLAGS+=	-Wconversion			\
 			-Wdouble-promotion		\
-			-Wfloat-equal 			\
-			-Wformat=2 				\
-			-Winit-self 			\
-			-fno-common 			\
-			-Wshadow 				\
-			-Wundef 				\
-			-Wunused-macros 		\
-			-Wwrite-strings 		\
-			-Wmissing-prototypes 	\
+			-Wfloat-equal			\
+			-Wformat=2				\
+			-Winit-self				\
+			-fno-common				\
+			-Wshadow				\
+			-Wundef					\
+			-Wunused-macros			\
+			-Wwrite-strings			\
+			-Wmissing-prototypes	\
 			-Wmissing-declarations	\
 			-O3
 
@@ -68,44 +68,46 @@ MAIN:=	main
 
 SRCS_FILES:=	game/rendering/draw_environment	\
 				game/rendering/draw_wall		\
-				game/rendering/drawing		    \
-				game/rendering/render		    \
-				game/game_check_grid  			\
-				game/game_destroy		        \
-				game/game_event			        \
-				game/game_init			        \
-				game/game_mini_map		        \
-				game/game_movement		        \
-				game/game_rotation		        \
-				game/run				        \
-				libx/libx_event	    		    \
-				libx/libx_destroy		        \
-				libx/libx_exception		        \
-				libx/libx_init			        \
+				game/rendering/drawing			\
+				game/rendering/render			\
+				game/game_check_grid			\
+				game/game_destroy				\
+				game/game_event					\
+				game/game_init					\
+				game/game_mini_map				\
+				game/game_movement				\
+				game/game_rotation				\
+				game/run						\
+				libx/libx_destroy				\
+				libx/libx_exception				\
+				libx/libx_init					\
+				libx/libx_key_handler			\
+				libx/libx_mouse_handler			\
+				libx/libx_new_image				\
 				libx/libx_print_screen			\
-				map/map_destroy			   		\
-				map/map_exception		    	\
-				map/map_init			    	\
-				map/map_parse			   	 	\
-				utils/ft_calloc	   	 			\
-				utils/ft_freef		    		\
-				utils/ft_get_next_line	    	\
-				utils/ft_isalnum		    	\
-				utils/ft_isalpha		    	\
-				utils/ft_isdigit		    	\
-				utils/ft_isspace		    	\
-				utils/ft_join			    	\
-				utils/ft_memcpy	    			\
+				map/map_destroy					\
+				map/map_exception				\
+				map/map_init					\
+				map/map_parse					\
+				utils/ft_calloc					\
+				utils/ft_freef					\
+				utils/ft_get_next_line			\
+				utils/ft_isalnum				\
+				utils/ft_isalpha				\
+				utils/ft_isdigit				\
+				utils/ft_isspace				\
+				utils/ft_join					\
+				utils/ft_memcpy					\
 				utils/ft_memset					\
-				utils/ft_putendl_fd			    \
-				utils/ft_putstr_fd		    	\
-				utils/ft_strchr			    	\
-				utils/ft_strcmp			    	\
-				utils/ft_strdup			    	\
-				utils/ft_strlen			    	\
-				utils/ft_strncmp		    	\
-				utils/ft_strndup		    	\
-				utils/ft_strnstr		    	\
+				utils/ft_putendl_fd				\
+				utils/ft_putstr_fd				\
+				utils/ft_strchr					\
+				utils/ft_strcmp					\
+				utils/ft_strdup					\
+				utils/ft_strlen					\
+				utils/ft_strncmp				\
+				utils/ft_strndup				\
+				utils/ft_strnstr				\
 				utils/ft_substr
 
 ################################################################################

@@ -11,9 +11,9 @@ void	ft_move_back_forth(t_game *game)
 	int		new_y_grid;
 	int		dir;
 
-	if ((game->bit_switch & BIT_KEY_W) != 0 && (game->bit_switch & BIT_KEY_S) == 0)
+	if ((game->bit_switch & BIT_KEY_W) && !(game->bit_switch & BIT_KEY_S))
 		dir = 1;
-	else if ((game->bit_switch & BIT_KEY_W) == 0 && (game->bit_switch & BIT_KEY_S) != 0)
+	else if (!(game->bit_switch & BIT_KEY_W) && (game->bit_switch & BIT_KEY_S))
 		dir = -1;
 	else
 		return ;
@@ -39,9 +39,9 @@ void	ft_move_left_right(t_game *game)
 	int		new_y_grid;
 	int		dir;
 
-	if ((game->bit_switch & BIT_KEY_A) != 0 && (game->bit_switch & BIT_KEY_D) == 0)
+	if ((game->bit_switch & BIT_KEY_A) && !(game->bit_switch & BIT_KEY_D))
 		dir = -1;
-	else if ((game->bit_switch & BIT_KEY_A) == 0 && (game->bit_switch & BIT_KEY_D) != 0)
+	else if (!(game->bit_switch & BIT_KEY_A) && (game->bit_switch & BIT_KEY_D))
 		dir = 1;
 	else
 		return ;

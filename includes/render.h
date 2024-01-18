@@ -67,7 +67,7 @@ typedef struct s_raycast
 }				t_raycast;
 
 /* draw environment */
-void 	ft_draw_text_env(t_game *game, t_player *pl);
+void	ft_draw_text_env(t_game *game, t_player *pl);
 
 /* draw wall */
 void	ft_draw_wall(t_game *game, t_draw *draw);

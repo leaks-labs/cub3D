@@ -1,6 +1,5 @@
 #include "render.h"
 #include "game.h"
-#include "utils.h"
 
 int				ft_render(t_game *game);
 static void		ft_raycast_init(t_game *game, int x);
@@ -26,7 +25,7 @@ int	ft_render(t_game *game)
 	if (game->show_minimap == true)
 	{
 		ft_draw_map(&game->map->s_mini_map, game->map);
-		ft_minimap_zoom(game, 0);
+		ft_minimap_zoom(game);
 		ft_refresh_mini_map(game);
 	}
 	return (0);

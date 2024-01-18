@@ -11,7 +11,7 @@
 # define WINDOW_HEIGHT			720
 # define MINI_MAP_WIDTH			300
 # define MINI_MAP_HEIGHT		300
-# define MINI_MAP_PIX_PER_CELL	MINI_MAP_WIDTH / 10
+# define MINI_MAP_PIX_PER_CELL	30
 
 # define MLX_INIT_ERROR		"Failed to initialise mlx"
 # define MLX_WINDOW_ERROR	"Failed to initialise the window"
@@ -37,14 +37,12 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 65363,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_UP = 65362,
-	KEY_H = 104,
-	KEY_L = 108,
 	KEY_I = 105,
 	KEY_O = 111,
 	KEY_M = 109,
 	KEY_P = 112,
 	KEY_ESC = 65307,
-	N_KEY = 15
+	N_KEY = 13
 }			t_keyboard;
 
 # elif __APPLE__
@@ -59,14 +57,12 @@ typedef enum e_keyboard
 	KEY_ARROW_RIGHT = 124,
 	KEY_ARROW_DOWN = 125,
 	KEY_ARROW_UP = 126,
-	KEY_H = 4,
-	KEY_L = 37,
 	KEY_I = 34,
 	KEY_O = 31,
 	KEY_M = 46,
 	KEY_P = 35,
 	KEY_ESC = 53,
-	N_KEY = 15
+	N_KEY = 13
 }			t_keyboard;
 
 # endif
@@ -84,14 +80,7 @@ typedef enum e_keyboard_bitwise
 	BIT_KEY_I = 256,
 	BIT_KEY_O = 512,
 	N_BIT_KEY = 10
-}				s_keyboard;
-
-typedef struct s_dic_keys
-{
-	int		keycode;
-	int32_t	bitwise;
-}				t_dic_keys;
-
+}				t_keyboard_bitwise;
 
 typedef enum e_mlx_exception
 {
@@ -101,6 +90,12 @@ typedef enum e_mlx_exception
 	N_EXCEPTION,
 	NO_EXCEPTION
 }				t_mlx_exception;
+
+typedef struct s_dic_keys
+{
+	int		keycode;
+	int32_t	bitwise;
+}				t_dic_keys;
 
 typedef struct s_image
 {
@@ -116,24 +111,31 @@ typedef struct s_image
 typedef struct s_window
 {
 	void		*mlx_win;
-	t_image		s_image; /* could be an array of 2 if minimap or a ptr */
+	t_image		s_image;
 }				t_window;
 
 typedef struct s_graphx
 {
 	void		*mlx_ptr;
-	t_window	s_window; /* could be a ptr, but struct is fine for the project */
+	t_window	s_window;
 }				t_graphx;
 
 /* init and destroy */
 t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx);
 void			ft_destroy_graphx(t_game *game);
 
-/* handlers */
-int32_t			ft_key_handler(int32_t key_code, t_game *game);
+/* new image */
+void			*ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
+void			*ft_mlx_new_mini_map_image(void *mlx_ptr, void **mlx_img);
+void			ft_set_images_metadata(t_game *game, t_graphx *graphx);
+
+/* key handlers */
+int32_t			ft_key_down_handler(int32_t key_code, t_game *game);
+int				ft_key_up_handler(int32_t key_code, t_game *game);
+
+/* mouse handlers */
 int				ft_on_destroy(t_game *game);
 int				ft_on_mouse_move(int x, int y, t_game *game);
-int				ft_key_up_handler(int32_t key_code, t_game *game);
 
 /* error handling */
 uint8_t			ft_throw_mlx_exception(t_mlx_exception e_exception);

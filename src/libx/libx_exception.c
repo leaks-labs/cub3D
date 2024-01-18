@@ -14,7 +14,7 @@ uint8_t	ft_throw_mlx_exception(t_mlx_exception e_mlx_exception)
 
 	if (e_mlx_exception < NO_EXCEPTION)
 	{
-		ft_putendl_fd("Error", STDERR_FILENO);
+		ft_putstr_fd("Error: ", STDERR_FILENO);
 		ft_putendl_fd(mlx_exception[e_mlx_exception], STDERR_FILENO);
 		return (1);
 	}

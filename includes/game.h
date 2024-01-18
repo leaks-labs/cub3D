@@ -33,7 +33,6 @@ typedef struct s_game
 	t_graphx	*graphx;
 	t_raycast	s_raycast;
 	int			screen_center;
-	double		size_factor;
 	bool		show_minimap;
 	int32_t		bit_switch;
 	t_mouse		s_mouse;
@@ -66,8 +65,7 @@ void	ft_rescale_angle(double *angle);
 
 /* game event */
 void	ft_escape(t_game *game);
-void	ft_size_factor(t_game *game, int key_code);
-void	ft_minimap_zoom(t_game *game, int key_code);
+void	ft_minimap_zoom(t_game *game);
 void	ft_rotate_mouse(t_game *game);
 
 #endif

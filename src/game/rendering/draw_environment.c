@@ -1,11 +1,11 @@
 #include "render.h"
 #include "game.h"
 
-void 		ft_draw_text_env(t_game *game, t_player *pl);
+void		ft_draw_text_env(t_game *game, t_player *pl);
 static void	ft_scan_one_line(t_game *game, t_env *env);
 static void	ft_print_pixel_on_line(t_env *env, int screen_center);
 
-void ft_draw_text_env(t_game *game, t_player *pl)
+void	ft_draw_text_env(t_game *game, t_player *pl)
 {
 	t_env	s_env;
 	int		max_y;
@@ -37,7 +37,6 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 	const double	pos_z = game->graphx->s_window.s_image.height * 0.5;
 	int				p;
 	double			row_distance;
-
 
 	// Current y position compared to the center of the screen (the horizon)
 	if (env->s_dst_pix.y < game->screen_center)

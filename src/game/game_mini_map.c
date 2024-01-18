@@ -1,5 +1,4 @@
 #include "game.h"
-#include "utils.h"
 
 void		ft_draw_map(t_mini_map *mini_map, t_map *map);
 static void	ft_draw_a_line(t_map *map, t_pixel *pix, t_vec *pos_tmp);
@@ -67,8 +66,7 @@ static void	ft_draw_player_pos(t_mini_map *mini_map, t_pixel *pix)
 	diff = 0;
 	pix->x = mini_map->s_image.width / 2 - 8;
 	pix->y = y_start;
-
-	while (pix->x <=  max_x)
+	while (pix->x <= max_x)
 	{
 		i = 0;
 		while (i++ < 3)
@@ -83,7 +81,7 @@ static void	ft_draw_player_pos(t_mini_map *mini_map, t_pixel *pix)
 static void	ft_print_cursor_column(t_mini_map *mini_map, t_pixel *pix, \
 									int diff, int y_start)
 {
-	t_pixel		s_pix_rotated;
+	t_pixel	s_pix_rotated;
 
 	s_pix_rotated.colour = CURSOR_COLOR_MAP;
 	pix->y = y_start - diff;

@@ -20,7 +20,7 @@
 
 # define REQUIREMENT_CEILING_RGB	"C"
 
-typedef enum e_map_exception /* add open and read exception */
+typedef enum e_map_exception
 {
 	EXTENSION_ERROR,
 	OPEN_ERROR,
