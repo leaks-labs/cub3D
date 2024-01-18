@@ -56,11 +56,11 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 int	ft_on_mouse_move(int x, int y, t_game *game)
 {
-	if (game->graphx->mouse_tracked == false)
+	if (game->s_mouse.mouse_tracked  == false)
 		return (0);
-	game->s_switch.rot_mouse_left_right += \
+	game->s_mouse.rot_mouse_left_right += \
 						(game->graphx->s_window.s_image.width / 2 - x) / 2.0;
-	game->s_switch.rot_mouse_up_down += \
+	game->s_mouse.rot_mouse_up_down += \
 						(game->graphx->s_window.s_image.height / 2 - y) * 2;
 	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
@@ -118,7 +118,7 @@ static void	ft_switch_mouse_mode(t_game *game)
 
 static void	ft_switch_mouse_mode(t_game *game)
 {
-	if (game->graphx->mouse_tracked == false)
+	if (game->s_mouse.mouse_tracked == false)
 	{
 		mlx_mouse_hide(game->graphx->mlx_ptr, \
 						game->graphx->s_window.mlx_win);
@@ -130,7 +130,7 @@ static void	ft_switch_mouse_mode(t_game *game)
 	else
 		mlx_mouse_show(game->graphx->mlx_ptr, \
 						game->graphx->s_window.mlx_win);
-	game->graphx->mouse_tracked ^= 1;
+	game->s_mouse.mouse_tracked ^= 1;
 }
 
 #endif
