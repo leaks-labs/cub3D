@@ -77,22 +77,12 @@ static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
 
 t_dictionary *ft_set_lexic(void)
 {
-	const char rule[N_RULE][RULE_LEN] = {
-			NORTH_TEXTURE, SOUTH_TEXTURE,
-			WEST_TEXTURE, EAST_TEXTURE,
-			FLOOR_TEXTURE, CEILING_TEXTURE,
-			FLOOR_RGB, CEILING_RGB
-	};
 	t_dictionary	*lexic;
 	size_t			i;
 	lexic = ft_calloc(N_RULE + 1, sizeof(t_dictionary));
 	if (NULL == lexic)
 		return (NULL);
-	i = 0;
-	while (i < 4)
-	{
-		ft_strlcpy(lexic[i].rule, rule[i], ft_strlen(rule[i]));
-	}
+	ft_set_path_rule()
 	return (lexic);
 }
 
@@ -107,7 +97,7 @@ char *ft_read_line(char **str, int32_t fd)
 	return	(*str);
 }
 
-uint8_t ft_rule_match(const t_dictionary *lexic, char *rule, size_t *index)
+uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 {
 	size_t i;
 
