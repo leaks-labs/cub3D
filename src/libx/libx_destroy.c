@@ -21,7 +21,7 @@ void	ft_destroy_graphx(t_game *game)
 
 void	ft_destroy_graphx(t_game *game)
 {
-	mlx_loop_end(graphx->mlx_ptr);
+	mlx_loop_end(game->graphx->mlx_ptr);
 	mlx_destroy_image(game->graphx->mlx_ptr, \
 						game->graphx->s_window.s_image.mlx_img);
 	mlx_destroy_image(game->graphx->mlx_ptr, \
