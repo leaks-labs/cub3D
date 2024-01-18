@@ -6,6 +6,7 @@ int				ft_render(t_game *game);
 static void		ft_raycast_init(t_game *game, int x);
 static void		ft_raycast_side_dist_init(t_player *pl, t_raycast *rc);
 static double	ft_get_ray_len(t_raycast *rc, t_map *map);
+static void		ft_update_moves(t_game *game);
 
 int	ft_render(t_game *game)
 {
@@ -20,10 +21,12 @@ int	ft_render(t_game *game)
 		ft_draw(game, current_x);
 		++current_x;
 	}
+	ft_update_moves(game);
 	ft_refresh(game);
 	if (game->show_minimap == true)
 	{
 		ft_draw_map(&game->map->s_mini_map, game->map);
+		ft_minimap_zoom(game, 0);
 		ft_refresh_mini_map(game);
 	}
 	return (0);
@@ -109,4 +112,13 @@ static double	ft_get_ray_len(t_raycast *rc, t_map *map)
 	if (rc->side_touched == TOUCH_X_AXIS)
 		return (rc->s_side_dist.x - rc->s_delta_dist.x);
 	return (rc->s_side_dist.y - rc->s_delta_dist.y);
+}
+
+static void	ft_update_moves(t_game *game)
+{
+	ft_move_back_forth(game);
+	ft_move_left_right(game);
+	ft_rotate_left_right(game);
+	ft_look_up_down(game);
+	ft_rotate_mouse(game);
 }

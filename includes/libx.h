@@ -27,10 +27,6 @@ typedef struct s_game	t_game;
 
 # ifdef __linux__
 
-#  define KEY_M	109
-#  define KEY_P	112
-#  define KEY_ESC 65307
-
 typedef enum e_keyboard
 {
 	KEY_W = 119,
@@ -45,14 +41,13 @@ typedef enum e_keyboard
 	KEY_L = 108,
 	KEY_I = 105,
 	KEY_O = 111,
-	N_KEY = 12
+	KEY_M = 109,
+	KEY_P = 112,
+	KEY_ESC = 65307,
+	N_KEY = 15
 }			t_keyboard;
 
 # elif __APPLE__
-
-#  define KEY_M	46
-#  define KEY_P	35
-#  define KEY_ESC 53
 
 typedef enum e_keyboard
 {
@@ -68,10 +63,35 @@ typedef enum e_keyboard
 	KEY_L = 37,
 	KEY_I = 34,
 	KEY_O = 31,
-	N_KEY = 12
+	KEY_M = 46,
+	KEY_P = 35,
+	KEY_ESC = 53,
+	N_KEY = 15
 }			t_keyboard;
 
 # endif
+
+typedef enum e_keyboard_bitwise
+{
+	BIT_KEY_W = 1,
+	BIT_KEY_S = 2,
+	BIT_KEY_D = 4,
+	BIT_KEY_A = 8,
+	BIT_KEY_ARROW_LEFT = 16,
+	BIT_KEY_ARROW_RIGHT = 32,
+	BIT_KEY_ARROW_DOWN = 64,
+	BIT_KEY_ARROW_UP = 128,
+	BIT_KEY_I = 256,
+	BIT_KEY_O = 512,
+	N_BIT_KEY = 10
+}				s_keyboard;
+
+typedef struct s_dic_keys
+{
+	int		keycode;
+	int32_t	bitwise;
+}				t_dic_keys;
+
 
 typedef enum e_mlx_exception
 {
@@ -103,7 +123,6 @@ typedef struct s_graphx
 {
 	void		*mlx_ptr;
 	t_window	s_window; /* could be a ptr, but struct is fine for the project */
-	bool		mouse_tracked;
 }				t_graphx;
 
 /* init and destroy */

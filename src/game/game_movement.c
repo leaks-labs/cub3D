@@ -1,9 +1,9 @@
 #include "game.h"
 
-void	ft_move_back_forth(t_game *game, int key_code);
-void	ft_move_left_right(t_game *game, int key_code);
+void	ft_move_back_forth(t_game *game);
+void	ft_move_left_right(t_game *game);
 
-void	ft_move_back_forth(t_game *game, int key_code)
+void	ft_move_back_forth(t_game *game)
 {
 	double	new_x_real;
 	double	new_y_real;
@@ -11,11 +11,12 @@ void	ft_move_back_forth(t_game *game, int key_code)
 	int		new_y_grid;
 	int		dir;
 
-	dir = 1;
-	if (key_code == KEY_W)
+	if ((game->bit_switch & BIT_KEY_W) != 0 && (game->bit_switch & BIT_KEY_S) == 0)
 		dir = 1;
-	else if (key_code == KEY_S)
+	else if ((game->bit_switch & BIT_KEY_W) == 0 && (game->bit_switch & BIT_KEY_S) != 0)
 		dir = -1;
+	else
+		return ;
 	new_x_real = game->map->s_player.s_pos.x \
 					+ game->map->s_player.s_dir.x * MOVEMENT_VELOCITY * dir;
 	new_y_real = game->map->s_player.s_pos.y \
@@ -30,7 +31,7 @@ void	ft_move_back_forth(t_game *game, int key_code)
 		game->map->s_player.s_pos.y = new_y_real;
 }
 
-void	ft_move_left_right(t_game *game, int key_code)
+void	ft_move_left_right(t_game *game)
 {
 	double	new_x_real;
 	double	new_y_real;
@@ -38,11 +39,12 @@ void	ft_move_left_right(t_game *game, int key_code)
 	int		new_y_grid;
 	int		dir;
 
-	dir = 1;
-	if (key_code == KEY_A)
+	if ((game->bit_switch & BIT_KEY_A) != 0 && (game->bit_switch & BIT_KEY_D) == 0)
 		dir = -1;
-	else if (key_code == KEY_D)
+	else if ((game->bit_switch & BIT_KEY_A) == 0 && (game->bit_switch & BIT_KEY_D) != 0)
 		dir = 1;
+	else
+		return ;
 	new_x_real = game->map->s_player.s_pos.x \
 					+ game->map->s_player.s_plane.x * MOVEMENT_VELOCITY * dir;
 	new_y_real = game->map->s_player.s_pos.y \
