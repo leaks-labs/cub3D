@@ -72,6 +72,15 @@ typedef struct s_player
 	t_orientation	e_orientation;
 }				t_player;
 
+typedef struct s_mini_map
+{
+	t_image	s_image;
+	int		wall_color;
+	int		empty_color;
+	int		units;
+	double	steps;
+}				t_mini_map;
+
 typedef struct s_map
 {
 	t_element	*grid;
@@ -79,6 +88,7 @@ typedef struct s_map
 	int32_t		width;
 	int32_t		height;
 	t_player	s_player;
+	t_mini_map	s_mini_map;
 }				t_map;
 
 /* init and destroy */

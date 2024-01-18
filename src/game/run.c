@@ -4,7 +4,7 @@ uint8_t	ft_run(t_map *map);
 
 uint8_t	ft_run(t_map *map)
 {
-	t_game	s_game;
+	t_game		s_game;
 	t_graphx	s_graphx;
 
 	ft_init_game_data(&s_game, &s_graphx, map);
@@ -56,7 +56,6 @@ uint8_t	ft_run(t_map *map)
 	map->texture[CEILING].rgb[0] = 0x43629d;
 	/* to remove */
 
-	mlx_loop_hook(s_graphx.mlx_ptr, &ft_render, &s_game);
 	mlx_loop(s_graphx.mlx_ptr);
 	return (0);
 }

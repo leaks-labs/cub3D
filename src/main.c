@@ -5,12 +5,12 @@
 
 int	main(int argc, char **argv)
 {
-	t_map	map;
+	t_map	s_map;
 
 	if (argc != 2)
 	{
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	return (1 == ft_init_map(argv[1], &map) || 1 == ft_run(&map));
+	return (1 == ft_init_map(argv[1], &s_map) || 1 == ft_run(&s_map));
 }
