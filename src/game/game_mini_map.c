@@ -4,6 +4,8 @@
 void		ft_draw_map(t_mini_map *mini_map, t_map *map);
 static void	ft_draw_a_line(t_map *map, t_pixel *pix, t_vec *pos_tmp);
 static void	ft_draw_player_pos(t_mini_map *mini_map, t_pixel *pix);
+static void	ft_print_cursor_column(t_mini_map *mini_map, t_pixel *pix, \
+									int diff, int y_start);
 static void	ft_rotate_cursor(t_image *img, t_pixel *pix, double angle);
 
 void	ft_draw_map(t_mini_map *mini_map, t_map *map)
@@ -59,32 +61,39 @@ static void	ft_draw_player_pos(t_mini_map *mini_map, t_pixel *pix)
 {
 	const int	y_start = mini_map->s_image.height / 2;
 	const int	max_x = mini_map->s_image.width / 2 + 11;
-	int	diff;
-	int	i;
-	t_pixel		s_pix_rotated;
+	int			diff;
+	int			i;
 
 	diff = 0;
 	pix->x = mini_map->s_image.width / 2 - 8;
 	pix->y = y_start;
-	s_pix_rotated.colour = CURSOR_COLOR_MAP;
 
 	while (pix->x <=  max_x)
 	{
 		i = 0;
 		while (i++ < 3)
 		{
-			pix->y = y_start - diff;
-			while (pix->y <= y_start + diff)
-			{
-				s_pix_rotated.x = pix->x;
-				s_pix_rotated.y = pix->y;
-				ft_rotate_cursor(&mini_map->s_image, &s_pix_rotated, mini_map->angle);
-				ft_pixel_put(&mini_map->s_image, &s_pix_rotated);
-				pix->y++;
-			}
+			ft_print_cursor_column(mini_map, pix, diff, y_start);
 			pix->x++;
 		}
 		diff++;
+	}
+}
+
+static void	ft_print_cursor_column(t_mini_map *mini_map, t_pixel *pix, \
+									int diff, int y_start)
+{
+	t_pixel		s_pix_rotated;
+
+	s_pix_rotated.colour = CURSOR_COLOR_MAP;
+	pix->y = y_start - diff;
+	while (pix->y <= y_start + diff)
+	{
+		s_pix_rotated.x = pix->x;
+		s_pix_rotated.y = pix->y;
+		ft_rotate_cursor(&mini_map->s_image, &s_pix_rotated, mini_map->angle);
+		ft_pixel_put(&mini_map->s_image, &s_pix_rotated);
+		pix->y++;
 	}
 }
 
