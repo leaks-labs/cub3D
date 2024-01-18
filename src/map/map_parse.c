@@ -16,8 +16,9 @@ uint8_t ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
 uint8_t ft_set_path(t_map *map, const t_dictionary *lexic, char *args);
 uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args);
 
-uint8_t ft_rule_match(const t_dictionary *lexic, char *rule, size_t *index);
-uint8_t ft_is_match(const t_dictionary *lexic);
+uint8_t ft_rule_match(t_dictionary *lexic, char *rule, ssize_t *index);
+uint8_t ft_is_match(t_dictionary *lexic, ssize_t *sig);
+t_dictionary *ft_set_lexic(void);
 
 t_map_exception ft_parse_map(char *file, t_map *map)
 {
@@ -58,31 +59,52 @@ uint8_t ft_open_file(char *file, int32_t *fd)
 static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
 {
 	static t_dictionary *lexic;
-	size_t index;
+	ssize_t index;
 	char **args;
 	char *line;
 
+	if (0 == i)
+		lexic = ft_set_lexic();
 	ft_read_line(&line, fd);
+	printf("%s\n", line);
 	args = ft_split(line, ' ');
 	if ((ft_dptrlen(args) != 2 || ft_rule_match(lexic, args[0], &index) != 0)
-		&& ft_is_match(lexic))
-		return (ft_freef("%p, %P", line, args), REQUIREMENT_ERROR); // free here
-	if (1 == ft_set_args(map, &lexic[index], args[1]))
-		return (ft_freef("%p, %P", line, args), lexic[index].exception);
-	ft_freef("%p, %P", line, args); //free here
+		&& ft_is_match(lexic, &index) != 0)
+		return (ft_freef("%p, %p, %P", lexic, line, args), REQUIREMENT_ERROR);
+	if (index != -1 && 1 == ft_set_args(map, &lexic[index], args[1]))
+		return (ft_freef("%p, %p, %P", lexic, line, args), lexic[index].exception);
+	printf("ic\n");
+	ft_freef("%p, %P", line, args);
 	if (i < N_RULE - 1)
 		return (ft_check_requirement(map, fd, ++i));
-	return (NO_MAP_EXCEPTION); //free here
+	return (free(lexic), NO_MAP_EXCEPTION);
 }
 
 t_dictionary *ft_set_lexic(void)
 {
+	printf("test\n");
+	const t_dictionary tmp_lexic[N_RULE]= {
+			{NORTH_TEXTURE, MANDATORY, WALL, NORTH, PATH_ERROR},
+			{SOUTH_TEXTURE, MANDATORY,WALL, SOUTH, PATH_ERROR},
+			{WEST_TEXTURE, MANDATORY, WALL, WEST, PATH_ERROR},
+			{EAST_TEXTURE, MANDATORY, WALL, EAST, PATH_ERROR},
+			{FLOOR_RGB, MANDATORY, FLOOR, 0, RGB_ERROR},
+			{CEILING_RGB, MANDATORY, CEILING, 0, RGB_ERROR},
+			{FLOOR_TEXTURE, NOT_MANDATORY, FLOOR, 0, PATH_ERROR},
+			{CEILING_TEXTURE, NOT_MANDATORY, CEILING, 0, PATH_ERROR}
+	};
 	t_dictionary	*lexic;
 	size_t			i;
+
 	lexic = ft_calloc(N_RULE + 1, sizeof(t_dictionary));
 	if (NULL == lexic)
 		return (NULL);
-	ft_set_path_rule()
+	i = 0;
+	while (i < N_RULE)
+	{
+		lexic[i] = tmp_lexic[i];
+		++i;
+	}
 	return (lexic);
 }
 
@@ -97,9 +119,9 @@ char *ft_read_line(char **str, int32_t fd)
 	return	(*str);
 }
 
-uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
+uint8_t ft_rule_match(t_dictionary *lexic, char *rule, ssize_t *index)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (i < N_RULE)
@@ -108,6 +130,7 @@ uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 		{
 			printf("lexic : %s\n rule : %s\n", lexic[i].rule, rule);
 			lexic[i].rule_type = MATCH;
+			printf("rule type %d\n", lexic[i].rule_type);
 			*index = i;
 			return (0);
 		}
@@ -116,7 +139,7 @@ uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 	return (1);
 }
 
-uint8_t ft_is_match(const t_dictionary *lexic)
+uint8_t ft_is_match(t_dictionary *lexic, ssize_t *sig)
 {
 	size_t i;
 
@@ -124,14 +147,19 @@ uint8_t ft_is_match(const t_dictionary *lexic)
 	while (i < N_RULE)
 	{
 		if (lexic[i].rule_type == MANDATORY)
+		{
+			printf("-> : %d\n", lexic[i].rule_type);
 			return (1);
+		}
 		++i;
 	}
+	*sig = -1;
 	return (0);
 }
 
 uint8_t ft_set_args(t_map *map, const t_dictionary *lexic, char *args)
 {
+	printf("ici\n, args : %s\n", args);
 	if (PATH_ERROR == lexic->exception)
 		return (ft_set_path(map, lexic, args));
 	return (ft_set_rgb(map, lexic, args));
@@ -151,7 +179,7 @@ uint8_t ft_set_path(t_map *map, const t_dictionary *lexic, char *args)
 	return (0);
 }
 
-uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args)
+uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args) /* handle ',' */
 {
 	char	**rgb;
 	size_t	len;
