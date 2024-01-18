@@ -38,7 +38,7 @@ CFLAGS+=	-Wconversion 			\
 			-Wwrite-strings 		\
 			-Wmissing-prototypes 	\
 			-Wmissing-declarations	\
-			-g3
+			-O3
 
 #			-Wpedantic \
 # 			-pedantic-errors

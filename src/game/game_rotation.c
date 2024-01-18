@@ -1,8 +1,8 @@
 #include "game.h"
 
 void	ft_rotate(t_game *game, double factor);
-void	ft_rotate_left_right(t_game *game, int key_code);
-void	ft_look_up_down(t_game *game, int key_code);
+void	ft_rotate_left_right(t_game *game);
+void	ft_look_up_down(t_game *game);
 void	ft_rescale_ver_view(int *screen_center, int window_height);
 void	ft_rescale_angle(double *angle);
 
@@ -23,15 +23,15 @@ void	ft_rotate(t_game *game, double factor)
 									+ game->map->s_player.s_plane.y * cos_fact;
 }
 
-void	ft_rotate_left_right(t_game *game, int key_code)
+void	ft_rotate_left_right(t_game *game)
 {
-	if (key_code == KEY_ARROW_LEFT)
+	if ((game->bit_switch & BIT_KEY_ARROW_LEFT) != 0)
 	{
 		ft_rotate(game, -1);
 		game->map->s_mini_map.angle -= ROTATION_VELOCITY;
 		ft_rescale_angle(&game->map->s_mini_map.angle);
 	}
-	else if (key_code == KEY_ARROW_RIGHT)
+	if ((game->bit_switch & BIT_KEY_ARROW_RIGHT) != 0)
 	{
 		ft_rotate(game, 1);
 		game->map->s_mini_map.angle += ROTATION_VELOCITY;
@@ -39,11 +39,11 @@ void	ft_rotate_left_right(t_game *game, int key_code)
 	}
 }
 
-void	ft_look_up_down(t_game *game, int key_code)
+void	ft_look_up_down(t_game *game)
 {
-	if (key_code == KEY_ARROW_UP)
+	if ((game->bit_switch & BIT_KEY_ARROW_UP) != 0)
 		game->screen_center += VER_VIEW_VELOCITY;
-	if (key_code == KEY_ARROW_DOWN)
+	if ((game->bit_switch & BIT_KEY_ARROW_DOWN) != 0)
 		game->screen_center -= VER_VIEW_VELOCITY;
 	ft_rescale_ver_view(&game->screen_center, \
 						game->graphx->s_window.s_image.height);
@@ -53,7 +53,7 @@ void	ft_rescale_ver_view(int *screen_center, int window_height)
 {
 	if (*screen_center < 10)
 		*screen_center = 10;
-	if (*screen_center >= window_height - 10)
+	else if (*screen_center >= window_height - 10)
 		*screen_center = window_height - 10;
 }
 

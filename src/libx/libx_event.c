@@ -1,42 +1,12 @@
 #include <stdlib.h>
 #include "libx.h"
 #include "game.h"
-#include <stdio.h>
 
-int	ft_key_handler(int32_t key_code, t_game *game);
-int	ft_on_destroy(t_game *game);
-int	ft_on_mouse_move(int x, int y, t_game *game);
-int	ft_key_up_handler(int32_t key_code, t_game *game);
-
-int	ft_key_handler(int32_t key_code, t_game *game)
-{
-	static void (*const		f[N_KEY])(t_game *game, int key_code) = {\
-			&ft_move_back_forth, &ft_move_back_forth, \
-			&ft_move_left_right, &ft_move_left_right, \
-			&ft_rotate_left_right, &ft_rotate_left_right, \
-			&ft_look_up_down, &ft_look_up_down, \
-			&ft_size_factor, &ft_size_factor, \
-			&ft_minimap_zoom, &ft_minimap_zoom
-	};
-	static const t_keyboard	keyboard_key[N_KEY] = {\
-			KEY_W, KEY_S, \
-			KEY_A, KEY_D, \
-			KEY_ARROW_LEFT, KEY_ARROW_RIGHT, \
-			KEY_ARROW_DOWN, KEY_ARROW_UP, \
-			KEY_H, KEY_L, \
-			KEY_I, KEY_O
-	};
-	size_t					i;
-
-	i = 0;
-	while (i < N_KEY)
-	{
-		if ((t_keyboard)key_code == keyboard_key[i])
-			f[i](game, key_code);
-		++i;
-	}
-	return (0);
-}
+int			ft_on_destroy(t_game *game);
+int			ft_key_handler(int32_t key_code, t_game *game);
+int			ft_on_mouse_move(int x, int y, t_game *game);
+int			ft_key_up_handler(int32_t key_code, t_game *game);
+static void	ft_switch_mouse_mode(t_game *game);
 
 int	ft_on_destroy(t_game *game)
 {
@@ -44,23 +14,38 @@ int	ft_on_destroy(t_game *game)
 	exit(0);
 }
 
+int	ft_key_handler(int32_t key_code, t_game *game)
+{
+	static const t_dic_keys	s_dic_keys[N_BIT_KEY] = {\
+		{KEY_W, BIT_KEY_W}, {KEY_S, BIT_KEY_S}, \
+		{KEY_D, BIT_KEY_D}, {KEY_A, BIT_KEY_A}, \
+		{KEY_ARROW_LEFT, BIT_KEY_ARROW_LEFT}, \
+		{KEY_ARROW_RIGHT, BIT_KEY_ARROW_RIGHT}, \
+		{KEY_ARROW_DOWN, BIT_KEY_ARROW_DOWN}, \
+		{KEY_ARROW_UP, BIT_KEY_ARROW_UP}, \
+		{KEY_I, BIT_KEY_I}, {KEY_O, BIT_KEY_O}};
+	size_t	i;
+
+	i = 0;
+	while (i < N_BIT_KEY)
+	{
+		if (key_code == s_dic_keys[i].keycode)
+			game->bit_switch |= s_dic_keys[i].bitwise;
+		++i;
+	}
+	return (0);
+}
+
 #ifdef __APPLE__
 
 int	ft_on_mouse_move(int x, int y, t_game *game)
 {
-	double	dist_x;
-	int		dist_y;
-
-	if (game->graphx->mouse_tracked == false)
+	if (game->s_mouse.mouse_tracked == false)
 		return (0);
-	dist_x = (game->graphx->s_window.s_image.width / 2 - x) / 2.0;
-	dist_y = (game->graphx->s_window.s_image.height / 2 - y) * 2;
-	game->screen_center += dist_y;
-	ft_rescale_ver_view(&game->screen_center, \
-						game->graphx->s_window.s_image.height);
-	ft_rotate(game, -dist_x / 16);
-	game->map->s_mini_map.angle += (-dist_x / 16) * ROTATION_VELOCITY;
-	ft_rescale_angle(&game->map->s_mini_map.angle);
+	game->s_mouse.rot_mouse_left_right += \
+						(game->graphx->s_window.s_image.width / 2 - x) / 2.0;
+	game->s_mouse.rot_mouse_up_down += \
+						(game->graphx->s_window.s_image.height / 2 - y) * 3;
 	mlx_mouse_move(game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
 					game->graphx->s_window.s_image.height / 2);
@@ -71,17 +56,12 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 int	ft_on_mouse_move(int x, int y, t_game *game)
 {
-	double	dist_x;
-	int		dist_y;
-
 	if (game->graphx->mouse_tracked == false)
 		return (0);
-	dist_x = (game->graphx->s_window.s_image.width / 2 - x) / 2.0;
-	dist_y = (game->graphx->s_window.s_image.height / 2 - y) * 2;
-	game->screen_center += dist_y;
-	ft_rescale_ver_view(&game->screen_center, \
-						game->graphx->s_window.s_image.height);
-	ft_rotate(game, -dist_x / 16);
+	game->s_switch.rot_mouse_left_right += \
+						(game->graphx->s_window.s_image.width / 2 - x) / 2.0;
+	game->s_switch.rot_mouse_up_down += \
+						(game->graphx->s_window.s_image.height / 2 - y) * 2;
 	mlx_mouse_move(game->graphx->mlx_ptr, game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
 					game->graphx->s_window.s_image.height / 2);
@@ -90,55 +70,67 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 
 #endif
 
-#ifdef __APPLE__
-
 int	ft_key_up_handler(int32_t key_code, t_game *game)
 {
+	static const t_dic_keys	s_dic_keys[N_BIT_KEY] = {\
+		{KEY_W, BIT_KEY_W}, {KEY_S, BIT_KEY_S}, \
+		{KEY_D, BIT_KEY_D}, {KEY_A, BIT_KEY_A}, \
+		{KEY_ARROW_LEFT, BIT_KEY_ARROW_LEFT}, \
+		{KEY_ARROW_RIGHT, BIT_KEY_ARROW_RIGHT}, \
+		{KEY_ARROW_DOWN, BIT_KEY_ARROW_DOWN}, \
+		{KEY_ARROW_UP, BIT_KEY_ARROW_UP}, \
+		{KEY_I, BIT_KEY_I}, {KEY_O, BIT_KEY_O}};
+	size_t	i;
+
+	i = 0;
+	while (i < N_BIT_KEY)
+	{
+		if (key_code == s_dic_keys[i].keycode)
+			game->bit_switch &= ~(s_dic_keys[i].bitwise);
+		++i;
+	}
 	if (key_code == KEY_ESC)
 		ft_escape(game);
-	else if (key_code == KEY_M)
-	{
-		if (game->graphx->mouse_tracked == false)
-		{
-			mlx_mouse_hide();
-			mlx_mouse_move(game->graphx->s_window.mlx_win, \
-							game->graphx->s_window.s_image.width / 2, \
-							game->graphx->s_window.s_image.height / 2);
-		}
-		else
-			mlx_mouse_show();
-		game->graphx->mouse_tracked ^= 1;
-	}
 	else if (key_code == KEY_P)
 		game->show_minimap ^= 1;
+	else if (key_code == KEY_M)
+		ft_switch_mouse_mode(game);
 	return (0);
+}
+
+#ifdef __APPLE__
+
+static void	ft_switch_mouse_mode(t_game *game)
+{
+	if (game->s_mouse.mouse_tracked == false)
+	{
+		mlx_mouse_hide();
+		mlx_mouse_move(game->graphx->s_window.mlx_win, \
+						game->graphx->s_window.s_image.width / 2, \
+						game->graphx->s_window.s_image.height / 2);
+	}
+	else
+		mlx_mouse_show();
+	game->s_mouse.mouse_tracked ^= 1;
 }
 
 #elif __linux__
 
-int	ft_key_up_handler(int32_t key_code, t_game *game)
+static void	ft_switch_mouse_mode(t_game *game)
 {
-	if (key_code == KEY_ESC)
-		ft_escape(game);
-	else if (key_code == KEY_M)
+	if (game->graphx->mouse_tracked == false)
 	{
-		if (game->graphx->mouse_tracked == false)
-		{
-			mlx_mouse_hide(game->graphx->mlx_ptr, \
-							game->graphx->s_window.mlx_win);
-			mlx_mouse_move(game->graphx->mlx_ptr, \
-							game->graphx->s_window.mlx_win, \
-							game->graphx->s_window.s_image.width / 2, \
-							game->graphx->s_window.s_image.height / 2);
-		}
-		else
-			mlx_mouse_show(game->graphx->mlx_ptr, \
-							game->graphx->s_window.mlx_win);
-		game->graphx->mouse_tracked ^= 1;
+		mlx_mouse_hide(game->graphx->mlx_ptr, \
+						game->graphx->s_window.mlx_win);
+		mlx_mouse_move(game->graphx->mlx_ptr, \
+						game->graphx->s_window.mlx_win, \
+						game->graphx->s_window.s_image.width / 2, \
+						game->graphx->s_window.s_image.height / 2);
 	}
-	else if (key_code == KEY_P)
-		game->show_minimap ^= 1;
-	return (0);
+	else
+		mlx_mouse_show(game->graphx->mlx_ptr, \
+						game->graphx->s_window.mlx_win);
+	game->graphx->mouse_tracked ^= 1;
 }
 
 #endif
