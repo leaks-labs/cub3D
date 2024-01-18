@@ -79,6 +79,7 @@ typedef struct s_mini_map
 	int		empty_color;
 	int		units;
 	double	steps;
+	double	angle;
 }				t_mini_map;
 
 typedef struct s_map

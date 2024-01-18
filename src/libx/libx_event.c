@@ -59,6 +59,8 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 	ft_rescale_ver_view(&game->screen_center, \
 						game->graphx->s_window.s_image.height);
 	ft_rotate(game, -dist_x / 16);
+	game->map->s_mini_map.angle += (-dist_x / 16) * ROTATION_VELOCITY;
+	ft_rescale_angle(&game->map->s_mini_map.angle);
 	mlx_mouse_move(game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
 					game->graphx->s_window.s_image.height / 2);

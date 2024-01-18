@@ -11,6 +11,13 @@
 
 # define EMPTY_COLOR_MAP	0xffffe3
 # define WALL_COLOR_MAP		0x464a4e
+# define CURSOR_COLOR_MAP	0xff2800
+
+# define RAD_EAST			0
+# define RAD_NORTH			1.570796326794897 // (90 * M_PI / 180)
+# define RAD_WEST			3.141592653589793 // (180 * M_PI / 180)
+# define RAD_SOUTH			4.712388980384690 // (270 * M_PI / 180)
+# define RAD_MAX			6.283185307179586 // (360 * M_PI / 180)
 
 typedef struct s_game
 {
@@ -45,6 +52,7 @@ void	ft_rotate(t_game *game, double factor);
 void	ft_rotate_left_right(t_game *game, int key_code);
 void	ft_look_up_down(t_game *game, int key_code);
 void	ft_rescale_ver_view(int *screen_center, int window_height);
+void	ft_rescale_angle(double *angle);
 
 /* game event */
 void	ft_escape(t_game *game);
