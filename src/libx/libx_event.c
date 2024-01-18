@@ -15,16 +15,19 @@ int	ft_key_handler(int32_t key_code, t_game *game)
 			&ft_move_left_right, &ft_move_left_right, \
 			&ft_rotate_left_right, &ft_rotate_left_right, \
 			&ft_look_up_down, &ft_look_up_down, \
-			&ft_size_factor, &ft_size_factor
+			&ft_size_factor, &ft_size_factor, \
+			&ft_minimap_zoom, &ft_minimap_zoom
 	};
 	static const t_keyboard	keyboard_key[N_KEY] = {\
 			KEY_W, KEY_S, \
 			KEY_A, KEY_D, \
 			KEY_ARROW_LEFT, KEY_ARROW_RIGHT, \
 			KEY_ARROW_DOWN, KEY_ARROW_UP, \
-			KEY_H, KEY_L
+			KEY_H, KEY_L, \
+			KEY_I, KEY_O
 	};
 	size_t					i;
+
 	i = 0;
 	while (i < N_KEY)
 	{
@@ -56,6 +59,8 @@ int	ft_on_mouse_move(int x, int y, t_game *game)
 	ft_rescale_ver_view(&game->screen_center, \
 						game->graphx->s_window.s_image.height);
 	ft_rotate(game, -dist_x / 16);
+	game->map->s_mini_map.angle += (-dist_x / 16) * ROTATION_VELOCITY;
+	ft_rescale_angle(&game->map->s_mini_map.angle);
 	mlx_mouse_move(game->graphx->s_window.mlx_win, \
 					game->graphx->s_window.s_image.width / 2, \
 					game->graphx->s_window.s_image.height / 2);
@@ -104,6 +109,8 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 			mlx_mouse_show();
 		game->graphx->mouse_tracked ^= 1;
 	}
+	else if (key_code == KEY_P)
+		game->show_minimap ^= 1;
 	return (0);
 }
 
@@ -129,6 +136,8 @@ int	ft_key_up_handler(int32_t key_code, t_game *game)
 							game->graphx->s_window.mlx_win);
 		game->graphx->mouse_tracked ^= 1;
 	}
+	else if (key_code == KEY_P)
+		game->show_minimap ^= 1;
 	return (0);
 }
 

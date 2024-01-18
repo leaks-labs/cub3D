@@ -3,6 +3,7 @@
 #include "utils.h"
 
 void	ft_refresh(t_game *game);
+void	ft_refresh_mini_map(t_game *game);
 void	ft_pixel_put(t_image *img, t_pixel *coord);
 void	ft_pixel_cpy(t_image *img_src, t_image *img_dst, \
 						t_pixel *src, t_pixel *dst);
@@ -12,6 +13,13 @@ void	ft_refresh(t_game *game)
 	mlx_put_image_to_window(game->graphx->mlx_ptr, \
 							game->graphx->s_window.mlx_win, \
 							game->graphx->s_window.s_image.mlx_img, 0, 0);
+}
+
+void	ft_refresh_mini_map(t_game *game)
+{
+	mlx_put_image_to_window(game->graphx->mlx_ptr, \
+							game->graphx->s_window.mlx_win, \
+							game->map->s_mini_map.s_image.mlx_img, 0, 0);
 }
 
 void	ft_pixel_put(t_image *img, t_pixel *coord)

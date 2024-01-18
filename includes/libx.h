@@ -6,9 +6,12 @@
 # include <stdint.h>
 # include "mlx.h"
 
-# define WINDOW_NAME		"cub3d"
-# define WINDOW_WIDTH		1280
-# define WINDOW_HEIGHT		720
+# define WINDOW_NAME			"cub3d"
+# define WINDOW_WIDTH			1280
+# define WINDOW_HEIGHT			720
+# define MINI_MAP_WIDTH			300
+# define MINI_MAP_HEIGHT		300
+# define MINI_MAP_PIX_PER_CELL	MINI_MAP_WIDTH / 10
 
 # define MLX_INIT_ERROR		"Failed to initialise mlx"
 # define MLX_WINDOW_ERROR	"Failed to initialise the window"
@@ -25,6 +28,7 @@ typedef struct s_game	t_game;
 # ifdef __linux__
 
 #  define KEY_M	109
+#  define KEY_P	112
 #  define KEY_ESC 65307
 
 typedef enum e_keyboard
@@ -39,12 +43,15 @@ typedef enum e_keyboard
 	KEY_ARROW_UP = 65362,
 	KEY_H = 104,
 	KEY_L = 108,
-	N_KEY = 10
+	KEY_I = 105,
+	KEY_O = 111,
+	N_KEY = 12
 }			t_keyboard;
 
 # elif __APPLE__
 
 #  define KEY_M	46
+#  define KEY_P	35
 #  define KEY_ESC 53
 
 typedef enum e_keyboard
@@ -59,7 +66,9 @@ typedef enum e_keyboard
 	KEY_ARROW_UP = 126,
 	KEY_H = 4,
 	KEY_L = 37,
-	N_KEY = 10
+	KEY_I = 34,
+	KEY_O = 31,
+	N_KEY = 12
 }			t_keyboard;
 
 # endif
@@ -99,7 +108,7 @@ typedef struct s_graphx
 
 /* init and destroy */
 t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx);
-void			ft_destroy_graphx(t_graphx *graphx);
+void			ft_destroy_graphx(t_game *game);
 
 /* handlers */
 int32_t			ft_key_handler(int32_t key_code, t_game *game);
@@ -112,6 +121,7 @@ uint8_t			ft_throw_mlx_exception(t_mlx_exception e_exception);
 
 /* print to screen */
 void			ft_refresh(t_game *game);
+void			ft_refresh_mini_map(t_game *game);
 void			ft_pixel_put(t_image *img, t_pixel *coord);
 void			ft_pixel_cpy(t_image *img_src, t_image *img_dst, \
 								t_pixel *src, t_pixel *dst);

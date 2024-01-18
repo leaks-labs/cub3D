@@ -4,6 +4,7 @@ void	ft_rotate(t_game *game, double factor);
 void	ft_rotate_left_right(t_game *game, int key_code);
 void	ft_look_up_down(t_game *game, int key_code);
 void	ft_rescale_ver_view(int *screen_center, int window_height);
+void	ft_rescale_angle(double *angle);
 
 void	ft_rotate(t_game *game, double factor)
 {
@@ -25,9 +26,17 @@ void	ft_rotate(t_game *game, double factor)
 void	ft_rotate_left_right(t_game *game, int key_code)
 {
 	if (key_code == KEY_ARROW_LEFT)
+	{
 		ft_rotate(game, -1);
+		game->map->s_mini_map.angle -= ROTATION_VELOCITY;
+		ft_rescale_angle(&game->map->s_mini_map.angle);
+	}
 	else if (key_code == KEY_ARROW_RIGHT)
+	{
 		ft_rotate(game, 1);
+		game->map->s_mini_map.angle += ROTATION_VELOCITY;
+		ft_rescale_angle(&game->map->s_mini_map.angle);
+	}
 }
 
 void	ft_look_up_down(t_game *game, int key_code)
@@ -46,4 +55,12 @@ void	ft_rescale_ver_view(int *screen_center, int window_height)
 		*screen_center = 10;
 	if (*screen_center >= window_height - 10)
 		*screen_center = window_height - 10;
+}
+
+void	ft_rescale_angle(double *angle)
+{
+	if (*angle < 0)
+		*angle += RAD_MAX;
+	else if (*angle >= RAD_MAX)
+		*angle -= RAD_MAX;
 }

@@ -70,9 +70,11 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				game/rendering/draw_wall		\
 				game/rendering/drawing		    \
 				game/rendering/render		    \
+				game/game_check_grid  			\
 				game/game_destroy		        \
 				game/game_event			        \
 				game/game_init			        \
+				game/game_mini_map		        \
 				game/game_movement		        \
 				game/game_rotation		        \
 				game/run				        \

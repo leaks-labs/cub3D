@@ -1,8 +1,7 @@
 #include "game.h"
 
-void			ft_move_back_forth(t_game *game, int key_code);
-void			ft_move_left_right(t_game *game, int key_code);
-static bool		ft_isawall_grid(t_map *map, int x, int y);
+void	ft_move_back_forth(t_game *game, int key_code);
+void	ft_move_left_right(t_game *game, int key_code);
 
 void	ft_move_back_forth(t_game *game, int key_code)
 {
@@ -56,9 +55,4 @@ void	ft_move_left_right(t_game *game, int key_code)
 	if (!ft_isawall_grid(game->map, (int)game->map->s_player.s_pos.x, \
 							new_y_grid))
 		game->map->s_player.s_pos.y = new_y_real;
-}
-
-bool	ft_isawall_grid(t_map *map, int x, int y)
-{
-	return ((map->grid)[x + (y * map->width)] > 0);
 }

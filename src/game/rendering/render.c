@@ -11,8 +11,6 @@ int	ft_render(t_game *game)
 {
 	int	current_x;
 
-	// game->map->texture[FLOOR].image[0].mlx_img = NULL;
-	// game->map->texture[CEILING].image[0].mlx_img = NULL;
 	ft_draw_text_env(game, &game->map->s_player);
 	current_x = 0;
 	while (current_x < game->graphx->s_window.s_image.width)
@@ -23,6 +21,11 @@ int	ft_render(t_game *game)
 		++current_x;
 	}
 	ft_refresh(game);
+	if (game->show_minimap == true)
+	{
+		ft_draw_map(&game->map->s_mini_map, game->map);
+		ft_refresh_mini_map(game);
+	}
 	return (0);
 }
 

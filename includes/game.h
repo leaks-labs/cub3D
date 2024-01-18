@@ -5,9 +5,19 @@
 # include "render.h"
 
 # define ROTATION_VELOCITY	0.174532925199433 // (10 degrees * M_PI / 180)
-# define MOVEMENT_VELOCITY	0.1
+# define MOVEMENT_VELOCITY	0.05
 # define VER_VIEW_VELOCITY	60
 # define FOV_FACTOR			0.65 // tan(66.0 degrees / 2.0 * M_PI / 180.0)
+
+# define EMPTY_COLOR_MAP	0xffffe3
+# define WALL_COLOR_MAP		0x464a4e
+# define CURSOR_COLOR_MAP	0xff2800
+
+# define RAD_EAST			0
+# define RAD_NORTH			1.570796326794897 // (90 * M_PI / 180)
+# define RAD_WEST			3.141592653589793 // (180 * M_PI / 180)
+# define RAD_SOUTH			4.712388980384690 // (270 * M_PI / 180)
+# define RAD_MAX			6.283185307179586 // (360 * M_PI / 180)
 
 typedef struct s_game
 {
@@ -16,15 +26,22 @@ typedef struct s_game
 	t_raycast	s_raycast;
 	int			screen_center;
 	double		size_factor;
+	bool		show_minimap;
 }				t_game;
 
 /* runtime */
 uint8_t	ft_run(t_map *map);
 
+/* check_grid */
+bool	ft_isawall_grid(t_map *map, int x, int y);
+bool	ft_isawall_coord(t_map *map, double x, double y);
+
 /* init and destroy */
 void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map);
 void	ft_destroy_game(t_game *game);
-/* throw error */
+
+/* mini map */
+void	ft_draw_map(t_mini_map *mini_map, t_map *map);
 
 /* game movement */
 void	ft_move_back_forth(t_game *game, int key_code);
@@ -35,9 +52,11 @@ void	ft_rotate(t_game *game, double factor);
 void	ft_rotate_left_right(t_game *game, int key_code);
 void	ft_look_up_down(t_game *game, int key_code);
 void	ft_rescale_ver_view(int *screen_center, int window_height);
+void	ft_rescale_angle(double *angle);
 
 /* game event */
 void	ft_escape(t_game *game);
 void	ft_size_factor(t_game *game, int key_code);
+void	ft_minimap_zoom(t_game *game, int key_code);
 
 #endif
