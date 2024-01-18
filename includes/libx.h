@@ -28,7 +28,7 @@ typedef struct s_game	t_game;
 # ifdef __linux__
 
 #  define KEY_M	109
-#  define KEY_P	35	// to redefine with linux value
+#  define KEY_P	112
 #  define KEY_ESC 65307
 
 typedef enum e_keyboard
@@ -43,8 +43,8 @@ typedef enum e_keyboard
 	KEY_ARROW_UP = 65362,
 	KEY_H = 104,
 	KEY_L = 108,
-	KEY_I = 34, // to redefine with linux value
-	KEY_O = 31, // to redefine with linux value
+	KEY_I = 105,
+	KEY_O = 111,
 	N_KEY = 12
 }			t_keyboard;
 
