@@ -21,7 +21,9 @@
 # define EAST_TEXTURE			"EA"
 # define FLOOR_RGB				"F"
 # define CEILING_RGB			"C"
-# define N_RULE					6
+# define FLOOR_TEXTURE			"FT"
+# define CEILING_TEXTURE		"CT"
+# define N_RULE					8
 # define RULE_LEN				3
 
 typedef enum	e_map_exception /* add open and read exception */
@@ -54,9 +56,17 @@ typedef enum	e_element
 	N_ELEMENT
 }				t_element;
 
+typedef enum	s_rule_level
+{
+	MANDATORY,
+	NOT_MANDATORY,
+	MATCH
+}				t_rule_level;
+
 typedef struct s_dictionary
 {
 	char				rule[RULE_LEN];
+	t_rule_level		rule_type;
 	t_element			element;
 	t_orientation		orientation;
 	t_map_exception		exception;

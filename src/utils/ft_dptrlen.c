@@ -1,6 +1,6 @@
 #include "utils.h"
 
-size_t	ft_dptrlen(const char **dptr)
+size_t	ft_dptrlen(char **dptr)
 {
 	size_t	i;
 

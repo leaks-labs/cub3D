@@ -6,7 +6,7 @@
 # include <stdint.h>
 
 void	*ft_calloc(size_t count, size_t size);
-size_t	ft_dptrlen(const char **dptr);
+size_t	ft_dptrlen(char **dptr);
 void	*ft_freef(const char *formats, ...);
 char	*ft_get_next_line(int fd);
 int		ft_isalnum(int c);
