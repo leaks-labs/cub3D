@@ -3,7 +3,7 @@
 
 void		ft_draw_text_env(t_game *game, t_player *pl);
 static void	ft_scan_one_line(t_game *game, t_env *env);
-static void	ft_print_pixel_on_line(t_env *env, int screen_center);
+static void	ft_print_pixel_on_line(t_env *env, t_image *tex);
 
 void	ft_draw_text_env(t_game *game, t_player *pl)
 {
@@ -37,12 +37,19 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 	const double	pos_z = game->graphx->s_window.s_image.height * 0.5;
 	int				p;
 	double			row_distance;
+	t_image			*actual_tex;
 
 	// Current y position compared to the center of the screen (the horizon)
 	if (env->s_dst_pix.y < game->screen_center)
+	{
+		actual_tex = env->tex_ceiling;
 		p = -(env->s_dst_pix.y - game->screen_center);
+	}
 	else
+	{
+		actual_tex = env->tex_floor;
 		p = env->s_dst_pix.y - game->screen_center;
+	}
 
 	// Horizontal distance from the camera to the floor for the current row.
 	// 0.5 is the z position exactly in the middle between floor and ceiling.
@@ -64,32 +71,27 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 	env->s_dst_pix.x = 0;
 	while (env->s_dst_pix.x < game->graphx->s_window.s_image.width)
 	{
-		ft_print_pixel_on_line(env, game->screen_center);
+		ft_print_pixel_on_line(env, actual_tex);
 		env->s_dst_pix.x++;
 	}
 }
 
-static void	ft_print_pixel_on_line(t_env *env, int screen_center)
+static void	ft_print_pixel_on_line(t_env *env, t_image *tex)
 {
 	// the cell coord is simply got from the integer parts of floorX and floorY
 	env->s_grid_coord.x = (int)(env->s_coord.x);
 	env->s_grid_coord.y = (int)(env->s_coord.y);
 
 	// get the texture coordinate from the fractional part
-	env->s_src_pix.x = (int)(env->tex_ceiling->width \
+	env->s_src_pix.x = (int)(tex->width \
 						* (env->s_coord.x - env->s_grid_coord.x)) \
-						& (env->tex_ceiling->width - 1);
-	env->s_src_pix.y = (int)(env->tex_ceiling->height \
+						& (tex->width - 1);
+	env->s_src_pix.y = (int)(tex->height \
 						* (env->s_coord.y - env->s_grid_coord.y)) \
-						& (env->tex_ceiling->height - 1);
+						& (tex->height - 1);
 
 	env->s_coord.x += env->s_step.x;
 	env->s_coord.y += env->s_step.y;
 
-	if (env->s_dst_pix.y < screen_center)
-		ft_pixel_cpy(env->tex_ceiling, env->dst_img, \
-					&env->s_src_pix, &env->s_dst_pix);
-	else
-		ft_pixel_cpy(env->tex_floor, env->dst_img, \
-					&env->s_src_pix, &env->s_dst_pix);
+	ft_pixel_cpy(tex, env->dst_img, &env->s_src_pix, &env->s_dst_pix);
 }
