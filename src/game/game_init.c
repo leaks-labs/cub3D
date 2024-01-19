@@ -6,11 +6,6 @@ static void	ft_init_minimap(t_mini_map *mini_map);
 
 void	ft_init_game_data(t_game *game, t_graphx *graphx, t_map *map)
 {
-	/* to remove */
-	map->s_player.s_pos.x = 1.5;
-	map->s_player.s_pos.y = 1.5;
-	map->s_player.e_orientation = NORTH;
-	/* to remove */
 	game->map = map;
 	game->graphx = graphx;
 	game->s_mouse.mouse_tracked = false;
