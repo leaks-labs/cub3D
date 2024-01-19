@@ -31,7 +31,7 @@ uint8_t	ft_init_map(char *file, t_map *map)
 	map->s_player.e_orientation = NORTH;
 	if (ft_throw_map_exception(ft_parse_map(file)))
 		return (1);
-	map->grid = ft_calloc(map_size, sizeof(t_element));
+	map->grid = ft_calloc(map_size, sizeof(*map->grid));
 	if (map->grid == NULL)
 		return (1);
 	i = 0;
