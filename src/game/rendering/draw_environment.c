@@ -3,6 +3,7 @@
 
 void		ft_draw_text_env(t_game *game, t_player *pl);
 static void	ft_scan_one_line(t_game *game, t_env *env);
+static void	ft_init_coord_and_step(t_env *env, double row_dist, t_game *game);
 static void	ft_print_pixel_on_line(t_env *env, t_image *tex);
 
 void	ft_draw_text_env(t_game *game, t_player *pl)
@@ -40,33 +41,19 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 	t_image			*actual_tex;
 
 	// Current y position compared to the center of the screen (the horizon)
+	actual_tex = env->tex_floor;
+	p = env->s_dst_pix.y - game->screen_center;
 	if (env->s_dst_pix.y < game->screen_center)
 	{
 		actual_tex = env->tex_ceiling;
-		p = -(env->s_dst_pix.y - game->screen_center);
-	}
-	else
-	{
-		actual_tex = env->tex_floor;
-		p = env->s_dst_pix.y - game->screen_center;
+		p = -p;
 	}
 
 	// Horizontal distance from the camera to the floor for the current row.
 	// 0.5 is the z position exactly in the middle between floor and ceiling.
 	row_distance = pos_z / p;
 
-	// calculate the real world step vector we have to add for each x (parallel to camera plane)
-	// adding step by step avoids multiplications with a weight in the inner loop
-	env->s_step.x = row_distance * (env->s_ray_dir_r.x - env->s_ray_dir_l.x) \
-					/ game->graphx->s_window.s_image.width;
-	env->s_step.y = row_distance * (env->s_ray_dir_r.y - env->s_ray_dir_l.y) \
-					/ game->graphx->s_window.s_image.width;
-
-	// real world coordinates of the leftmost column. This will be updated as we step to the right.
-	env->s_coord.x = game->map->s_player.s_pos.x + \
-					row_distance * env->s_ray_dir_l.x;
-	env->s_coord.y = game->map->s_player.s_pos.y + \
-					row_distance * env->s_ray_dir_l.y;
+	ft_init_coord_and_step(env, row_distance, game);
 
 	env->s_dst_pix.x = 0;
 	while (env->s_dst_pix.x < game->graphx->s_window.s_image.width)
@@ -74,6 +61,22 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 		ft_print_pixel_on_line(env, actual_tex);
 		env->s_dst_pix.x++;
 	}
+}
+
+static void	ft_init_coord_and_step(t_env *env, double row_dist, t_game *game)
+{
+	// calculate the real world step vector we have to add for each x (parallel to camera plane)
+	// adding step by step avoids multiplications with a weight in the inner loop
+	env->s_step.x = row_dist * (env->s_ray_dir_r.x - env->s_ray_dir_l.x) \
+					/ game->graphx->s_window.s_image.width;
+	env->s_step.y = row_dist * (env->s_ray_dir_r.y - env->s_ray_dir_l.y) \
+					/ game->graphx->s_window.s_image.width;
+
+	// real world coordinates of the leftmost column. This will be updated as we step to the right.
+	env->s_coord.x = game->map->s_player.s_pos.x + \
+					row_dist * env->s_ray_dir_l.x;
+	env->s_coord.y = game->map->s_player.s_pos.y + \
+					row_dist * env->s_ray_dir_l.y;
 }
 
 static void	ft_print_pixel_on_line(t_env *env, t_image *tex)
