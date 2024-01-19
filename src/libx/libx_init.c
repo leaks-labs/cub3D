@@ -83,8 +83,9 @@ static void	ft_set_hooks(t_game *game, t_graphx *graphx)
 	mlx_hook(graphx->s_window.mlx_win, ON_DESTROY, 0, &ft_on_destroy, game);
 	mlx_hook(graphx->s_window.mlx_win, ON_KEYDOWN, (1L << 0), \
 				&ft_key_down_handler, game);
+	mlx_hook(graphx->s_window.mlx_win, ON_KEYUP, (1L << 1), \
+				&ft_key_up_handler, game);
 	mlx_hook(graphx->s_window.mlx_win, ON_MOUSEMOVE, (1L << 6), \
 				&ft_on_mouse_move, game);
-	mlx_key_hook(graphx->s_window.mlx_win, &ft_key_up_handler, game);
 	mlx_loop_hook(graphx->mlx_ptr, &ft_render, game);
 }

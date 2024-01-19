@@ -19,6 +19,7 @@
 # define MLX_LEN_ERROR		32
 
 # define ON_KEYDOWN			2
+# define ON_KEYUP			3
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
