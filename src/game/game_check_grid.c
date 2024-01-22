@@ -14,4 +14,3 @@ bool	ft_isawall_coord(t_map *map, double x, double y)
 		return (true);
 	return (ft_isawall_grid(map, (int)x, (int)y));
 }
-

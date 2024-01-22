@@ -1,9 +1,7 @@
-#include <stdlib.h>
 #include "game.h"
 
 void	ft_escape(t_game *game);
-void	ft_size_factor(t_game *game, int key_code);
-void	ft_minimap_zoom(t_game *game, int key_code);
+void	ft_minimap_zoom(t_game *game);
 void	ft_rotate_mouse(t_game *game);
 
 void	ft_escape(t_game *game)
@@ -11,26 +9,13 @@ void	ft_escape(t_game *game)
 	ft_on_destroy(game);
 }
 
-void	ft_size_factor(t_game *game, int key_code)
+void	ft_minimap_zoom(t_game *game)
 {
-	if (key_code == KEY_H)
-		game->size_factor += 0.1;
-	else if (key_code == KEY_L)
-		game->size_factor -= 0.1;
-	if (game->size_factor < 0.5)
-		game->size_factor = 0.5;
-	else if (game->size_factor > 2)
-		game->size_factor = 2;
-}
-
-void	ft_minimap_zoom(t_game *game, int key_code)
-{
-	(void)key_code;
 	if (game->show_minimap == false)
 		return ;
-	if ((game->bit_switch & BIT_KEY_I) != 0 && (game->bit_switch & BIT_KEY_O) == 0)
+	if ((game->bit_switch & BIT_KEY_I) && !(game->bit_switch & BIT_KEY_O))
 		game->map->s_mini_map.units += M_MAP_ZOOM_SPEED;
-	else if ((game->bit_switch & BIT_KEY_I) == 0 && (game->bit_switch & BIT_KEY_O) != 0)
+	else if (!(game->bit_switch & BIT_KEY_I) && (game->bit_switch & BIT_KEY_O))
 		game->map->s_mini_map.units -= M_MAP_ZOOM_SPEED;
 	else
 		return ;

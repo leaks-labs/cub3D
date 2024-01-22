@@ -15,12 +15,12 @@ uint8_t	ft_run(t_map *map)
 	}
 
 	/* to remove (just for testing)*/
-	const char	*f1 = "./maps/textures/north_texture_xpm.xpm";
-	const char	*f2 = "./maps/textures/south_texture_xpm.xpm";
-	const char	*f3 = "./maps/textures/west_texture_xpm.xpm";
-	const char	*f4 = "./maps/textures/east_texture_xpm.xpm";
-	const char	*f5 = "./maps/textures/north_texture_xpm.xpm";
-	const char	*f6 = "./maps/textures/east_texture_xpm.xpm";
+	const char	*f1 = "./maps/textures/purplestone.xpm";
+	const char	*f2 = "./maps/textures/wood.xpm";
+	const char	*f3 = "./maps/textures/mossy.xpm";
+	const char	*f4 = "./maps/textures/greystone.xpm";
+	const char	*f5 = "./maps/textures/colorstone.xpm";
+	const char	*f6 = "./maps/textures/bluestone.xpm";
 	t_image		*i1 = &s_game.map->texture[WALL].image[NORTH];
 	t_image		*i2 = &s_game.map->texture[WALL].image[SOUTH];
 	t_image		*i3 = &s_game.map->texture[WALL].image[WEST];
