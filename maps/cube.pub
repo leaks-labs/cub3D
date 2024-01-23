@@ -1,10 +1,13 @@
-NO /home/martin/Bureau/cub3d/fi le
+NO /home/martin/Bureau/cub3d/test
 F 255,100,0
+C 255,100,0
+EA /home/martin/Bureau/cub3d/test
+FT /home/martin/Bureau/cub3d/test
 SO /home/martin/Bureau/cub3d/test
 WE /home/martin/Bureau/cub3d/test
-EA /home/martin/Bureau/cub3d/test
-EA /home/martin/Bureau/cub3d/test
-C 255,30,0
+CT /home/martin/Bureau/cub3d/test
+
+
 
 11111111111
 10000000001
