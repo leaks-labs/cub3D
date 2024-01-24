@@ -8,7 +8,7 @@
 
 static uint8_t			ft_check_extension(char *str, char *ext);
 static uint8_t			ft_open_file(char *file, int32_t *fd);
-static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i);
+static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t fd, size_t i);
 static t_map_exception	ft_check_map(t_map *map, char *tmp_map, int32_t fd);
 
 char *ft_read_line(char **str, int32_t fd);
@@ -17,24 +17,23 @@ uint8_t ft_set_path(t_map *map, const t_dictionary *lexic, char *args);
 uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args);
 size_t ft_n_occurence(char *str, char c);
 
-uint8_t ft_rule_match(t_dictionary *lexic, char *rule, ssize_t *index);
-uint8_t ft_is_match(t_dictionary *lexic, char *rule, ssize_t *sig);
-t_dictionary *ft_set_lexic(void);
+uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index);
+uint8_t ft_is_match(t_dictionary *lexic, char **tmp_map, char *line, char *rule);
+t_dictionary *ft_set_lexic(t_dictionary	**lexic);
 
 t_map_exception ft_parse_map(char *file, t_map *map)
 {
 	t_map_exception	map_exception;
-	char *tmp_map;
+	char			*tmp_map;
 	int32_t			fd;
 
 	if (1 == ft_check_extension(file, (char *)".pub"))
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);
-	map_exception = ft_check_requirement(map, fd, 0);
+	map_exception = ft_check_requirement(map, &tmp_map, fd, 0);
 	if (map_exception >= REQUIREMENT_ERROR && map_exception <= RGB_ERROR)
 		return (close(fd), map_exception);
-	tmp_map = NULL;
 	if (ELEMENT_ERROR == ft_check_map(map, tmp_map, fd))
 		return (close(fd), ELEMENT_ERROR);
 	close(fd);
@@ -57,34 +56,36 @@ uint8_t ft_open_file(char *file, int32_t *fd)
 	return (-1 == *fd);
 }
 
-static t_map_exception	ft_check_requirement(t_map *map, int32_t fd, size_t i)
+static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t fd, size_t i)
 {
-	static t_dictionary *lexic;
-	ssize_t index;
-	char **args;
-	char *line;
+	static t_dictionary	*lexic;
+	size_t 				index;
+	char				**args;
+	char				*line;
+	t_map_exception		ret;
 
-	if (0 == i)
-		lexic = ft_set_lexic();
+	if (0 == i && NULL == ft_set_lexic(&lexic))
+		return (REQUIREMENT_ERROR);
 	ft_read_line(&line, fd);
-	printf("%s\n", line);
 	args = ft_split(line, ' ');
-	if ((ft_dptrlen(args) != 2 || ft_rule_match(lexic, args[0], &index) != 0)
-		&& ft_is_match(lexic, args[0], &index) != 0)
-		return (ft_freef("%p, %p, %P", lexic, line, args), REQUIREMENT_ERROR);
-	if (index != -1 && 1 == ft_set_args(map, &lexic[index], args[1]))
-		return (ft_freef("%p, %p, %P", lexic, line, args), lexic[index].exception);
-	printf("ic\n");
+	if (ft_dptrlen(args) != 2
+		|| ft_rule_match(lexic, args[0], &index) != 0)
+	{
+		ret = NO_MAP_EXCEPTION;
+		if (NULL == args || ft_is_match(lexic, tmp_map, line, args[0]) != 0)
+			ret = REQUIREMENT_ERROR;
+		return (ft_freef("%p, %p, %P", lexic, line, args), ret);
+	}
+	if (1 == ft_set_args(map, &lexic[index], args[1]))
+		return (ft_freef("%p, %p, %P", lexic, line, args),
+				lexic[index].exception);
 	ft_freef("%p, %P", line, args);
-	if (i < N_RULE - 1) /* matching instead of n_rule */
-		return (ft_check_requirement(map, fd, ++i));
-	return (free(lexic), NO_MAP_EXCEPTION);
+	return (ft_check_requirement(map, tmp_map, fd, ++i));
 }
 
-t_dictionary *ft_set_lexic(void)
+t_dictionary *ft_set_lexic(t_dictionary	**lexic)
 {
-	printf("test\n");
-	const t_dictionary tmp_lexic[N_RULE]= {
+	const t_dictionary	tmp_lexic[N_RULE]= {
 			{NORTH_TEXTURE, MANDATORY, WALL, NORTH, PATH_ERROR},
 			{SOUTH_TEXTURE, MANDATORY,WALL, SOUTH, PATH_ERROR},
 			{WEST_TEXTURE, MANDATORY, WALL, WEST, PATH_ERROR},
@@ -94,25 +95,24 @@ t_dictionary *ft_set_lexic(void)
 			{FLOOR_TEXTURE, NOT_MANDATORY, FLOOR, 0, PATH_ERROR},
 			{CEILING_TEXTURE, NOT_MANDATORY, CEILING, 0, PATH_ERROR}
 	};
-	t_dictionary	*lexic;
-	size_t			i;
+	size_t				i;
 
-	lexic = ft_calloc(N_RULE + 1, sizeof(t_dictionary));
-	if (NULL == lexic)
+	*lexic = ft_calloc(N_RULE + 1, sizeof(t_dictionary));
+	if (NULL == *lexic)
 		return (NULL);
 	i = 0;
 	while (i < N_RULE)
 	{
-		lexic[i] = tmp_lexic[i];
+		*(*lexic + i) = tmp_lexic[i];
 		++i;
 	}
-	return (lexic);
+	return (*lexic);
 }
 
 char *ft_read_line(char **str, int32_t fd)
 {
 	*str = ft_get_next_line(fd);
-	if (*str != NULL && **str == '\n')
+	if (*str != NULL && '\n' == **str)
 	{
 		free(*str);
 		ft_read_line(str, fd);
@@ -120,9 +120,9 @@ char *ft_read_line(char **str, int32_t fd)
 	return	(*str);
 }
 
-uint8_t ft_rule_match(t_dictionary *lexic, char *rule, ssize_t *index)
+uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 {
-	ssize_t i;
+	size_t i;
 
 	i = 0;
 	while (i < N_RULE)
@@ -139,7 +139,7 @@ uint8_t ft_rule_match(t_dictionary *lexic, char *rule, ssize_t *index)
 	return (1);
 }
 
-uint8_t ft_is_match(t_dictionary *lexic, char *rule, ssize_t *sig)
+uint8_t ft_is_match(t_dictionary *lexic, char **tmp_map, char *line, char *rule)
 {
 	size_t i;
 
@@ -147,13 +147,11 @@ uint8_t ft_is_match(t_dictionary *lexic, char *rule, ssize_t *sig)
 	while (i < N_RULE)
 	{
 		if (lexic[i].rule_type == MANDATORY || 0 == ft_strcmp(lexic[i].rule, rule))
-		{
-			printf("-> : %s, %d\n", lexic[i].rule, lexic[i].rule_type);
 			return (1);
-		}
 		++i;
 	}
-	*sig = -1;
+	/* only not mandatory or map */
+	*tmp_map = ft_strdup(line);
 	return (0);
 }
 
@@ -225,21 +223,9 @@ static t_map_exception	ft_check_map(t_map *map, char *tmp_map, int32_t fd)
 //	size_t	i;
 //	char	*line;
 //
+//
 //	if (NULL == ft_read_line(&line, fd))
-//		return (NO_MAP_EXCEPTION);
-//	i = 0;
-//	while (line[i] != '\0')
-//	{
-//		if (ft_isspace(line[i]))
-//			line[i] = '0';
-//		printf("%c\n", line[i]);
-//		if (line[i] < '0' || line[i] > '1')
-//			return (ELEMENT_ERROR);
-//		++i;
-//	}
-//	tmp_map = map->grid;
-//	ft_join(2, map->grid, line);
-//	free (tmp);
+//		return (NO_MAP_EXCEPTION); /* ret no map exp and check map for eventual error */
 //	return (ft_check_map(map, tmp_map, fd));
 	(void)map;
 	(void)tmp_map;
