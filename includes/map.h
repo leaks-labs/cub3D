@@ -2,29 +2,34 @@
 # define MAP_H
 
 # include "libx.h"
+# include "game.h"
+# include <stddef.h>
+# include <stdint.h>
+# include <limits.h>
 
 # define MAP_EXTENSION_ERROR	"Missing or wrong extension file"
 # define MAP_OPEN_ERROR			"Failed to open the file"
-# define MAP_READ_ERROR			"Failed to read the file"
 # define MAP_REQUIREMENT_ERROR	"Missing or wrong requirement"
 # define MAP_PATH_ERROR			"Texture path doesn't exist or is misleading"
 # define MAP_RGB_ERROR			"Missing or wrong RGB value"
 # define MAP_ELEMENT_ERROR		"Missing or wrong map element"
+# define MAP_LEN_ERROR			44
 
-# define MAP_LEN_ERROR				44
-# define REQUIREMENT_NORTH_TEXTURE	"NO"
-# define REQUIREMENT_SOUTH_TEXTURE	"SO"
-# define REQUIREMENT_WEST_TEXTURE	"WE"
-# define REQUIREMENT_EAST_TEXTURE	"EA"
-# define REQUIREMENT_FLOOR_RGB		"F"
-
-# define REQUIREMENT_CEILING_RGB	"C"
+# define NORTH_TEXTURE			"NO"
+# define SOUTH_TEXTURE			"SO"
+# define WEST_TEXTURE			"WE"
+# define EAST_TEXTURE			"EA"
+# define FLOOR_RGB				"F"
+# define CEILING_RGB			"C"
+# define FLOOR_TEXTURE			"FT"
+# define CEILING_TEXTURE		"CT"
+# define N_RULE					8
+# define RULE_LEN				3
 
 typedef enum e_map_exception
 {
 	EXTENSION_ERROR,
 	OPEN_ERROR,
-	READ_ERROR,
 	REQUIREMENT_ERROR,
 	PATH_ERROR,
 	RGB_ERROR,
@@ -51,12 +56,28 @@ typedef enum e_element
 	N_ELEMENT
 }				t_element;
 
-typedef struct s_texture
+typedef enum	s_rule_level
 {
-	char	orientation[N_ORIENTATION][50]; /* PATH MAX */
+	MANDATORY,
+	NOT_MANDATORY,
+	MATCH
+}				t_rule_level;
+
+typedef struct s_dictionary
+{
+	char				rule[RULE_LEN];
+	t_rule_level		rule_type;
+	t_element			element;
+	t_orientation		orientation;
+	t_map_exception		exception;
+}				t_dictionary;
+
+typedef struct		s_texture
+{
+	char	orientation[N_ORIENTATION][PATH_MAX];
 	t_image	image[N_ORIENTATION];
-	int32_t	rgb[N_ORIENTATION];
-}				t_texture;
+	int32_t	RGB[N_ORIENTATION];
+}					t_texture;
 
 typedef struct s_vec
 {
@@ -97,7 +118,6 @@ uint8_t			ft_init_map(char *file, t_map *map);
 void			ft_destroy_map(t_map *map);
 
 /* map parsing + error handling */
-uint8_t			ft_throw_map_exception(t_map_exception e_exception);
-t_map_exception	ft_parse_map(char *file);/* in progress */
-
+uint8_t 		ft_throw_map_exception(t_map_exception e_exception);
+t_map_exception	ft_parse_map(char *file, t_map *map);/* in progress */
 #endif
