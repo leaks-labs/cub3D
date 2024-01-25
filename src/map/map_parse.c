@@ -24,7 +24,7 @@ t_dictionary *ft_set_lexic(t_dictionary	**lexic);
 t_map_exception ft_parse_map(char *file, t_map *map)
 {
 	t_map_exception	map_exception;
-	char			*<< test "">>;
+	char			*tmp_map;
 	int32_t			fd;
 
 	if (1 == ft_check_extension(file, (char *)".pub"))
