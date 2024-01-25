@@ -24,7 +24,7 @@ t_dictionary *ft_set_lexic(t_dictionary	**lexic);
 t_map_exception ft_parse_map(char *file, t_map *map)
 {
 	t_map_exception	map_exception;
-	char			*tmp_map;
+	char			*<< test "">>;
 	int32_t			fd;
 
 	if (1 == ft_check_extension(file, (char *)".pub"))
@@ -150,7 +150,7 @@ uint8_t ft_is_match(t_dictionary *lexic, char **tmp_map, char *line, char *rule)
 			return (1);
 		++i;
 	}
-	/* only not mandatory or map */
+	/* if is range map ret 0 else ret 1 for req_error */
 	*tmp_map = ft_strdup(line);
 	return (0);
 }
@@ -172,11 +172,13 @@ uint8_t ft_set_path(t_map *map, const t_dictionary *lexic, char *args)
 	if (len >= PATH_MAX || 1 == ft_open_file(args, &fd))
 		return (1);
 	close(fd);
-	ft_strlcpy(map->texture[lexic->element].orientation[lexic->orientation], args, len);
+	ft_strlcpy(map->texture[lexic->element].orientation[lexic->orientation],
+			   args,
+			   len);
 	return (0);
 }
 
-uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args) /* handle ',' */
+uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args)
 {
 	char	**rgb;
 	size_t	len;
@@ -220,16 +222,21 @@ size_t ft_n_occurence(char *str, char c)
 
 static t_map_exception	ft_check_map(t_map *map, char *tmp_map, int32_t fd)
 {
-//	size_t	i;
-//	char	*line;
-//
-//
-//	if (NULL == ft_read_line(&line, fd))
-//		return (NO_MAP_EXCEPTION); /* ret no map exp and check map for eventual error */
-//	return (ft_check_map(map, tmp_map, fd));
-	(void)map;
-	(void)tmp_map;
-	(void)fd;
+	int32_t	len;
+	char	*tmp;
+	char	*line;
+
+	if (NULL == ft_read_line(&line, fd))
+		return (NO_MAP_EXCEPTION);
+	if (!ft_is_range_map(line, &len))
+		return (ELEMENT_ERROR);
+	tmp = tmp_map;
+	tmp_map = ft_join(2, tmp_map, line);
+	ft_freef("%p, %p", tmp, line);
+	if (len > map->width)
+		map->width = len;
+	++map->height;
+	return (ft_check_map(map, tmp_map, fd));
 	return (NO_MAP_EXCEPTION);
 }
 
