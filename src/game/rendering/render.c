@@ -103,8 +103,7 @@ static double	ft_get_ray_len(t_raycast *rc, t_map *map)
 			rc->side_touched = TOUCH_Y_AXIS;
 		}
 		// Check if ray has hit a wall
-		if (map->grid[rc->s_map_tmp.x + rc->s_map_tmp.y * map->width] > 0)
-			hit = 1;
+		hit = ft_isawall_grid(map, rc->s_map_tmp.x, rc->s_map_tmp.y);
 	}
 	// Calculate distance projected on camera direction
 	// (Euclidean distance would give fisheye effect!)

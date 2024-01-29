@@ -4,7 +4,7 @@
 # include <math.h>
 # include "render.h"
 
-# define ROTATION_VELOCITY	0.06
+# define ROTATION_VELOCITY	0.05
 # define MOVEMENT_VELOCITY	0.05
 # define VER_VIEW_VELOCITY	30
 # define FOV_FACTOR			0.65 // tan(66.0 degrees / 2.0 * M_PI / 180.0)
