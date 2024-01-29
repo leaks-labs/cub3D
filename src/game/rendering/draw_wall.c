@@ -13,9 +13,9 @@ void	ft_draw_wall(t_game *game, t_draw *draw)
 	t_image			*src_img;
 	double			wall_x;
 
-	e_block_type = game->map->grid[game->s_raycast.s_map_tmp.x \
-									+ game->s_raycast.s_map_tmp.y \
-									* game->map->width];
+	e_block_type = game->map->grid[(size_t)game->s_raycast.s_map_tmp.x \
+									+ (size_t)game->s_raycast.s_map_tmp.y \
+									* (size_t)game->map->width];
 	e_orientation = ft_get_orientation(&game->s_raycast);
 	src_img = &game->map->texture[e_block_type].image[e_orientation];
 	if (game->s_raycast.side_touched == TOUCH_X_AXIS)
