@@ -2,9 +2,6 @@
 # define MAP_H
 
 # include "libx.h"
-# include "game.h"
-# include <stddef.h>
-# include <stdint.h>
 # include <limits.h>
 
 # define MAP_EXTENSION_ERROR	"Missing or wrong extension file"
@@ -72,11 +69,18 @@ typedef struct s_dictionary
 	t_map_exception		exception;
 }				t_dictionary;
 
+typedef struct s_parse_map
+{
+	char			*str;
+	int32_t			len;
+	t_orientation	orientation;
+}				t_parse_map;
+
 typedef struct		s_texture
 {
-	char	orientation[N_ORIENTATION][PATH_MAX];
+	char	path[N_ORIENTATION][PATH_MAX];
 	t_image	image[N_ORIENTATION];
-	int32_t	RGB[N_ORIENTATION];
+	int32_t	rgb[N_ORIENTATION];
 }					t_texture;
 
 typedef struct s_vec
