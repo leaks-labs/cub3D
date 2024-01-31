@@ -106,6 +106,7 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				utils/ft_strchr					\
 				utils/ft_strcmp					\
 				utils/ft_strdup					\
+				utils/ft_strlcat				\
 				utils/ft_strlcpy				\
 				utils/ft_strlen					\
 				utils/ft_strncmp				\

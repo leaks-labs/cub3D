@@ -15,7 +15,6 @@
 
 char			*ft_join(int argc, ...);
 static size_t	ft_get_len(int argc, va_list *aq);
-static size_t	ft_strlcat(char *dst, const char *src, size_t n);
 
 char	*ft_join(int argc, ...)
 {
@@ -54,24 +53,4 @@ static size_t	ft_get_len(int argc, va_list *aq)
 		len += ft_strlen(va_arg(*aq, char *));
 	va_end(*aq);
 	return (len);
-}
-
-static size_t	ft_strlcat(char *dst, const char *src, size_t n)
-{
-	size_t	i;
-	size_t	d;
-
-	if (n == 0)
-		return (ft_strlen(src));
-	i = 0;
-	d = ft_strlen(dst);
-	if (d > n)
-		return (ft_strlen(src) + n);
-	while (src[i] && d + i < (n - 1))
-	{
-		dst[d + i] = src[i];
-		++i;
-	}
-	dst[d + i] = '\0';
-	return (ft_strlen(src) + d);
 }

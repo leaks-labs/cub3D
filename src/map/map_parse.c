@@ -8,36 +8,45 @@
 
 static uint8_t			ft_check_extension(char *str, char *ext);
 static uint8_t			ft_open_file(char *file, int32_t *fd);
-static t_map_exception	ft_check_requirement(t_map *map, t_parse_map *tmp_map, int32_t fd, size_t i);
-static t_map_exception	ft_check_map(t_map *map, t_parse_map *tmp_map, int32_t fd);
+static void				ft_map_set_default(t_map *map);
+static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t fd, size_t i);
+static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd);
+static t_map_exception	ft_format_map(t_map *map, char *tmp_map);
+uint8_t ft_resize_map(t_map *map, char *tmp_map);
 
 char *ft_read_line(char **str, int32_t fd, char to_skip);
 uint8_t ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
 uint8_t ft_set_path(t_map *map, const t_dictionary *lexic, char *args);
 uint8_t ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args);
 size_t ft_n_occurence(char *str, char c);
+size_t ft_len_till(char *str, char c);
 
 uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index);
-uint8_t ft_is_match(t_dictionary *lexic, t_parse_map *tmp_map, char *line, char *rule);
+uint8_t ft_is_match(t_dictionary *lexic, t_map *tmp_map, char *line, char *rule);
 t_dictionary *ft_set_lexic(t_dictionary	**lexic);
-uint8_t ft_is_valid_map(t_parse_map *parse_map);
+uint8_t ft_is_valid_map(t_map *map, char *line);
+t_orientation ft_str_to_enum(char *str);
 
 t_map_exception ft_parse_map(char *file, t_map *map)
 {
+	char			*tmp_map;
 	t_map_exception	map_exception;
-	t_parse_map		tmp_map;
 	int32_t			fd;
 
 	if (1 == ft_check_extension(file, (char *)".pub"))
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);
+	ft_map_set_default(map);
 	map_exception = ft_check_requirement(map, &tmp_map, fd, 0);
 	if (map_exception >= REQUIREMENT_ERROR && map_exception <= RGB_ERROR)
 		return (close(fd), map_exception);
-	if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd))
+	if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd)
+		|| ELEMENT_ERROR == ft_format_map(map, tmp_map))
 		return (close(fd), ELEMENT_ERROR);
+	printf("%s\n", tmp_map);
 	close(fd);
+	exit(0);
 	return (NO_MAP_EXCEPTION);
 }
 
@@ -57,13 +66,19 @@ uint8_t ft_open_file(char *file, int32_t *fd)
 	return (-1 == *fd);
 }
 
-static t_map_exception	ft_check_requirement(t_map *map, t_parse_map *tmp_map, int32_t fd, size_t i)
+void ft_map_set_default(t_map *map)
+{
+	map->height = 0;
+	map->width = 0;
+	map->s_player.e_orientation = N_ORIENTATION;
+}
+
+static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t fd, size_t i)
 {
 	static t_dictionary	*lexic;
 	size_t 				index;
 	char				**args;
 	char				*line;
-	t_map_exception		ret;
 
 	if (0 == i && NULL == ft_set_lexic(&lexic))
 		return (REQUIREMENT_ERROR);
@@ -72,10 +87,10 @@ static t_map_exception	ft_check_requirement(t_map *map, t_parse_map *tmp_map, in
 	if (ft_dptrlen(args) != 2
 		|| ft_rule_match(lexic, args[0], &index) != 0)
 	{
-		ret = NO_MAP_EXCEPTION;
-		if (NULL == args || ft_is_match(lexic, tmp_map, line, args[0]) != 0)
-			ret = REQUIREMENT_ERROR;
-		return (ft_freef("%p, %p, %P", lexic, line, args), ret);
+		if (NULL == args || ft_is_match(lexic, map, line, args[0]) != 0)
+			return (ft_freef("%p, %p, %P", lexic, line, args), REQUIREMENT_ERROR);
+		*tmp_map = ft_strdup(line);
+		return (ft_freef("%p, %p, %P", lexic, line, args), NO_MAP_EXCEPTION);
 	}
 	if (1 == ft_set_args(map, &lexic[index], args[1]))
 		return (ft_freef("%p, %p, %P", lexic, line, args),
@@ -140,7 +155,7 @@ uint8_t ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 	return (1);
 }
 
-uint8_t ft_is_match(t_dictionary *lexic, t_parse_map *tmp_map, char *line, char *rule)
+uint8_t ft_is_match(t_dictionary *lexic, t_map *map, char *line, char *rule)
 {
 	size_t i;
 
@@ -151,10 +166,7 @@ uint8_t ft_is_match(t_dictionary *lexic, t_parse_map *tmp_map, char *line, char 
 			return (1);
 		++i;
 	}
-	(void)tmp_map;
-	printf("line : %s. args : %s.\n", line, rule);
-	//if (ft_is_range_map(tmp_map))
-	return (0);
+	return (ft_is_valid_map(map, line));
 }
 
 uint8_t ft_set_args(t_map *map, const t_dictionary *lexic, char *args)
@@ -222,37 +234,112 @@ size_t ft_n_occurence(char *str, char c)
 	return (j);
 }
 
-static t_map_exception	ft_check_map(t_map *map, t_parse_map *tmp_map, int32_t fd)
+static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd)
 {
-	t_parse_map parse_map;
-	char	*ptr_cpy;
+	char	*line;
+	void	*ptr_cpy;
 
-	++map->height;
-	if (tmp_map->len > map->width)
-		map->width = tmp_map->len;
-	if (NULL == ft_read_line(&parse_map.str, fd, '\0'))
-		return (NO_MAP_EXCEPTION);
-	if (!ft_is_valid_map(&parse_map))
+	if (NULL == *tmp_map)
 		return (ELEMENT_ERROR);
-	ptr_cpy = tmp_map->str;
-	tmp_map->str = ft_join(2, tmp_map, parse_map.str);
-	ft_freef("%p, %p", ptr_cpy, parse_map.str);
+	if (NULL == ft_read_line(&line, fd, '\0'))
+		return (NO_MAP_EXCEPTION);
+	if ('\n' == *line || ft_is_valid_map(map, line))
+		return (free(line), ELEMENT_ERROR);
+	ptr_cpy = *tmp_map;
+	*tmp_map = ft_join(2, *tmp_map, line);
+	ft_freef("%p, %p", ptr_cpy, line);
 	return (ft_check_map(map, tmp_map, fd));
 }
 
-uint8_t ft_is_valid_map(t_parse_map *parse_map)
+uint8_t ft_is_valid_map(t_map *map, char *line)
 {
 	int32_t i;
 
-	i = 0;
-	while (parse_map->str[i] != '\0')
+	i = -1;
+	while (line[++i] != '\0')
 	{
-		if (' ' == parse_map->str[i])
-			parse_map->str[i] = '1';
-		if ((parse_map->str[i] < '0' || parse_map->str[i] > '1') && parse_map->str[i] != '\n')
+		if (' ' == line[i])
+			line[i] = '1';
+		if (N_ORIENTATION == map->s_player.e_orientation && ft_str_to_enum(&line[i]) != N_ORIENTATION)
+		{
+			map->s_player.s_pos.x = i + 0.5;
+			map->s_player.s_pos.y = map->height + 0.5;
+			map->s_player.e_orientation = ft_str_to_enum(&line[i]);
+			line[i] = '0';
+		}
+		if ((line[i] < '0' || line[i] > '1') && line[i] != '\n')
 			return (1);
+	}
+	if (i > map->width)
+		map->width = i;
+	++map->height;
+	return (0);
+}
+
+t_orientation ft_str_to_enum(char *str)
+{
+	static const char orientation[N_ORIENTATION][2] = {
+			"N", "S","W","E"
+	};
+	t_orientation i;
+
+	i = 0;
+	while (i < N_ORIENTATION)
+	{
+		if (0 == ft_strncmp(orientation[i], str, 1))
+			return (i);
 		++i;
 	}
-	parse_map->len = i;
+	return (N_ORIENTATION);
+}
+
+static t_map_exception	ft_format_map(t_map *map, char *tmp_map)
+{
+	printf("%d\n", map->height);
+	printf("%d\n", map->width);
+	printf("%d\n", map->s_player.e_orientation);
+	if (N_ORIENTATION == map->s_player.e_orientation
+		|| ft_resize_map(map, tmp_map) != 0) {
+		return (ELEMENT_ERROR);
+	}
+	return (NO_MAP_EXCEPTION);
+}
+
+uint8_t ft_resize_map(t_map *map, char *tmp_map)
+{
+	size_t i;
+	size_t j;
+	char *line;
+//	char dst[2];
+//	char *ptr_cpy;
+
+	i = 0;
+	j = 0;
+	while (tmp_map[j] != '\0')
+	{
+		line = ft_strndup(&tmp_map[i], (size_t)map->width);
+		j = ft_len_till(&tmp_map[i], '\n');
+		printf("%zu\n", j);
+		ft_memset(&line[j], '1', (size_t)map->width);
+		printf("%s.\n", line);
+//		ptr_cpy = dst;
+//		dst = ft_join(2, dst, line);
+//		ft_freef("%p, %p", line, ptr_cpy);
+		i = j;
+		//free(line);
+	}
+	//printf("%s\n", dst);
 	return (0);
+}
+
+size_t ft_len_till(char *str, char c)
+{
+	const char *s = str;
+	while (*s != '\0')
+	{
+		if (c == *s)
+			break;
+		++s;
+	}
+	return ((size_t)(s - str));
 }
