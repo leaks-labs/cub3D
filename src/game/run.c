@@ -4,8 +4,8 @@ uint8_t	ft_run(t_map *map);
 
 uint8_t	ft_run(t_map *map)
 {
-	t_game		s_game;
-	t_graphx	s_graphx;
+	t_game			s_game;
+	t_graphx		s_graphx;
 
 	ft_init_game_data(&s_game, &s_graphx, map);
 	if (ft_throw_mlx_exception(ft_init_graphx(&s_game, &s_graphx)))
@@ -14,7 +14,27 @@ uint8_t	ft_run(t_map *map)
 		return (1);
 	}
 
-//	/* to remove (just for testing)*/
+	t_element		element;
+	t_orientation	orientation;
+	t_image			image
+
+	element = WALL;
+	while (element < N_ELEMENT)
+	{
+		orientation = NORTH;
+		while (orientation < N_ORIENTATION)
+		{
+			map->texture[element].path[N_ORIENTATION]
+			++orientation;
+		}
+		++element;
+	}
+	ft_destroy_game(&s_game);
+	mlx_loop(s_graphx.mlx_ptr);
+	return (0);
+}
+
+/* to remove (just for testing)*/
 //	const char	*f1 = "./maps/textures/purplestone.xpm";
 //	const char	*f2 = "./maps/textures/wood.xpm";
 //	const char	*f3 = "./maps/textures/mossy.xpm";
@@ -54,9 +74,5 @@ uint8_t	ft_run(t_map *map)
 //	i6->data = mlx_get_data_addr(i6->mlx_img, &i6->bits_per_pixel, &i6->size_line, &i6->endian);
 //	map->texture[FLOOR].rgb[0] = 0xffecbf;
 //	map->texture[CEILING].rgb[0] = 0x43629d;
-	/* to remove */
-	//ft_destroy_graphx(&s_game);
-	ft_destroy_game(&s_game);
-	mlx_loop(s_graphx.mlx_ptr);
-	return (0);
-}
+/* to remove */
+//ft_destroy_graphx(&s_game);

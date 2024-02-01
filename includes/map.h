@@ -79,7 +79,7 @@ typedef struct s_parse_border
 typedef struct		s_texture
 {
 	char	path[N_ORIENTATION][PATH_MAX];
-	t_image	image[N_ORIENTATION];
+	t_image	image[N_ORIENTATION]; //if t_image == 0 then  look rgb
 	int32_t	rgb[N_ORIENTATION];
 }					t_texture;
 
