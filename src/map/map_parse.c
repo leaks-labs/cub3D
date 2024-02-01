@@ -253,7 +253,7 @@ static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool
 	if ('\n' == *line)
 		return (free(line), ft_check_map(map, tmp_map, fd, true));
 	if (true == empty || ft_is_valid_map(map, line))
-		return (ft_freef("%p, %p", line), ELEMENT_ERROR); // removed tmp map
+		return (ft_freef("%p, %p", *tmp_map, line), ELEMENT_ERROR);
 	ptr_cpy = *tmp_map;
 	*tmp_map = ft_join(2, *tmp_map, line);
 	ft_freef("%p, %p", ptr_cpy, line);
