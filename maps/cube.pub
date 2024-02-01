@@ -1,10 +1,9 @@
 NO ./maps/textures/greystone.xpm
 C 255,100,0
 F 255,100,0
-EA /home/martin/Bureau/cub3d/test
-SO /home/martin/Bureau/cub3d/test
-WE /home/martin/Bureau/cub3d/test
-CT /home/martin/Bureau/cub3d/test
+EA ./maps/textures/greystone.xpm
+SO ./maps/textures/greystone.xpm
+WE ./maps/textures/greystone.xpm
 
 11111111111111111
 10000000001
