@@ -22,7 +22,7 @@ ifeq (${shell uname}, Linux)
 		MLX= lib/mlx_linux/libmlx.a
 endif
 
-CC:=	clang
+CC:=	clang -fsanitize=address -fno-omit-frame-pointer
 
 CFLAGS=	-Wall -Wextra -Werror
 
@@ -38,7 +38,7 @@ CFLAGS+=	-Wconversion			\
 			-Wwrite-strings			\
 			-Wmissing-prototypes	\
 			-Wmissing-declarations	\
-			-O3
+			-g3
 
 #			-Wpedantic \
 # 			-pedantic-errors
@@ -87,9 +87,15 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				libx/libx_print_screen			\
 				map/map_destroy					\
 				map/map_exception				\
+				map/map_format					\
 				map/map_init					\
 				map/map_parse					\
+				map/map_requirement				\
+				map/map_set_requirement			\
+				map/map_utils					\
+				map/map_verify					\
 				utils/ft_calloc					\
+				utils/ft_dptrlen				\
 				utils/ft_freef					\
 				utils/ft_get_next_line			\
 				utils/ft_isalnum				\
@@ -101,13 +107,17 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				utils/ft_memset					\
 				utils/ft_putendl_fd				\
 				utils/ft_putstr_fd				\
+				utils/ft_split					\
 				utils/ft_strchr					\
 				utils/ft_strcmp					\
 				utils/ft_strdup					\
+				utils/ft_strlcat				\
+				utils/ft_strlcpy				\
 				utils/ft_strlen					\
 				utils/ft_strncmp				\
 				utils/ft_strndup				\
 				utils/ft_strnstr				\
+				utils/ft_strtoi					\
 				utils/ft_substr
 
 ################################################################################

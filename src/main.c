@@ -9,6 +9,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
+		ft_putendl_fd("Error", STDERR_FILENO);
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
