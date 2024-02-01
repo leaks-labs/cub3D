@@ -22,7 +22,7 @@ ifeq (${shell uname}, Linux)
 		MLX= lib/mlx_linux/libmlx.a
 endif
 
-CC:=	clang
+CC:=	clang -fsanitize=address -fno-omit-frame-pointer
 
 CFLAGS=	-Wall -Wextra -Werror
 
@@ -38,7 +38,7 @@ CFLAGS+=	-Wconversion			\
 			-Wwrite-strings			\
 			-Wmissing-prototypes	\
 			-Wmissing-declarations	\
-			-O3
+			-g3
 
 #			-Wpedantic \
 # 			-pedantic-errors

@@ -10,9 +10,9 @@ static uint8_t			ft_check_extension(char *str, char *ext);
 static uint8_t			ft_open_file(char *file, int32_t *fd);
 static void				ft_map_set_default(t_map *map);
 static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t fd, size_t i);
-static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd);
-static t_map_exception	ft_format_map(t_map *map, char *tmp_map);
-uint8_t					ft_resize_map(t_map *map, char *tmp_map);
+static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool empty);
+static t_map_exception	ft_format_map(t_map *map, char **tmp_map);
+uint8_t					ft_resize_map(t_map *map, char **tmp_map);
 
 char		*ft_read_line(char **str, int32_t fd, char to_skip);
 uint8_t		ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
@@ -41,11 +41,10 @@ t_map_exception	ft_parse_map(char *file, t_map *map)
 	map_exception = ft_check_requirement(map, &tmp_map, fd, 0);
 	if (map_exception >= REQUIREMENT_ERROR && map_exception <= RGB_ERROR)
 		return (close(fd), map_exception);
-	if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd)
-		|| ELEMENT_ERROR == ft_format_map(map, tmp_map))
+	if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd, false)
+		|| ELEMENT_ERROR == ft_format_map(map, &tmp_map))
 		return (close(fd), ELEMENT_ERROR);
 	close(fd);
-	exit(0);
 	return (NO_MAP_EXCEPTION);
 }
 
@@ -96,7 +95,7 @@ static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
 	}
 	if (1 == ft_set_args(map, &lexic[index], args[1]))
 		return (ft_freef("%p, %p, %P", lexic, line, args),
-			lexic[index].exception);
+			lexic[index].exception); // heap use after free
 	ft_freef("%p, %P", line, args);
 	return (ft_check_requirement(map, tmp_map, fd, ++i));
 }
@@ -239,7 +238,7 @@ size_t	ft_n_occurence(char *str, char c)
 	return (j);
 }
 
-static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd)
+static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool empty)
 {
 	char	*line;
 	void	*ptr_cpy;
@@ -249,17 +248,13 @@ static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd)
 	if (NULL == ft_read_line(&line, fd, '\0'))
 		return (NO_MAP_EXCEPTION);
 	if ('\n' == *line)
-	{
-		ft_freef("%p, %p", *tmp_map, line);
-		*tmp_map = ft_strdup("Empty line");
-		return (ft_check_map(map, tmp_map, fd));
-	}
-	if (0 == ft_strcmp(*tmp_map, "Empty line") || ft_is_valid_map(map, line))
+		return (free(line), ft_check_map(map, tmp_map, fd, true));
+	if (true == empty || ft_is_valid_map(map, line))
 		return (ft_freef("%p, %p", *tmp_map, line), ELEMENT_ERROR);
 	ptr_cpy = *tmp_map;
 	*tmp_map = ft_join(2, *tmp_map, line);
 	ft_freef("%p, %p", ptr_cpy, line);
-	return (ft_check_map(map, tmp_map, fd));
+	return (ft_check_map(map, tmp_map, fd, empty));
 }
 
 uint8_t	ft_is_valid_map(t_map *map, char *line)
@@ -305,25 +300,40 @@ t_orientation	ft_str_to_enum(char *str, t_orientation *pos)
 	return (*pos);
 }
 
-static t_map_exception	ft_format_map(t_map *map, char *tmp_map)
+static t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 {
 	printf("%d\n", map->height);
 	printf("%d\n", map->width);
 	printf("%d\n", map->s_player.e_orientation);
 	if (N_ORIENTATION == map->s_player.e_orientation
-		|| ft_resize_map(map, tmp_map) != 0)
-	{
-		return (ELEMENT_ERROR);
-
-	}
+	|| ft_resize_map(map, tmp_map) != 0)
+		return (free(*tmp_map), ELEMENT_ERROR);
+	//check border
+	//
+	//printf("ici\n");
+	//printf("%s", *tmp_map);
+	free(*tmp_map);
 	return (NO_MAP_EXCEPTION);
 }
 
-uint8_t	ft_resize_map(t_map *map, char *tmp_map)
+uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 {
-	(void)tmp_map;
-	(void)map;
-	exit (0);
+	const size_t	len = ((size_t)(map->width * map->height + 1));
+	size_t			i;
+	size_t			j;
+	char			*resized_line;
+
+	i = 0;
+	resized_line = ft_calloc(len, sizeof(char));
+	while (*(*tmp_map + i) != '\0')
+	{
+		j = ft_len_till(*tmp_map + i, '\n');
+		ft_strlcat(resized_line, *tmp_map + i, ft_strlen(resized_line) + j);
+		ft_memset(&resized_line[ft_strlen(resized_line)], '1', (size_t)map->width - j);
+		i += j + 1;
+	}
+	free(*tmp_map);
+	*tmp_map = resized_line;
 	return (0);
 }
 
