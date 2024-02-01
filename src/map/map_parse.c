@@ -2,16 +2,16 @@
 #include "utils.h"
 #include <unistd.h>
 
-t_map_exception	ft_parse_map(char *file, t_map *map);
+t_map_exception	ft_parse_map(const char *file, t_map *map);
 static void		ft_map_set_default(t_map *map);
 
-t_map_exception	ft_parse_map(char *file, t_map *map)
+t_map_exception	ft_parse_map(const char *file, t_map *map)
 {
 	char			*tmp_map;
 	t_map_exception	e_map_exception;
 	int32_t			fd;
 
-	if (1 == ft_check_extension(file, (char *)".pub"))
+	if (1 == ft_check_extension(file, ".pub"))
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);

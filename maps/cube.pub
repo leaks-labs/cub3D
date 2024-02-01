@@ -1,14 +1,15 @@
 NO ./maps/textures/greystone.xpm
-C 255,100,0
+C 84,136,61
 F 255,100,0
-EA ./maps/textures/greystone.xpm
-SO ./maps/textures/greystone.xpm
-WE ./maps/textures/greystone.xpm
-CT ./maps/textures/greystone.xpm
+EA ./maps/textures/mossy.xpm
+SO ./maps/textures/bluestone.xpm
+WE ./maps/textures/purplestone.xpm
+FT ./maps/textures/colorstone.xpm
 
 111111111
 100000001
+100000001
+100000001
+100000001
 100N00011
 1111111111
-
-

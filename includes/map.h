@@ -125,7 +125,7 @@ void			ft_destroy_map(t_map *map);
 uint8_t 		ft_throw_map_exception(t_map_exception e_exception);
 
 /* map parsing */
-t_map_exception	ft_parse_map(char *file, t_map *map);
+t_map_exception	ft_parse_map(const char *file, t_map *map);
 t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
 										int32_t fd, size_t i);
 t_map_exception	ft_verify_map(t_map *map, char **tmp_map, int32_t fd, \
@@ -134,14 +134,14 @@ uint8_t			ft_is_valid_map(t_map *map, char *line);
 t_map_exception	ft_format_map(t_map *map, char **tmp_map);
 
 /* map utils */
-uint8_t	ft_check_extension(char *str, char *ext);
-uint8_t	ft_open_file(char *file, int32_t *fd);
-char	*ft_read_line(char **str, int32_t fd, char to_skip);
-size_t	ft_n_occurence(char *str, char c);
-size_t	ft_len_till(char *str, char c);
+uint8_t			ft_check_extension(const char *str, const char *ext);
+uint8_t			ft_open_file(const char *file, int32_t *fd);
+char			*ft_read_line(char **str, int32_t fd, char to_skip);
+size_t			ft_n_occurence(char *str, char c);
+size_t			ft_len_till(char *str, char c);
 
 /* set requirement map */
-uint8_t	ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
+uint8_t			ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
 
 
 #endif

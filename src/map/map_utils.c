@@ -3,13 +3,13 @@
 #include "map.h"
 #include "utils.h"
 
-uint8_t	ft_check_extension(char *str, char *ext);
-uint8_t	ft_open_file(char *file, int32_t *fd);
+uint8_t	ft_check_extension(const char *str, const char *ext);
+uint8_t	ft_open_file(const char *file, int32_t *fd);
 char	*ft_read_line(char **str, int32_t fd, char to_skip);
 size_t	ft_n_occurence(char *str, char c);
 size_t	ft_len_till(char *str, char c);
 
-uint8_t	ft_check_extension(char *str, char *ext)
+uint8_t	ft_check_extension(const char *str, const char *ext)
 {
 	size_t	i;
 
@@ -19,7 +19,7 @@ uint8_t	ft_check_extension(char *str, char *ext)
 	return (ft_strcmp(&str[i], ext) != 0);
 }
 
-uint8_t	ft_open_file(char *file, int32_t *fd)
+uint8_t	ft_open_file(const char *file, int32_t *fd)
 {
 	*fd = open(file, O_RDONLY);
 	return (-1 == *fd);
