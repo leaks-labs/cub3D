@@ -13,6 +13,7 @@ static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, int32_t 
 static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool empty);
 static t_map_exception	ft_format_map(t_map *map, char **tmp_map);
 uint8_t					ft_resize_map(t_map *map, char **tmp_map);
+uint8_t					ft_check_border(t_map *map, char *tmp_map);
 
 char		*ft_read_line(char **str, int32_t fd, char to_skip);
 uint8_t		ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
@@ -302,18 +303,16 @@ t_orientation	ft_str_to_enum(char *str, t_orientation *pos)
 
 static t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 {
-	printf("%d\n", map->height);
-	printf("%d\n", map->width);
-	printf("%d\n", map->s_player.e_orientation);
+	t_map_exception ret;
+
+	ret = NO_MAP_EXCEPTION;
 	if (N_ORIENTATION == map->s_player.e_orientation
-	|| ft_resize_map(map, tmp_map) != 0)
-		return (free(*tmp_map), ELEMENT_ERROR);
-	//check border
-	//
-	//printf("ici\n");
-	//printf("%s", *tmp_map);
+		|| ft_resize_map(map, tmp_map) != 0
+		|| ft_check_border(map, *tmp_map) != 0)
+		ret = ELEMENT_ERROR;
+
 	free(*tmp_map);
-	return (NO_MAP_EXCEPTION);
+	return (ret);
 }
 
 uint8_t	ft_resize_map(t_map *map, char **tmp_map)
@@ -325,7 +324,7 @@ uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 
 	i = 0;
 	resized_line = ft_calloc(len, sizeof(char));
-	while (*(*tmp_map + i) != '\0')
+	while (NULL != resized_line && *(*tmp_map + i) != '\0')
 	{
 		j = ft_len_till(*tmp_map + i, '\n');
 		ft_strlcat(resized_line, *tmp_map + i, ft_strlen(resized_line) + j);
@@ -334,7 +333,7 @@ uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 	}
 	free(*tmp_map);
 	*tmp_map = resized_line;
-	return (0);
+	return (NULL == tmp_map);
 }
 
 size_t	ft_len_till(char *str, char c)
@@ -348,4 +347,14 @@ size_t	ft_len_till(char *str, char c)
 		++s;
 	}
 	return ((size_t)(s - str));
+}
+
+uint8_t	ft_check_border(t_map *map, char *tmp_map)
+{
+	//from / to / each
+	const int32_t border[4][2] = {
+			{1, map->width},
+			{map->width, map->width},
+	};
+	return (0);
 }

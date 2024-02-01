@@ -69,12 +69,12 @@ typedef struct s_dictionary
 	t_map_exception		exception;
 }				t_dictionary;
 
-typedef struct s_parse_map
+typedef struct s_parse_border
 {
-	char			*str;
-	int32_t			len;
-	t_orientation	orientation;
-}				t_parse_map;
+	int32_t from;
+	int32_t each;
+	int32_t to;
+}				t_parse_border;
 
 typedef struct		s_texture
 {
