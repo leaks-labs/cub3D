@@ -335,11 +335,10 @@ uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 	while (NULL != resized_line && *(*tmp_map + i) != '\0')
 	{
 		j = ft_len_till(*tmp_map + i, '\n');
-		ft_strlcat(resized_line, *tmp_map + i, ft_strlen(resized_line) + j);
-		ft_memset(&resized_line[ft_strlen(resized_line)], '1', (size_t)map->width - j + 1);
+		ft_strlcat(resized_line, *tmp_map + i, ft_strlen(resized_line) + j + 1);
+		ft_memset(&resized_line[ft_strlen(resized_line)], '1', (size_t)map->width - j);
 		i += j + 1;
 	}
-	printf("%s\n%s\n", resized_line, "111111111111111111000000000111111110000000001111111100010000011111111000000000000000110000000001111111100000000011111111000000000111111111111111111111111");
 	free(*tmp_map);
 	*tmp_map = resized_line;
 	return (NULL == tmp_map);
@@ -360,18 +359,12 @@ size_t	ft_len_till(char *str, char c)
 
 uint8_t	ft_check_border(t_map *map, char *tmp_map)
 {
-	if (0 == ft_strcmp(tmp_map, "111111111111111111000000000111111110000000001111111100010000011111111000000000000000110000000001111111100000000011111111000000000111111111111111111111111"))
-		printf("ok\n");
-	printf(">%d\n", map->width);
-	printf(">%d\n", map->height);
-	printf("%zu\n", ft_strlen(tmp_map));
 	const int32_t map_size = map->width * map->height;
 	const t_parse_border parse_border[4] = {
-			{0, 1, map->width - 1}, //front
-			{0, map->width - 1, map_size - map->width - 1}, //left
-			{map->width - 1, map->width - 1, map_size}, // right
-			{map_size - map->width - 1, 1, map_size}, // bottom
-
+			{0, 1, map->width}, //front
+			{0, map->width, map_size - map->width}, //left
+			{map->width - 1, map->width, map_size}, // right
+			{map_size - map->width, 1, map_size}, // bottom
 	};
 	int32_t from;
 	int32_t to;
@@ -385,9 +378,8 @@ uint8_t	ft_check_border(t_map *map, char *tmp_map)
 		while (from < to)
 		{
 			if (tmp_map[from] != '1')
-				return (printf("c : %c, from : %d, i : %d\n", tmp_map[from], from, i), 1);
+				return (1);
 			from += parse_border[i].each;
-			printf("%d\n", from);
 		}
 		++i;
 	}
