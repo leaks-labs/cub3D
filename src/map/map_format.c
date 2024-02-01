@@ -9,21 +9,21 @@ static uint8_t	ft_map_to_int(t_map *map, char *tmp_map);
 
 t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 {
-	t_map_exception	ret;
+	t_map_exception	e_ret;
 
-	ret = NO_MAP_EXCEPTION;
-	if (N_ORIENTATION == map->s_player.e_orientation
-		|| ft_resize_map(map, tmp_map) != 0
-		|| ft_check_border(map, *tmp_map) != 0
+	e_ret = NO_MAP_EXCEPTION;
+	if (N_ORIENTATION == map->s_player.e_orientation \
+		|| ft_resize_map(map, tmp_map) != 0 \
+		|| ft_check_border(map, *tmp_map) != 0 \
 		|| ft_map_to_int(map, *tmp_map))
-		ret = ELEMENT_ERROR;
+		e_ret = ELEMENT_ERROR;
 	free(*tmp_map);
-	return (ret);
+	return (e_ret);
 }
 
 static uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 {
-	const size_t	len = ((size_t)(map->width * map->height + 1));
+	const size_t	len = (size_t)(map->width * map->height + 1);
 	const size_t	tmp_len = ft_strlen(*tmp_map);
 	char			*resized_line;
 	size_t			i;
@@ -50,15 +50,15 @@ static uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 static uint8_t	ft_check_border(t_map *map, char *tmp_map)
 {
 	const int32_t			map_size = map->width * map->height;
-	const t_parse_border	parse_border[4] = {
-			{0, 1, map->width},
-			{0, map->width, map_size - map->width},
-			{map->width - 1, map->width, map_size},
-			{map_size - map->width, 1, map_size},
+	const t_parse_border	parse_border[4] = {\
+			{0, 1, map->width}, \
+			{0, map->width, map_size - map->width}, \
+			{map->width - 1, map->width, map_size}, \
+			{map_size - map->width, 1, map_size}, \
 	};
-	int32_t	from;
-	int32_t	to;
-	int32_t	i;
+	int32_t					from;
+	int32_t					to;
+	int32_t					i;
 
 	i = 0;
 	while (i < 4)
@@ -78,14 +78,14 @@ static uint8_t	ft_check_border(t_map *map, char *tmp_map)
 
 static uint8_t	ft_map_to_int(t_map *map, char *tmp_map)
 {
-	const size_t	len = ((size_t)(map->width * map->height));
+	const size_t	len = (size_t)(map->width * map->height);
 	size_t			i;
 
 	map->grid = ft_calloc(len, sizeof(t_element));
 	i = 0;
 	while (map->grid != NULL && i < len)
 	{
-		map->grid[i] = (t_element) (tmp_map[i] - '0');
+		map->grid[i] = (t_element)(tmp_map[i] - '0');
 		++i;
 	}
 	return (NULL == map->grid);

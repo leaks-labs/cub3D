@@ -1,5 +1,6 @@
 #include "map.h"
 #include "utils.h"
+#include <unistd.h>
 
 uint8_t			ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
 static uint8_t	ft_set_path(t_map *map, const t_dictionary *lexic, char *args);
@@ -22,9 +23,8 @@ static uint8_t	ft_set_path(t_map *map, const t_dictionary *lexic, char *args)
 	if (len >= PATH_MAX || 1 == ft_open_file(args, &fd))
 		return (1);
 	close(fd);
-	ft_strlcpy(map->texture[lexic->element].path[lexic->orientation],
-			   args,
-			   len);
+	ft_strlcpy(map->texture[lexic->element].path[lexic->orientation], \
+				args, len);
 	return (0);
 }
 
@@ -49,9 +49,9 @@ static uint8_t	ft_set_rgb(t_map *map, const t_dictionary *lexic, char *args)
 		if (is_overflow == true || rgb_val[len] < 0 || rgb_val[len] > 255)
 			return (ft_freef("%P", rgb), 1);
 	}
-	map->texture[lexic->element].rgb[lexic->orientation]
-			= ((rgb_val[0] & 0x0ff) << 16)
-			  | ((rgb_val[1] & 0x0ff) << 8)
-			  | (rgb_val[2] & 0x0ff);
+	map->texture[lexic->element].rgb[lexic->orientation] \
+		= ((rgb_val[0] & 0x0ff) << 16) \
+		| ((rgb_val[1] & 0x0ff) << 8) \
+		| (rgb_val[2] & 0x0ff);
 	return (ft_freef("%P", rgb), 0);
 }

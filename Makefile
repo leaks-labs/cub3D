@@ -85,7 +85,6 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				libx/libx_mouse_handler			\
 				libx/libx_new_image				\
 				libx/libx_print_screen			\
-				map/map_check					\
 				map/map_destroy					\
 				map/map_exception				\
 				map/map_format					\
@@ -93,6 +92,8 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				map/map_parse					\
 				map/map_requirement				\
 				map/map_set_requirement			\
+				map/map_utils					\
+				map/map_verify					\
 				utils/ft_calloc					\
 				utils/ft_dptrlen				\
 				utils/ft_freef					\
@@ -102,10 +103,8 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				utils/ft_isdigit				\
 				utils/ft_isspace				\
 				utils/ft_join					\
-				utils/ft_len_till				\
 				utils/ft_memcpy					\
 				utils/ft_memset					\
-				utils/ft_n_occurence			\
 				utils/ft_putendl_fd				\
 				utils/ft_putstr_fd				\
 				utils/ft_split					\

@@ -2,12 +2,14 @@
 #include "map.h"
 #include "utils.h"
 
-t_map_exception			ft_verify_map(t_map *map, char **tmp_map, int32_t fd, bool empty);
-static uint8_t			ft_is_valid_map(t_map *map, char *line);
+t_map_exception			ft_verify_map(t_map *map, char **tmp_map, int32_t fd, \
+										bool empty);
+uint8_t					ft_is_valid_map(t_map *map, char *line);
 static t_orientation	ft_str_to_enum(char *str, t_orientation *pos);
 static int32_t			ft_eval_width(char *line, int32_t i);
 
-t_map_exception	ft_verify_map(t_map *map, char **tmp_map, int32_t fd, bool empty)
+t_map_exception	ft_verify_map(t_map *map, char **tmp_map, int32_t fd, \
+								bool empty)
 {
 	char	*line;
 	void	*ptr_cpy;
@@ -17,19 +19,19 @@ t_map_exception	ft_verify_map(t_map *map, char **tmp_map, int32_t fd, bool empty
 	if (NULL == ft_read_line(&line, fd, '\0'))
 		return (NO_MAP_EXCEPTION);
 	if ('\n' == *line)
-		return (free(line), ft_check_map(map, tmp_map, fd, true));
+		return (free(line), ft_verify_map(map, tmp_map, fd, true));
 	if (true == empty || ft_is_valid_map(map, line))
 		return (ft_freef("%p, %p", *tmp_map, line), ELEMENT_ERROR);
 	ptr_cpy = *tmp_map;
 	*tmp_map = ft_join(2, *tmp_map, line);
 	ft_freef("%p, %p", ptr_cpy, line);
-	return (ft_check_map(map, tmp_map, fd, empty));
+	return (ft_verify_map(map, tmp_map, fd, empty));
 }
 
-static uint8_t	ft_is_valid_map(t_map *map, char *line)
+uint8_t	ft_is_valid_map(t_map *map, char *line)
 {
 	int32_t			i;
-	t_orientation	pos;
+	t_orientation	e_pos;
 
 	i = -1;
 	while (line[++i] != '\0')
@@ -37,11 +39,11 @@ static uint8_t	ft_is_valid_map(t_map *map, char *line)
 		if (' ' == line[i])
 			line[i] = '1';
 		if (N_ORIENTATION == map->s_player.e_orientation
-			&& ft_str_to_enum(&line[i], &pos) != N_ORIENTATION)
+			&& ft_str_to_enum(&line[i], &e_pos) != N_ORIENTATION)
 		{
 			map->s_player.s_pos.x = i + 0.5;
 			map->s_player.s_pos.y = map->height + 0.5;
-			map->s_player.e_orientation = pos;
+			map->s_player.e_orientation = e_pos;
 			line[i] = '0';
 		}
 		if ((line[i] < '0' || line[i] > '1') && line[i] != '\n')
@@ -55,7 +57,7 @@ static uint8_t	ft_is_valid_map(t_map *map, char *line)
 
 static t_orientation	ft_str_to_enum(char *str, t_orientation *pos)
 {
-	static const char	orientation[N_ORIENTATION][2] = {
+	static const char	orientation[N_ORIENTATION][2] = {\
 			"N", "S", "W", "E"
 	};
 
