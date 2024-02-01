@@ -55,7 +55,8 @@ uint8_t	ft_run(t_map *map)
 //	map->texture[FLOOR].rgb[0] = 0xffecbf;
 //	map->texture[CEILING].rgb[0] = 0x43629d;
 	/* to remove */
-	ft_destroy_graphx(&s_game);
+	//ft_destroy_graphx(&s_game);
+	ft_destroy_game(&s_game);
 	mlx_loop(s_graphx.mlx_ptr);
 	return (0);
 }

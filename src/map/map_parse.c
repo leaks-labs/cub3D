@@ -14,6 +14,10 @@ static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool
 static t_map_exception	ft_format_map(t_map *map, char **tmp_map);
 uint8_t					ft_resize_map(t_map *map, char **tmp_map);
 uint8_t					ft_check_border(t_map *map, char *tmp_map);
+uint8_t					ft_map_to_int(t_map *map, char *tmp_map);
+t_map_exception ft_ret_exception(t_dictionary *lexic, char **args, char *line,
+								 size_t index);
+
 
 char		*ft_read_line(char **str, int32_t fd, char to_skip);
 uint8_t		ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
@@ -41,13 +45,11 @@ t_map_exception	ft_parse_map(char *file, t_map *map)
 		return (OPEN_ERROR);
 	ft_map_set_default(map);
 	map_exception = ft_check_requirement(map, &tmp_map, fd, 0);
-	if (map_exception >= REQUIREMENT_ERROR && map_exception <= RGB_ERROR)
-		return (close(fd), map_exception);
-	if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd, false)
-		|| ELEMENT_ERROR == ft_format_map(map, &tmp_map))
-		return (close(fd), ELEMENT_ERROR);
-	close(fd);
-	return (NO_MAP_EXCEPTION);
+	if (!(map_exception >= REQUIREMENT_ERROR && map_exception <= RGB_ERROR))
+		if (ELEMENT_ERROR == ft_check_map(map, &tmp_map, fd, false)
+			|| ELEMENT_ERROR == ft_format_map(map, &tmp_map))
+			map_exception = ELEMENT_ERROR;
+	return (close(fd), map_exception);
 }
 
 uint8_t	ft_check_extension(char *str, char *ext)
@@ -89,15 +91,12 @@ static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
 		|| ft_rule_match(lexic, args[0], &index) != 0)
 	{
 		if (NULL == args || ft_is_match(lexic, map, line, args[0]) != 0)
-			return (ft_freef("%p, %p, %P", lexic, line, args),
-				REQUIREMENT_ERROR);
+			return (ft_freef("%p%p%P", lexic, line, args), REQUIREMENT_ERROR);
 		*tmp_map = ft_strdup(line);
-		return (ft_freef("%p, %p, %P", lexic, line, args),
-			NO_MAP_EXCEPTION);
+		return (ft_freef("%p%p%P", lexic, line, args),NO_MAP_EXCEPTION);
 	}
 	if (1 == ft_set_args(map, &lexic[index], args[1]))
-		return (ft_freef("%p, %p, %P", lexic, line, args),
-			lexic[index].exception); // heap use after free
+		return (ft_ret_exception(lexic, args, line, index));
 	ft_freef("%p, %P", line, args);
 	return (ft_check_requirement(map, tmp_map, fd, ++i));
 }
@@ -148,7 +147,6 @@ uint8_t	ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 	{
 		if (lexic[i].rule_type != MATCH && 0 == ft_strcmp(lexic[i].rule, rule))
 		{
-			printf("lexic : %s\n rule : %s\n", lexic[i].rule, rule);
 			lexic[i].rule_type = MATCH;
 			*index = i;
 			return (0);
@@ -311,14 +309,14 @@ t_orientation	ft_str_to_enum(char *str, t_orientation *pos)
 
 static t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 {
-	t_map_exception ret;
+	t_map_exception	ret;
 
 	ret = NO_MAP_EXCEPTION;
 	if (N_ORIENTATION == map->s_player.e_orientation
 		|| ft_resize_map(map, tmp_map) != 0
-		|| ft_check_border(map, *tmp_map) != 0)
+		|| ft_check_border(map, *tmp_map) != 0
+		|| ft_map_to_int(map, *tmp_map))
 		ret = ELEMENT_ERROR;
-
 	free(*tmp_map);
 	return (ret);
 }
@@ -359,8 +357,8 @@ size_t	ft_len_till(char *str, char c)
 
 uint8_t	ft_check_border(t_map *map, char *tmp_map)
 {
-	const int32_t map_size = map->width * map->height;
-	const t_parse_border parse_border[4] = {
+	const int32_t			map_size = map->width * map->height;
+	const t_parse_border	parse_border[4] = {
 			{0, 1, map->width}, //front
 			{0, map->width, map_size - map->width}, //left
 			{map->width - 1, map->width, map_size}, // right
@@ -384,4 +382,27 @@ uint8_t	ft_check_border(t_map *map, char *tmp_map)
 		++i;
 	}
 	return (0);
+}
+
+uint8_t ft_map_to_int(t_map *map, char *tmp_map)
+{
+	const size_t	len = ((size_t)(map->width * map->height));
+	size_t i;
+
+	map->grid = ft_calloc(len, sizeof(t_element));
+	i = 0;
+	while (map->grid != NULL && i < len)
+	{
+		map->grid[i] = (t_element) (tmp_map[i] - '0');
+		++i;
+	}
+	return (NULL == map->grid);
+}
+
+t_map_exception ft_ret_exception(t_dictionary *lexic, char **args, char *line,
+								 size_t index)
+{
+	const t_map_exception exp = lexic[index].exception;
+	ft_freef("%p, %p, %P", lexic, line, args);
+	return (exp);
 }
