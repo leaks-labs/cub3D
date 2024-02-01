@@ -15,8 +15,9 @@ static t_map_exception	ft_format_map(t_map *map, char **tmp_map);
 uint8_t					ft_resize_map(t_map *map, char **tmp_map);
 uint8_t					ft_check_border(t_map *map, char *tmp_map);
 uint8_t					ft_map_to_int(t_map *map, char *tmp_map);
-t_map_exception ft_ret_exception(t_dictionary *lexic, char **args, char *line,
+t_map_exception	ft_ret_exception(t_dictionary *lexic, char **args, char *line,
 								 size_t index);
+
 
 
 char		*ft_read_line(char **str, int32_t fd, char to_skip);
@@ -28,7 +29,8 @@ size_t		ft_len_till(char *str, char c);
 int32_t		ft_eval_width(char *line, int32_t i);
 
 uint8_t	ft_rule_match(t_dictionary *lexic, char *rule, size_t *index);
-uint8_t	ft_is_match(t_dictionary *lexic, t_map *tmp_map, char *line, char *rule);
+uint8_t	ft_is_match(t_map *map, t_dictionary *lexic, char *line, char *rule);
+void	ft_set_not_mandatory(t_map *map);
 t_dictionary	*ft_set_lexic(t_dictionary	**lexic);
 uint8_t	ft_is_valid_map(t_map *map, char *line);
 t_orientation	ft_str_to_enum(char *str, t_orientation *pos);
@@ -90,7 +92,7 @@ static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
 	if (ft_dptrlen(args) != 2
 		|| ft_rule_match(lexic, args[0], &index) != 0)
 	{
-		if (NULL == args || ft_is_match(lexic, map, line, args[0]) != 0)
+		if (NULL == args || ft_is_match(map, lexic, line, args[0]) != 0)
 			return (ft_freef("%p%p%P", lexic, line, args), REQUIREMENT_ERROR);
 		*tmp_map = ft_strdup(line);
 		return (ft_freef("%p%p%P", lexic, line, args),NO_MAP_EXCEPTION);
@@ -156,7 +158,7 @@ uint8_t	ft_rule_match(t_dictionary *lexic, char *rule, size_t *index)
 	return (1);
 }
 
-uint8_t	ft_is_match(t_dictionary *lexic, t_map *map, char *line, char *rule)
+uint8_t	ft_is_match(t_map *map, t_dictionary *lexic, char *line, char *rule)
 {
 	size_t	i;
 
@@ -168,6 +170,7 @@ uint8_t	ft_is_match(t_dictionary *lexic, t_map *map, char *line, char *rule)
 			return (1);
 		++i;
 	}
+	ft_set_not_mandatory(map);
 	return (ft_is_valid_map(map, line));
 }
 
@@ -405,4 +408,10 @@ t_map_exception ft_ret_exception(t_dictionary *lexic, char **args, char *line,
 	const t_map_exception exp = lexic[index].exception;
 	ft_freef("%p, %p, %P", lexic, line, args);
 	return (exp);
+}
+
+void ft_set_not_mandatory(t_map *map)
+{
+	map->texture[FLOOR].path[0][0] = '\0';
+	map->texture[CEILING].path[0][0] = '\0';
 }
