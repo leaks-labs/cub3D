@@ -30,7 +30,6 @@ int32_t		ft_eval_width(char *line, int32_t i);
 
 uint8_t	ft_rule_match(t_dictionary *lexic, char *rule, size_t *index);
 uint8_t	ft_is_match(t_map *map, t_dictionary *lexic, char *line, char *rule);
-void	ft_set_not_mandatory(t_map *map);
 t_dictionary	*ft_set_lexic(t_dictionary	**lexic);
 uint8_t	ft_is_valid_map(t_map *map, char *line);
 t_orientation	ft_str_to_enum(char *str, t_orientation *pos);
@@ -75,6 +74,8 @@ void	ft_map_set_default(t_map *map)
 	map->height = 0;
 	map->width = 0;
 	map->s_player.e_orientation = N_ORIENTATION;
+	map->texture[FLOOR].path[0][0] = '\0';
+	map->texture[CEILING].path[0][0] = '\0';
 }
 
 static t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
@@ -170,7 +171,6 @@ uint8_t	ft_is_match(t_map *map, t_dictionary *lexic, char *line, char *rule)
 			return (1);
 		++i;
 	}
-	ft_set_not_mandatory(map);
 	return (ft_is_valid_map(map, line));
 }
 
@@ -253,7 +253,7 @@ static t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd, bool
 	if ('\n' == *line)
 		return (free(line), ft_check_map(map, tmp_map, fd, true));
 	if (true == empty || ft_is_valid_map(map, line))
-		return (ft_freef("%p, %p", *tmp_map, line), ELEMENT_ERROR);
+		return (ft_freef("%p, %p", line), ELEMENT_ERROR); // removed tmp map
 	ptr_cpy = *tmp_map;
 	*tmp_map = ft_join(2, *tmp_map, line);
 	ft_freef("%p, %p", ptr_cpy, line);
@@ -327,18 +327,21 @@ static t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 {
 	const size_t	len = ((size_t)(map->width * map->height + 1));
+	const size_t tmp_len = ft_strlen(*tmp_map);
 	size_t			i;
 	size_t			j;
 	char			*resized_line;
 
 	i = 0;
 	resized_line = ft_calloc(len, sizeof(char));
-	while (NULL != resized_line && *(*tmp_map + i) != '\0')
+	while (NULL != resized_line && *(*tmp_map + i) != '\0') //here
 	{
 		j = ft_len_till(*tmp_map + i, '\n');
 		ft_strlcat(resized_line, *tmp_map + i, ft_strlen(resized_line) + j + 1);
 		ft_memset(&resized_line[ft_strlen(resized_line)], '1', (size_t)map->width - j);
 		i += j + 1;
+		if (i > tmp_len)
+			--i;
 	}
 	free(*tmp_map);
 	*tmp_map = resized_line;
@@ -362,10 +365,10 @@ uint8_t	ft_check_border(t_map *map, char *tmp_map)
 {
 	const int32_t			map_size = map->width * map->height;
 	const t_parse_border	parse_border[4] = {
-			{0, 1, map->width}, //front
-			{0, map->width, map_size - map->width}, //left
-			{map->width - 1, map->width, map_size}, // right
-			{map_size - map->width, 1, map_size}, // bottom
+			{0, 1, map->width},
+			{0, map->width, map_size - map->width},
+			{map->width - 1, map->width, map_size},
+			{map_size - map->width, 1, map_size},
 	};
 	int32_t from;
 	int32_t to;
@@ -408,10 +411,4 @@ t_map_exception ft_ret_exception(t_dictionary *lexic, char **args, char *line,
 	const t_map_exception exp = lexic[index].exception;
 	ft_freef("%p, %p, %P", lexic, line, args);
 	return (exp);
-}
-
-void ft_set_not_mandatory(t_map *map)
-{
-	map->texture[FLOOR].path[0][0] = '\0';
-	map->texture[CEILING].path[0][0] = '\0';
 }
