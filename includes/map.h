@@ -121,7 +121,15 @@ typedef struct s_map
 uint8_t			ft_init_map(char *file, t_map *map);
 void			ft_destroy_map(t_map *map);
 
-/* map parsing + error handling */
+/* error handling */
 uint8_t 		ft_throw_map_exception(t_map_exception e_exception);
-t_map_exception	ft_parse_map(char *file, t_map *map);/* in progress */
+
+/* map parsing */
+t_map_exception	ft_parse_map(char *file, t_map *map);
+t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
+										int32_t fd, size_t i);
+t_map_exception	ft_check_map(t_map *map, char **tmp_map, int32_t fd,
+								bool empty);
+t_map_exception	ft_format_map(t_map *map, char **tmp_map);
+
 #endif
