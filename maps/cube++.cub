@@ -8,6 +8,8 @@ EA ./maps/textures/west_texture_xpm.xpm
 WE        ./maps/textures/east_texture_xpm.xpm
 F 0,153,51
 
+FT ./maps/textures/colorstone.xpm
+CT ./maps/textures/bluestone.xpm
 
 C 102,204,255
 1111111111111111111111111
