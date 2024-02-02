@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*   By: shinfray <shinfray@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:25:02 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2024/02/02 01:25:03 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/02/02 11:16:40 by shinfray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_map_exception	ft_parse_map(const char *file, t_map *map)
 	t_map_exception	e_map_exception;
 	int32_t			fd;
 
-	if (1 == ft_check_extension(file, ".pub"))
+	if (1 == ft_check_extension(file, ".cub"))
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);
