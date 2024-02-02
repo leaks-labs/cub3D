@@ -29,7 +29,8 @@ int	ft_on_destroy(t_game *game)
 
 int	ft_on_destroy(t_game *game)
 {
-	mlx_loop_end(game->mlx_ptr);
+	mlx_loop_end(game->graphx->mlx_ptr);
+	return (0);
 }
 
 #endif
