@@ -6,7 +6,7 @@
 /*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:23:46 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2024/02/02 01:36:06 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/02/02 18:15:18 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ uint8_t	ft_run(t_map *map)
 		return (1);
 	}
 	mlx_loop(s_graphx.mlx_ptr);
+	ft_destroy_game(&s_game);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:24:38 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2024/02/02 01:44:54 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/02/02 18:15:14 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,22 @@
 int	ft_on_destroy(t_game *game);
 int	ft_on_mouse_move(int x, int y, t_game *game);
 
+#ifdef __APPLE__
+
 int	ft_on_destroy(t_game *game)
 {
 	ft_destroy_game(game);
 	exit(0);
 }
+
+#elif __linux__
+
+int	ft_on_destroy(t_game *game)
+{
+	mlx_loop_end(game->mlx_ptr);
+}
+
+#endif
 
 #ifdef __APPLE__
 
