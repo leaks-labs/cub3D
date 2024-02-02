@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_wall.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:23:56 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:33:36 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "render.h"
 #include "game.h"
 
@@ -63,8 +75,6 @@ static void	ft_texture_iter(t_draw *draw, t_game *game, t_image *src_img, \
 	draw->s_dst_pix.y = draw->draw_start;
 	while (draw->s_dst_pix.y <= draw->draw_end)
 	{
-		// Cast the texture coordinate to integer,
-		// and mask with (texHeight - 1) in case of overflow
 		s_tex.y = (int)tex_pos & (src_img->height - 1);
 		tex_pos += step;
 		ft_pixel_cpy(src_img, draw->dst_img, &s_tex, &draw->s_dst_pix);

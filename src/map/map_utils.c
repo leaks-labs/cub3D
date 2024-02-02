@@ -1,6 +1,18 @@
-#include <stdlib.h>
-#include <fcntl.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:25:15 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:45:48 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
+#include <fcntl.h>
+#include <stdlib.h>
 #include "utils.h"
 
 uint8_t	ft_check_extension(const char *str, const char *ext);

@@ -40,21 +40,6 @@ CFLAGS+=	-Wconversion			\
 			-Wmissing-declarations	\
 			-O3
 
-#			-Wpedantic \
-# 			-pedantic-errors
-#			-Wcast-qual
-#			-Wstrict-prototypes \
-#			-Wpadded \
-#
-#			gcc flags only
-#			-Wformat-overflow \
-#			-Wformat-truncation \
-#			-Wlogical-op \
-#			-Wformat-signedness \
-#			-Wduplicated-cond \
-#			-Wduplicated-branches \
-#			-Walloc-zero
-
 ADDITIONAL_CPPFLAGS=
 ADDITIONAL_LDFLAGS=
 
@@ -98,10 +83,6 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				utils/ft_dptrlen				\
 				utils/ft_freef					\
 				utils/ft_get_next_line			\
-				utils/ft_isalnum				\
-				utils/ft_isalpha				\
-				utils/ft_isdigit				\
-				utils/ft_isspace				\
 				utils/ft_join					\
 				utils/ft_memcpy					\
 				utils/ft_memset					\
@@ -115,8 +96,6 @@ SRCS_FILES:=	game/rendering/draw_environment	\
 				utils/ft_strlcpy				\
 				utils/ft_strlen					\
 				utils/ft_strncmp				\
-				utils/ft_strndup				\
-				utils/ft_strnstr				\
 				utils/ft_strtoi					\
 				utils/ft_substr
 

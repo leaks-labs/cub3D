@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_environment.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:23:53 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:34:42 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "render.h"
 #include "game.h"
 
@@ -20,7 +32,6 @@ void	ft_draw_text_env(t_game *game, t_player *pl)
 		s_env.s_dst_pix.y = game->screen_center;
 	if (s_env.tex_floor->mlx_img == NULL)
 		max_y = game->screen_center;
-	// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 	s_env.s_ray_dir_l.x = pl->s_dir.x - pl->s_plane.x;
 	s_env.s_ray_dir_l.y = pl->s_dir.y - pl->s_plane.y;
 	s_env.s_ray_dir_r.x = pl->s_dir.x + pl->s_plane.x;
@@ -34,13 +45,11 @@ void	ft_draw_text_env(t_game *game, t_player *pl)
 
 static void	ft_scan_one_line(t_game *game, t_env *env)
 {
-	// Vertical position of the camera.
 	const double	pos_z = game->graphx->s_window.s_image.height * 0.5;
 	int				p;
 	double			row_distance;
 	t_image			*actual_tex;
 
-	// Current y position compared to the center of the screen (the horizon)
 	actual_tex = env->tex_floor;
 	p = env->s_dst_pix.y - game->screen_center;
 	if (env->s_dst_pix.y < game->screen_center)
@@ -48,13 +57,8 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 		actual_tex = env->tex_ceiling;
 		p = -p;
 	}
-
-	// Horizontal distance from the camera to the floor for the current row.
-	// 0.5 is the z position exactly in the middle between floor and ceiling.
 	row_distance = pos_z / p;
-
 	ft_init_coord_and_step(env, row_distance, game);
-
 	env->s_dst_pix.x = 0;
 	while (env->s_dst_pix.x < game->graphx->s_window.s_image.width)
 	{
@@ -65,14 +69,10 @@ static void	ft_scan_one_line(t_game *game, t_env *env)
 
 static void	ft_init_coord_and_step(t_env *env, double row_dist, t_game *game)
 {
-	// calculate the real world step vector we have to add for each x (parallel to camera plane)
-	// adding step by step avoids multiplications with a weight in the inner loop
 	env->s_step.x = row_dist * (env->s_ray_dir_r.x - env->s_ray_dir_l.x) \
 					/ game->graphx->s_window.s_image.width;
 	env->s_step.y = row_dist * (env->s_ray_dir_r.y - env->s_ray_dir_l.y) \
 					/ game->graphx->s_window.s_image.width;
-
-	// real world coordinates of the leftmost column. This will be updated as we step to the right.
 	env->s_coord.x = game->map->s_player.s_pos.x + \
 					row_dist * env->s_ray_dir_l.x;
 	env->s_coord.y = game->map->s_player.s_pos.y + \
@@ -81,20 +81,15 @@ static void	ft_init_coord_and_step(t_env *env, double row_dist, t_game *game)
 
 static void	ft_print_pixel_on_line(t_env *env, t_image *tex)
 {
-	// the cell coord is simply got from the integer parts of floorX and floorY
 	env->s_grid_coord.x = (int)(env->s_coord.x);
 	env->s_grid_coord.y = (int)(env->s_coord.y);
-
-	// get the texture coordinate from the fractional part
 	env->s_src_pix.x = (int)(tex->width \
 						* (env->s_coord.x - env->s_grid_coord.x)) \
 						& (tex->width - 1);
 	env->s_src_pix.y = (int)(tex->height \
 						* (env->s_coord.y - env->s_grid_coord.y)) \
 						& (tex->height - 1);
-
 	env->s_coord.x += env->s_step.x;
 	env->s_coord.y += env->s_step.y;
-
 	ft_pixel_cpy(tex, env->dst_img, &env->s_src_pix, &env->s_dst_pix);
 }

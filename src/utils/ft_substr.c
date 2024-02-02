@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leex-labs@gmail.com>            +#+  +:+       +#+        */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:58:14 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2023/11/24 14:58:15 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/02/02 01:46:24 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-char			*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {

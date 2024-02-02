@@ -1,5 +1,17 @@
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libx_exception.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:24:08 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:44:43 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libx.h"
+#include <unistd.h>
 #include "utils.h"
 
 uint8_t	ft_throw_mlx_exception(t_mlx_exception e_mlx_exception);

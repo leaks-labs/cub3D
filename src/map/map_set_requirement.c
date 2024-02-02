@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_set_requirement.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:25:11 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:45:32 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
-#include "utils.h"
 #include <unistd.h>
+#include "utils.h"
 
 uint8_t			ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
 static uint8_t	ft_set_path(t_map *map, const t_dictionary *lexic, char *args);

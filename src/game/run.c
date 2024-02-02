@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:23:46 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:36:06 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
 
 uint8_t			ft_run(t_map *map);
@@ -70,8 +82,8 @@ void	ft_destroy_texture(void *mlx_ptr, t_texture *texture, \
 		e_tmp_orientation = NORTH;
 		while (((e_tmp_element != e_element \
 				&& e_tmp_orientation < N_ORIENTATION) \
-				|| e_tmp_orientation < e_orientation)
-			   && (e_tmp_element < FLOOR || e_tmp_orientation == 0))
+				|| e_tmp_orientation < e_orientation) \
+				&& (e_tmp_element < FLOOR || e_tmp_orientation == 0))
 		{
 			tmp_img = &texture[e_tmp_element].image[e_tmp_orientation];
 			if (tmp_img->mlx_img != NULL)

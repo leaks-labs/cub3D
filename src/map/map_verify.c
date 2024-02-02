@@ -1,5 +1,17 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_verify.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:25:18 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:45:52 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
+#include <stdlib.h>
 #include "utils.h"
 
 t_map_exception			ft_verify_map(t_map *map, char **tmp_map, int32_t fd, \

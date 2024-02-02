@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:22:52 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:43:07 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MAP_H
 # define MAP_H
 
-# include "libx.h"
 # include <limits.h>
+# include "libx.h"
 
 # define MAP_EXTENSION_ERROR	"Missing or wrong extension file"
 # define MAP_OPEN_ERROR			"Failed to open the file"
@@ -53,7 +65,7 @@ typedef enum e_element
 	N_ELEMENT
 }				t_element;
 
-typedef enum	s_rule_level
+typedef enum s_rule_level
 {
 	MANDATORY,
 	NOT_MANDATORY,
@@ -71,17 +83,17 @@ typedef struct s_dictionary
 
 typedef struct s_parse_border
 {
-	size_t from;
-	size_t each;
-	size_t to;
+	size_t	from;
+	size_t	each;
+	size_t	to;
 }				t_parse_border;
 
-typedef struct		s_texture
+typedef struct s_texture
 {
 	char	path[N_ORIENTATION][PATH_MAX];
 	t_image	image[N_ORIENTATION]; //if t_image == 0 then  look rgb
 	int32_t	rgb[N_ORIENTATION];
-}					t_texture;
+}				t_texture;
 
 typedef struct s_vec
 {
@@ -122,11 +134,11 @@ uint8_t			ft_init_map(char *file, t_map *map);
 void			ft_destroy_map(t_map *map);
 
 /* error handling */
-uint8_t 		ft_throw_map_exception(t_map_exception e_exception);
+uint8_t			ft_throw_map_exception(t_map_exception e_exception);
 
 /* map parsing */
 t_map_exception	ft_parse_map(const char *file, t_map *map);
-t_map_exception	ft_check_requirement(t_map *map, char **tmp_map,
+t_map_exception	ft_check_requirement(t_map *map, char **tmp_map, \
 										int32_t fd, size_t i);
 t_map_exception	ft_verify_map(t_map *map, char **tmp_map, int32_t fd, \
 								bool empty);
@@ -142,6 +154,5 @@ size_t			ft_len_till(char *str, char c);
 
 /* set requirement map */
 uint8_t			ft_set_args(t_map *map, const t_dictionary *lexic, char *args);
-
 
 #endif
