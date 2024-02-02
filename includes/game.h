@@ -14,9 +14,9 @@
 # define WALL_COLOR_MAP		0x464a4e
 # define CURSOR_COLOR_MAP	0xff2800
 
-# define RAD_EAST			0
+# define RAD_WEST			0
 # define RAD_NORTH			1.570796326794897 // (90 * M_PI / 180)
-# define RAD_WEST			3.141592653589793 // (180 * M_PI / 180)
+# define RAD_EAST			3.141592653589793 // (180 * M_PI / 180)
 # define RAD_SOUTH			4.712388980384690 // (270 * M_PI / 180)
 # define RAD_MAX			6.283185307179586 // (360 * M_PI / 180)
 
