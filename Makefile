@@ -5,7 +5,7 @@
 .DELETE_ON_ERROR:
 .SILENT:
 
-NAME:=	cub3d
+NAME:=	cub3D
 
 SRCS_DIR:= src
 BUILD_DIR:= build
