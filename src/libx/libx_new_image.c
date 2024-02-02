@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libx_new_image.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:24:42 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:37:18 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libx.h"
 #include "game.h"
 
-void			*ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
-void			*ft_mlx_new_mini_map_image(void *mlx_ptr, void **mlx_img);
-void			ft_set_images_metadata(t_game *game, t_graphx *graphx);
-static void		ft_mlx_get_data_addr(t_image *image);
+void	*ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
+void	*ft_mlx_new_mini_map_image(void *mlx_ptr, void **mlx_img);
+void	ft_set_images_metadata(t_game *game, t_graphx *graphx);
+void	ft_mlx_get_data_addr(t_image *image);
 
 void	*ft_mlx_new_image(void *mlx_ptr, void **mlx_img)
 {
@@ -29,7 +41,7 @@ void	ft_set_images_metadata(t_game *game, t_graphx *graphx)
 	ft_mlx_get_data_addr(&game->map->s_mini_map.s_image);
 }
 
-static void	ft_mlx_get_data_addr(t_image *image)
+void	ft_mlx_get_data_addr(t_image *image)
 {
 	image->data = mlx_get_data_addr(image->mlx_img, \
 									&image->bits_per_pixel, \

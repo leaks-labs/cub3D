@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_dptrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leex-labs@gmail.com>            +#+  +:+       +#+        */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 14:57:16 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2023/11/24 14:57:17 by Leex-Labs        ###   ########.fr       */
+/*   Created: 2024/02/02 01:25:29 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:25:30 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_isalnum(int c);
-
-int	ft_isalnum(int c)
+size_t	ft_dptrlen(char **dptr)
 {
-	return (ft_isalpha(c) == true || ft_isdigit(c) == true);
+	size_t	i;
+
+	i = 0;
+	while (dptr != NULL && dptr[i] != NULL)
+		++i;
+	return (i);
 }

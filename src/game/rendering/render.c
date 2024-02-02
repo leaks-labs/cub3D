@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:24:02 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:34:02 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "render.h"
 #include "game.h"
 
@@ -35,20 +47,13 @@ static void	ft_raycast_init(t_game *game, int x)
 {
 	const double	screen_w = (double)(game->graphx->s_window.s_image.width);
 
-	//calculate ray position and direction
 	game->s_raycast.camera_x = 2 * x / screen_w - 1;
 	game->s_raycast.s_ray_dir.x = game->map->s_player.s_dir.x \
 					+ game->map->s_player.s_plane.x * game->s_raycast.camera_x;
 	game->s_raycast.s_ray_dir.y = game->map->s_player.s_dir.y \
 					+ game->map->s_player.s_plane.y * game->s_raycast.camera_x;
-
-	// which box of the map we're in
 	game->s_raycast.s_map_tmp.x = (int)game->map->s_player.s_pos.x;
 	game->s_raycast.s_map_tmp.y = (int)game->map->s_player.s_pos.y;
-
-	// length of ray from one x or y-side to next x or y-side
-	// double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX);
-	// double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY);
 	game->s_raycast.s_delta_dist.x = fabs(1.0 / game->s_raycast.s_ray_dir.x);
 	game->s_raycast.s_delta_dist.y = fabs(1.0 / game->s_raycast.s_ray_dir.y);
 	ft_raycast_side_dist_init(&game->map->s_player, &game->s_raycast);
@@ -89,7 +94,6 @@ static double	ft_get_ray_len(t_raycast *rc, t_map *map)
 	hit = 0;
 	while (hit == 0)
 	{
-		// jump to next map square, either in x-direction, or in y-direction
 		if (rc->s_side_dist.x < rc->s_side_dist.y)
 		{
 			rc->s_side_dist.x += rc->s_delta_dist.x;
@@ -102,11 +106,8 @@ static double	ft_get_ray_len(t_raycast *rc, t_map *map)
 			rc->s_map_tmp.y += rc->s_step.y;
 			rc->side_touched = TOUCH_Y_AXIS;
 		}
-		// Check if ray has hit a wall
 		hit = ft_isawall_grid(map, rc->s_map_tmp.x, rc->s_map_tmp.y);
 	}
-	// Calculate distance projected on camera direction
-	// (Euclidean distance would give fisheye effect!)
 	if (rc->side_touched == TOUCH_X_AXIS)
 		return (rc->s_side_dist.x - rc->s_delta_dist.x);
 	return (rc->s_side_dist.y - rc->s_delta_dist.y);

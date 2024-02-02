@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leex-labs@gmail.com>            +#+  +:+       +#+        */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 14:57:18 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2023/11/24 14:57:19 by Leex-Labs        ###   ########.fr       */
+/*   Created: 2024/02/02 01:26:19 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:37:06 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_isalpha(int c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t n);
 
-int	ft_isalpha(int c)
+size_t	ft_strlcpy(char *dst, const char *src, size_t n)
 {
-	return (((unsigned int)c | 32) - 'a' < 26);
+	const char	*s;
+
+	s = src;
+	if (n < 1)
+		return (ft_strlen(src));
+	while (*s && n-- > 1)
+		*dst++ = *s++;
+	*dst = '\0';
+	return (ft_strlen(src));
 }

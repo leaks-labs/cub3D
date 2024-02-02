@@ -1,47 +1,47 @@
-#include <fcntl.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:25:02 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:25:03 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 #include "utils.h"
+#include <unistd.h>
 
-#include <stdlib.h>
-#include <stdio.h>
+t_map_exception	ft_parse_map(const char *file, t_map *map);
+static void		ft_map_set_default(t_map *map);
 
-t_map_exception	ft_parse_map(char *file);
-static uint8_t	ft_check_extension(const char *str);
-static uint8_t	ft_open_file(char *file, int32_t *fd);
-
-t_map_exception	ft_parse_map(char *file)
+t_map_exception	ft_parse_map(const char *file, t_map *map)
 {
-	int32_t	fd;
-	char	*line;
+	char			*tmp_map;
+	t_map_exception	e_map_exception;
+	int32_t			fd;
 
-	if (1 == ft_check_extension(file))
+	if (1 == ft_check_extension(file, ".pub"))
 		return (EXTENSION_ERROR);
 	if (1 == ft_open_file(file, &fd))
 		return (OPEN_ERROR);
-	line = ft_get_next_line(fd);
-	while (line != NULL)
-	{
-		printf("%s", line);
-		free(line);
-		line = ft_get_next_line(fd);
-	}
+	ft_map_set_default(map);
+	e_map_exception = ft_check_requirement(map, &tmp_map, fd, 0);
+	if (!(e_map_exception >= REQUIREMENT_ERROR && e_map_exception <= RGB_ERROR))
+		if (ELEMENT_ERROR == ft_verify_map(map, &tmp_map, fd, false) \
+			|| ELEMENT_ERROR == ft_format_map(map, &tmp_map))
+			e_map_exception = ELEMENT_ERROR;
 	close(fd);
-	return (NO_MAP_EXCEPTION);
+	return (e_map_exception);
 }
 
-static uint8_t	ft_check_extension(const char *str)
+void	ft_map_set_default(t_map *map)
 {
-	size_t	i;
-
-	i = ft_strlen(str);
-	while (str[i] != '.' && i != 0)
-		--i;
-	return (ft_strcmp(&str[i], ".pub") != 0);
-}
-
-static uint8_t	ft_open_file(char *file, int32_t *fd)
-{
-	*fd = open(file, O_RDONLY);
-	return (-1 == *fd);
+	map->height = 0;
+	map->width = 0;
+	map->s_player.e_orientation = N_ORIENTATION;
+	map->texture[FLOOR].path[0][0] = '\0';
+	map->texture[CEILING].path[0][0] = '\0';
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libx.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 01:22:47 by Leex-Labs         #+#    #+#             */
+/*   Updated: 2024/02/02 01:22:48 by Leex-Labs        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBX_H
 # define LIBX_H
 
@@ -23,8 +35,11 @@
 # define ON_MOUSEMOVE		6
 # define ON_DESTROY			17
 
-typedef struct s_pixel	t_pixel;
-typedef struct s_game	t_game;
+typedef struct s_pixel		t_pixel;
+typedef struct s_game		t_game;
+typedef struct s_texture	t_texture;
+typedef enum e_element		t_element;
+typedef enum e_orientation	t_orientation;
 
 # ifdef __linux__
 
@@ -124,9 +139,14 @@ typedef struct s_graphx
 /* init and destroy */
 t_mlx_exception	ft_init_graphx(t_game *game, t_graphx *graphx);
 void			ft_destroy_graphx(t_game *game);
+t_mlx_exception	ft_open_texture(t_texture *texture, void *mlx_ptr);
+void			ft_destroy_texture(void *mlx_ptr, t_texture *texture, \
+									t_orientation e_orientation, \
+									t_element e_element);
 
 /* new image */
 void			*ft_mlx_new_image(void *mlx_ptr, void **mlx_img);
+void			ft_mlx_get_data_addr(t_image *image);
 void			*ft_mlx_new_mini_map_image(void *mlx_ptr, void **mlx_img);
 void			ft_set_images_metadata(t_game *game, t_graphx *graphx);
 

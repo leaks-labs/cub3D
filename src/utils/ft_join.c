@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_join.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leex-Labs <leex-labs@gmail.com>            +#+  +:+       +#+        */
+/*   By: Leex-Labs <leakslabs@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:57:33 by Leex-Labs         #+#    #+#             */
-/*   Updated: 2023/11/24 14:57:34 by Leex-Labs        ###   ########.fr       */
+/*   Updated: 2024/02/02 01:25:50 by Leex-Labs        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 char			*ft_join(int argc, ...);
 static size_t	ft_get_len(int argc, va_list *aq);
-static size_t	ft_strlcat(char *dst, const char *src, size_t n);
 
 char	*ft_join(int argc, ...)
 {
@@ -54,24 +53,4 @@ static size_t	ft_get_len(int argc, va_list *aq)
 		len += ft_strlen(va_arg(*aq, char *));
 	va_end(*aq);
 	return (len);
-}
-
-static size_t	ft_strlcat(char *dst, const char *src, size_t n)
-{
-	size_t	i;
-	size_t	d;
-
-	if (n == 0)
-		return (ft_strlen(src));
-	i = 0;
-	d = ft_strlen(dst);
-	if (d > n)
-		return (ft_strlen(src) + n);
-	while (src[i] && d + i < (n - 1))
-	{
-		dst[d + i] = src[i];
-		++i;
-	}
-	dst[d + i] = '\0';
-	return (ft_strlen(src) + d);
 }

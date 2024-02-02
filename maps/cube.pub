@@ -1,17 +1,14 @@
-NO ./textures/Wall1.xpm
-SO ./textures/Wall2.xpm
-WE ./textures/Wall3.xpm
-EA ./textures/Wall4.xpm
+NO ./maps/textures/greystone.xpm
+SO ./maps/textures/bluestone.xpm
+EA ./maps/textures/mossy.xpm
+WE ./maps/textures/purplestone.xpm
+C 84,136,61
+F 255,100,0
 
-F 220,100,0
-C 225,30,0
-
-11111111111
-10000000001
-10000000001
-10001000001
-10000000001
-10000000001
-10000000001
-1000N000001
-11111111111
+111111111
+100000001
+100100001
+100000001
+100N00101
+100000001
+111111111
