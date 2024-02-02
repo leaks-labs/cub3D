@@ -71,9 +71,9 @@ typedef struct s_dictionary
 
 typedef struct s_parse_border
 {
-	int32_t from;
-	int32_t each;
-	int32_t to;
+	size_t from;
+	size_t each;
+	size_t to;
 }				t_parse_border;
 
 typedef struct		s_texture

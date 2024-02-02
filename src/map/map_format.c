@@ -15,7 +15,7 @@ t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 	if (N_ORIENTATION == map->s_player.e_orientation \
 		|| ft_resize_map(map, tmp_map) != 0 \
 		|| ft_check_border(map, *tmp_map) != 0 \
-		|| ft_map_to_int(map, *tmp_map))
+		|| ft_map_to_int(map, *tmp_map) != 0)
 		e_ret = ELEMENT_ERROR;
 	free(*tmp_map);
 	return (e_ret);
@@ -23,7 +23,7 @@ t_map_exception	ft_format_map(t_map *map, char **tmp_map)
 
 static uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 {
-	const size_t	len = (size_t)(map->width * map->height + 1);
+	const size_t	len = (size_t)map->width * (size_t)map->height + 1;
 	const size_t	tmp_len = ft_strlen(*tmp_map);
 	char			*resized_line;
 	size_t			i;
@@ -49,16 +49,16 @@ static uint8_t	ft_resize_map(t_map *map, char **tmp_map)
 
 static uint8_t	ft_check_border(t_map *map, char *tmp_map)
 {
-	const int32_t			map_size = map->width * map->height;
+	const size_t			map_size = (size_t)map->width * (size_t)map->height;
 	const t_parse_border	parse_border[4] = {\
-			{0, 1, map->width}, \
-			{0, map->width, map_size - map->width}, \
-			{map->width - 1, map->width, map_size}, \
-			{map_size - map->width, 1, map_size}, \
+			{0, 1, (size_t)map->width}, \
+			{0, (size_t)map->width, map_size - (size_t)map->width}, \
+			{(size_t)(map->width - 1), (size_t)map->width, map_size}, \
+			{map_size - (size_t)map->width, 1, map_size}, \
 	};
-	int32_t					from;
-	int32_t					to;
-	int32_t					i;
+	size_t					from;
+	size_t					to;
+	size_t					i;
 
 	i = 0;
 	while (i < 4)
@@ -78,7 +78,7 @@ static uint8_t	ft_check_border(t_map *map, char *tmp_map)
 
 static uint8_t	ft_map_to_int(t_map *map, char *tmp_map)
 {
-	const size_t	len = (size_t)(map->width * map->height);
+	const size_t	len = (size_t)map->width * (size_t)map->height;
 	size_t			i;
 
 	map->grid = ft_calloc(len, sizeof(t_element));
